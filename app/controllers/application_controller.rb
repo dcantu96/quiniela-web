@@ -1,7 +1,6 @@
 class ApplicationController < ActionController::Base
   before_action :authenticate_user!
   before_action :configure_permitted_parameters, if: :devise_controller?
-  around_action :set_timezone, if: :current_user
 
   def after_invite_path_for(resource)
     edit_user_registration_path
@@ -17,9 +16,6 @@ class ApplicationController < ActionController::Base
 
   protected
 
-  def set_timezone(&action)
-    Time.use_zone(current_user.time_zone, &action)
-  end
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:account_update, keys: [:full_name, :phone])
