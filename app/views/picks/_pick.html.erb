@@ -38,7 +38,7 @@
       <% end %>
     <% else %>
       <h2 class='text-lg mb-4'>
-        <%= pick.visit_team.short_name %>
+        <%= pick.match.visit_team.short_name %>
       </h2>
     <% end %>
     <% if Time.now < pick.match.start_time - 1.hour && pick.picked_team != pick.match.home_team %>
@@ -48,7 +48,7 @@
       <% end %>
     <% else %>
       <h2 class='text-lg mb-4'>
-        <%= pick.home_team.short_name %>
+        <%= pick.match.home_team.short_name %>
       </h2>
     <% end %>
   </div>

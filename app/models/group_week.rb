@@ -3,4 +3,8 @@ class GroupWeek < ApplicationRecord
   belongs_to :week
   belongs_to :winner, class_name: 'Account', inverse_of: :week_wins, optional: true
   has_many :picks
+
+  def number
+    week.number
+  end
 end

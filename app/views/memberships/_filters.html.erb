@@ -1,0 +1,17 @@
+<div class="<%= 'hidden' if @filters_empty %>" data-target="toggle.content">
+  <div class="flex flex-wrap" data-controller="filters">
+    <div class='mr-3' data-controller='select'>
+      <div class="label">Week</div>
+      <div class='relative'>
+        <%= select_tag :week_number,
+          options_from_collection_for_select(
+            @group_weeks, 'id', 'number', params[:week_number]
+          ),
+          include_blank: "Current",
+          class: "select",
+          data: { action: "filters#filter", target: "filters.filter" } %>
+        <span class='custom-arrow'></span>
+      </div>
+    </div>
+  </div>
+</div>

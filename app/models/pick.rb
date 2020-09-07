@@ -1,8 +1,10 @@
 class Pick < ApplicationRecord
+  include Filterable
   belongs_to :membership
   belongs_to :match
   belongs_to :group_week
   belongs_to :picked_team, class_name: 'Team', inverse_of: :picks, optional: true
+  scope :filter_by_week_number, -> (group_week) { where group_week: group_week }
   # validate :pick_not_passed_time
 
 
