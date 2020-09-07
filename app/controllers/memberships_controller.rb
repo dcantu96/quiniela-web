@@ -24,6 +24,8 @@ class MembershipsController < ApplicationController
   end
 
   def validate_user
-    redirect_to root_path if !current_user.admin? && @membership.account.user != current_user
+    if !current_user.admin? && @membership.account.user != current_user
+      redirect_to root_path, alert: 'Access restricted'
+    end
   end
 end
