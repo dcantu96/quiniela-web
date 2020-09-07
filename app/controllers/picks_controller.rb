@@ -5,6 +5,8 @@ class PicksController < ApplicationController
     respond_to do |format|
       if @pick.update pick_params
         format.js
+      else
+        format.js { render 'error' }
       end
     end
   end
