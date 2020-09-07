@@ -1,0 +1,6 @@
+toaster.fire({
+  icon: 'success',
+  title: 'Pick actualizado correctamente a <%= @pick.picked_team.short_name %>',
+});
+$("#pick-<%= @pick.id %>").html(`<%= j render 'inner_pick', pick: @pick %>`);
+

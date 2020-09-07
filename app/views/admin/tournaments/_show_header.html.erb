@@ -1,0 +1,16 @@
+<div class='bg-white px-6 pt-3 shadow-sm'>
+  <div class='flex flex-wrap justify-start lg:justify-between mb-6'>
+    <div class="flex items-center">
+      <i class="fas fa-handshake fa-2x p-1 mr-3 fill-current transition-all duration-300 text-indigo-900"></i>
+      <%= link_to 'Tournaments', admin_tournaments_path, class: 'text-md text-indigo-900 mr-3 underline' %>
+      <div class="text-md text-indigo-900 mr-3">&#x2f;</div>
+      <h1 class='text-xl text-indigo-900 mr-3'><b><%= @tournament.name %></b></h1>
+    </div>
+    <div class="flex items-center">
+      <div class='text-md flex items-center hover:text-indigo-900 py-3 px-3'>
+        <i class="fas fa-play-circle mr-2 fill-current"></i>
+        <span><%= @tournament.sport.name %></span>
+      </div>
+    </div>
+  </div>
+</div>

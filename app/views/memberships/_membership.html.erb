@@ -1,0 +1,11 @@
+<div class="rounded-xl p-6 shadow-lg bg-white">
+  <p class='text-xs font-light text-gray-500'>
+    Membership
+  </p>
+  <h2 class='text-lg mb-4'>
+    <%= membership.account.username %>
+  </h2>
+  <div class='flex justify-between'>
+    <%= link_to "View", admin_membership_path(membership), class: 'btn btn--primary' %>
+  </div>
+</div>

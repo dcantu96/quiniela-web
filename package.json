@@ -1,0 +1,29 @@
+{
+  "name": "quiniela_web",
+  "private": true,
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.14.0",
+    "@rails/actioncable": "^6.0.0",
+    "@rails/activestorage": "^6.0.0",
+    "@rails/ujs": "^6.0.0",
+    "@rails/webpacker": "4.2.2",
+    "chart.js": "^2.9.3",
+    "chartkick": "^3.2.1",
+    "dropzone": "^5.7.2",
+    "flatpickr": "^4.6.5",
+    "jquery": "^3.5.1",
+    "select2": "^4.0.13",
+    "sortablejs": "^1.10.2",
+    "stimulus": "^1.1.1",
+    "stimulus-datatables": "^1.0.6",
+    "stimulus-use": "^0.9.4",
+    "sweetalert2": "^9.17.1",
+    "tailwindcss": "^1.6.0",
+    "toastr": "^2.1.4",
+    "turbolinks": "^5.2.0"
+  },
+  "version": "0.1.0",
+  "devDependencies": {
+    "webpack-dev-server": "^3.11.0"
+  }
+}

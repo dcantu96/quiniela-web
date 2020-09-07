@@ -1,0 +1,23 @@
+<%= form_with model: [:admin, @team] do |f| %>
+  <% if @team.errors.any? %>
+    <div>
+      <ul>
+        <% @team.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <%= f.hidden_field :sport_id, value: @sport.id %>
+  <div class='mb-4'>
+    <%= f.label :name, class: 'label' %>
+    <%= f.text_field :name, class: 'input', required: true %>
+  </div>
+  <div class='mb-4'>
+    <%= f.label :short_name, class: 'label' %>
+    <%= f.text_field :short_name, class: 'input', required: true %>
+  </div>
+  <%= f.submit class: 'btn btn--primary' %>
+<% end %>
+
+

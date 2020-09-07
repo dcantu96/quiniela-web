@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Quiniela 2020 - Admin</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <%= stylesheet_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body class='antialiased'>
+    <div class='flex w-screen min-h-screen bg-indigo-100 overflow-x-hidden' data-controller='navigation'>
+      <div class='flex flex-shrink-0 flex-col bg-white items-center shadow-xl transition-all duration-1000 w-0 opacity-0 md:opacity-100 md:w-64' data-target='navigation.sidebar'>
+        <div class="flex justify-center items-center bg-teal-200 select-none h-12 w-12 mt-8 text-xl rounded-lg overflow-hidden border-2 border-gray-400 focus:outline-none">
+          <%= current_user.full_name.capitalize.chr %>
+        </div>
+        <h1 class="text2xl font-bold block px-4 pt-2 pb-1 text-gray-800"><%= current_user.full_name %></h1>
+        <h2 class="text2xl block px-4 pb-1 text-gray-800"><%= current_user.email %></h2>
+        <h2 class="text2xl font-bold block px-4 pb-2 text-gray-800">Admin</h2>
+        <div class='flex pb-4'>
+          <%= link_to edit_user_registration_path, class: 'hover:border-indigo-900 border-transparent border-b-2 mx-3' do %>
+            <i class="fas fa-user-cog fa-lg fill-current transition-all duration-300 hover:text-indigo-900 text-teal-500 pb-1"></i>
+          <% end %>
+          <%= link_to destroy_user_session_path, method: :delete, class: 'hover:border-indigo-900 border-transparent border-b-2 mx-3' do %>
+            <i class="fas fa-sign-out-alt fa-lg fill-current transition-all duration-300 hover:text-indigo-900 text-teal-500 pb-1"></i>
+          <% end %>
+        </div>
+        <hr>
+        <nav class='flex flex-col w-48'>
+          <%= link_to admin_root_path, class: "group flex items-center my-4 py-2 px-3 rounded-lg #{ 'bg-indigo-900' if current_page?(admin_root_path)}" do %>
+            <i class="fas fa-home fa-2x p-1 mr-3 fill-current transition-all duration-300 <%= current_page?(admin_root_path) ? 'text-white' : 'group-hover:text-indigo-900 text-teal-500' %>"></i>
+            <span class="transition-all duration-300 <%= current_page?(admin_root_path) ? 'text-white' : 'group-hover:text-indigo-900 text-teal-500' %>">Inicio</span>
+          <% end %>
+          <%= link_to admin_sports_path, class: "group flex items-center my-4 py-2 px-3 rounded-lg #{ 'bg-indigo-900' if current_page?(admin_sports_path)}" do %>
+            <i class="fas fa-users fa-2x p-1 mr-3 fill-current transition-all duration-300 <%= current_page?(admin_sports_path) ? 'text-white' : 'group-hover:text-indigo-900 text-teal-500' %>"></i>
+            <span class="transition-all duration-300 <%= current_page?(admin_sports_path) ? 'text-white' : 'group-hover:text-indigo-900 text-teal-500' %>">Deportes</span>
+          <% end %>
+          <%= link_to admin_groups_path, class: "group flex items-center my-4 py-2 px-3 rounded-lg #{ 'bg-indigo-900' if current_page?(admin_groups_path)}" do %>
+            <i class="fas fa-users fa-2x p-1 mr-3 fill-current transition-all duration-300 <%= current_page?(admin_groups_path) ? 'text-white' : 'group-hover:text-indigo-900 text-teal-500' %>"></i>
+            <span class="transition-all duration-300 <%= current_page?(admin_groups_path) ? 'text-white' : 'group-hover:text-indigo-900 text-teal-500' %>">Grupos</span>
+          <% end %>
+          <%= link_to admin_tournaments_path, class: "group flex items-center my-4 py-2 px-3 rounded-lg #{ 'bg-indigo-900' if current_page?(admin_tournaments_path)}" do %>
+            <i class="far fa-file-alt fa-2x p-1 mr-3 fill-current transition-all duration-300 <%= current_page?(admin_tournaments_path) ? 'text-white' : 'group-hover:text-indigo-900 text-teal-500' %>"></i>
+            <span class="transition-all duration-300 <%= current_page?(admin_tournaments_path) ? 'text-white' : 'group-hover:text-indigo-900 text-teal-500' %>">Torneos</span>
+          <% end %>
+        </nav>
+      </div>
+      <div class='flex-1'>
+        <%= yield %>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,22 @@
+<div class='flex mb-4 items-center'>
+  <div class='mr-4'>
+    <p class='text-xs font-light text-gray-500'>
+      Username
+    </p>
+    <h2 class='text-lg mb-4'><%= account.username %></h2>
+  </div>
+  <%= link_to "Edit Username", edit_account_path(account), class: 'btn btn--primary' %>
+</div>
+
+<% if account.requests.present? %>
+  <h2 class='text-lg mb-4'>Requests</h2>
+  <div class='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-8'>
+    <%= render account.requests %>
+  </div>
+<% end %>
+<% if account.memberships.present? %>
+  <h2 class='text-lg mb-4'>Memberships</h2>
+  <div class='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-8'>
+    <%= render account.memberships %>
+  </div>
+<% end %>

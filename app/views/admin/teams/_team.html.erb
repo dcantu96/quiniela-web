@@ -1,0 +1,17 @@
+<div class="rounded-xl p-6 shadow-lg bg-white">
+  <p class='text-xs font-light text-gray-500'>
+    Team
+  </p>
+  <h2 class='text-lg mb-4'>
+    <%= team.name %>
+  </h2>
+  <p class='text-xs font-light text-gray-500'>
+    Short Name
+  </p>
+  <h2 class='text-lg mb-4'>
+    <%= team.short_name %>
+  </h2>
+  <div class='flex justify-between'>
+    <%= link_to "Edit", edit_admin_team_path(team), class: 'btn btn--primary' %>
+  </div>
+</div>

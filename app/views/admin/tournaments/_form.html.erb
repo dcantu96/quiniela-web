@@ -1,0 +1,22 @@
+<%= form_with model: [:admin, @tournament] do |f| %>
+  <% if @tournament.errors.any? %>
+    <div>
+      <ul>
+        <% @tournament.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class='mb-4'>
+    <%= f.label :name, class: 'label' %>
+    <%= f.text_field :name, class: 'input', required: true %>
+  </div>
+  <div class='mb-4' data-controller='select'> 
+    <%= f.label :sport, class: 'label' %>
+    <%= f.collection_select :sport_id, Sport.all, :id, :name, {}, { class: 'select2' } %>
+  </div>
+  <%= f.submit class: 'btn btn--primary' %>
+<% end %>
+
+

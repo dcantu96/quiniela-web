@@ -1,0 +1,30 @@
+<div class='bg-white px-6 py-3 shadow-sm'>
+  <div class="flex mb-6 items-center">
+    <i class="fas fa-users fa-2x p-1 mr-3 fill-current transition-all duration-300 text-indigo-900"></i>
+    <%= link_to @team.sport.name, admin_sport_path(@team.sport), class: 'text-md text-indigo-900 mr-3 underline' %>
+    <div class="text-md text-indigo-900 mr-3">&#x2f;</div>
+    <h1 class='text-xl text-indigo-900 mr-3'>Edit <%= @team.name %></h1>
+  </div>
+</div>
+<div class='p-6 container mx-auto'>
+  <%= form_with model: [:admin, @team] do |f| %>
+    <% if @team.errors.any? %>
+      <div>
+        <ul>
+          <% @team.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <div class='mb-4'>
+      <%= f.label :name, class: 'label' %>
+      <%= f.text_field :name, class: 'input', required: true %>
+    </div>
+    <div class='mb-4'>
+      <%= f.label :short_name, class: 'label' %>
+      <%= f.text_field :short_name, class: 'input', required: true %>
+    </div>
+    <%= f.submit class: 'btn btn--primary' %>
+  <% end %>
+</div>

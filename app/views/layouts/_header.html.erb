@@ -1,0 +1,11 @@
+<header class='px-6 lg:px-8 bg-white flex flex-wrap items-center py-2' data-controller='navigation'>
+  <div class='flex-1 flex justify-between items-center'>
+    <%= link_to root_path do %>
+      <%= image_pack_tag 'logo.svg', alt: 'Logo', class: 'h-12' %>
+    <% end %>
+  </div>
+
+  <div class="flex items-center lg:w-auto" id="menu">
+    <%= render 'layouts/account_button' %>
+  </div>
+</header>

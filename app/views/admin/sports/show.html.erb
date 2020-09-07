@@ -1,0 +1,20 @@
+<div class='bg-white px-6 py-3 shadow-sm'>
+  <div class="flex mb-6 items-center">
+    <i class="fas fa-users fa-2x p-1 mr-3 fill-current transition-all duration-300 text-indigo-900"></i>
+    <%= link_to 'Sports', admin_sports_path, class: 'text-md text-indigo-900 mr-3 underline' %>
+    <div class="text-md text-indigo-900 mr-3">&#x2f;</div>
+    <h1 class='text-xl text-indigo-900 mr-3'><%= @sport.name %></h1>
+  </div>
+</div>
+
+<div class='p-6 container mx-auto'>
+  <div class='mb-4'>
+    <div class='flex items-center mb-2'>
+      <h1 class='text-xl text-indigo-900 mr-4'><%= @sport.name %></h1>
+      <%= link_to 'New Team', new_admin_sport_team_path(@sport), class: 'btn btn--secondary' %>
+    </div>
+  </div>
+  <div class='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-8'>
+    <%= render @sport.teams %>
+  </div>
+</div>

@@ -1,0 +1,15 @@
+.stage-link {
+  @apply bg-blue-900 text-white px-4 py-3 no-underline rounded shadow text-xl text-center align-middle;
+
+  &:not(:last-child) {
+    @apply mr-4;
+  }
+
+  &--current {
+    @apply bg-indigo-400;
+  }
+
+  &--complete {
+    @apply bg-orange-600;
+  }
+}

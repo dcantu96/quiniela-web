@@ -1,0 +1,45 @@
+class Admin::WeeksController < Admin::BaseController
+  before_action :set_week, only: [:update, :show, :edit]
+
+  def index
+    @weeks = Week.all
+  end
+
+  def new
+    @week = Week.new
+  end
+
+  def show
+    @weeks = @week.matches
+  end
+
+  def edit
+  end
+
+  def create
+    @week = Week.new week_params
+    if @week.save
+      redirect_to admin_tournament_path(@week.tournament)
+    else
+      render :new
+    end       
+  end
+
+  def update
+    if @week.update week_params
+      redirect_to admin_weeks_path
+    else
+      render :edit
+    end
+  end
+
+  private
+
+  def set_week
+    @week = Week.find(params[:id])
+  end
+
+  def week_params
+    params.require(:week).permit :number, :tournament_id
+  end
+end

@@ -1,0 +1,71 @@
+.btn {
+  @apply rounded-lg text-sm text-black bg-gray-300 shadow-xs py-2 px-3 cursor-pointer outline-none transition-all duration-300;
+
+  &:hover {
+    @apply bg-gray-400;
+    transform: scale(1.06);
+  }
+
+  &:active {
+    @apply bg-gray-500;
+  }
+
+  &--primary {
+    @apply text-white bg-indigo-700;
+
+    &:hover {
+      @apply bg-indigo-800;
+    }
+    &:active {
+      @apply bg-indigo-900;
+    }
+  }
+
+  &--success {
+    @apply text-white bg-green-600;
+
+    &:hover {
+      @apply bg-green-700;
+    }
+    &:active {
+      @apply bg-green-800;
+    }
+  }
+
+  &--info {
+    @apply text-white bg-blue-300;
+
+    &:hover {
+      @apply bg-blue-500;
+    }
+    &:active {
+      @apply bg-blue-600;
+    }
+  }
+  
+  &--warning {
+    @apply text-white bg-orange-500;
+
+    &:hover {
+      @apply bg-orange-600;
+    }
+    &:active {
+      @apply bg-orange-700;
+    }
+  }
+
+  &--danger {
+    @apply text-white bg-red-500;
+
+    &:hover {
+      @apply bg-red-600;
+    }
+    &:active {
+      @apply bg-red-700;
+    }
+  }
+
+  &--link {
+    @apply underline bg-transparent shadow-none text-indigo-400 text-sm;
+  }
+}

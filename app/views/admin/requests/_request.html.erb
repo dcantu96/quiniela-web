@@ -1,0 +1,22 @@
+<div class="rounded-xl p-6 shadow-lg bg-white">
+  <p class='text-xs font-light text-gray-500'>
+    Request
+  </p>
+  <h2 class='text-lg mb-4'>
+    <b><%= request.account.username %></b> wants access to group <b><%= request.group.name %></b>
+  </h2>
+  <h2 class='text-lg mb-4'>
+    <b><%= request.account.username %></b> is associated to email <b><%= request.account.user.email %></b>
+  </h2>
+  <h2 class='text-lg mb-4'>
+    He currently has <b><%= request.account.user.accounts.includes(:memberships).where(memberships: {group: request.group}).count %></b> accounts in the group <b><%= request.group.name %></b>
+  </h2>
+  <div class='flex justify-between'>
+    <%= form_with model: [:admin, request] do |f| %>
+      <%= f.submit 'Accept', class: 'btn btn--success' %>
+    <% end %>
+    <%= form_with model: [:admin, request] do |f| %>
+      <%= f.submit 'Reject', class: 'btn btn--danger' %>
+    <% end %>
+  </div>
+</div>

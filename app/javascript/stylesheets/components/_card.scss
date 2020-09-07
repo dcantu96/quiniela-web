@@ -1,0 +1,7 @@
+.card {
+  @apply rounded-xl p-6 shadow-lg bg-white;
+
+  &--primary {
+    @apply bg-white;
+  }
+}

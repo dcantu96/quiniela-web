@@ -1,0 +1,40 @@
+<div class='bg-white px-6 pt-3 shadow-sm'>
+  <div class='flex flex-wrap justify-start lg:justify-between mb-6'>
+    <div class="flex items-center">
+      <i class="fas fa-handshake fa-2x p-1 mr-3 fill-current transition-all duration-300 text-indigo-900"></i>
+      <%= link_to 'Groups', admin_groups_path, class: 'text-md text-indigo-900 mr-3 underline' %>
+      <div class="text-md text-indigo-900 mr-3">&#x2f;</div>
+      <h1 class='text-xl text-indigo-900 mr-3'><b><%= @group.name %></b></h1>
+    </div>
+    <div class="flex items-center">
+      <% if @group.tournament.weeks.present? %>
+        <%= link_to admin_week_path(@group.tournament.current_week), class: "text-md text-gray-600 flex items-center hover:text-indigo-900 py-3 px-3" do %>
+          <i class="fas fa-user mr-2 fill-current"></i>
+          <span><%= @group.tournament.current_week.number %></span>
+        <% end %>
+      <% end %>
+      <div class='text-md flex items-center hover:text-indigo-900 py-3 px-3'>
+        <i class="fas fa-shoe-prints mr-2 fill-current"></i>
+      <span><%= @group.tournament.name %></span>
+      </div>
+      <div class='text-md flex items-center hover:text-indigo-900 py-3 px-3'>
+        <i class="fas fa-play-circle mr-2 fill-current"></i>
+        <span><%= @group.tournament.sport.name %></span>
+      </div>
+    </div>
+  </div>
+  <div class="flex">
+    <%= link_to admin_group_path(@group), class: "text-md text-indigo-900 flex items-center border-b-2 pb-3 px-2 #{current_page?(admin_group_path(@group)) ? 'border-orange-400' : 'border-transparent hover:border-gray-400'}" do %>
+      <i class="fas fa-home mr-3 fill-current"></i>
+      <span>General</span>
+    <% end %>
+    <%= link_to picks_admin_group_path(@group), class: "text-md text-indigo-900 flex items-center border-b-2 pb-3 px-2 #{current_page?(picks_admin_group_path(@group)) ? 'border-orange-400' : 'border-transparent hover:border-gray-400'}" do %>
+      <i class="fas fa-cog mr-3 fill-current"></i>
+      <span>Picks</span>
+    <% end %>
+    <%= link_to winners_admin_group_path(@group), class: "text-md text-indigo-900 flex items-center border-b-2 pb-3 px-2 #{current_page?(winners_admin_group_path(@group)) ? 'border-orange-400' : 'border-transparent hover:border-gray-400'}" do %>
+      <i class="fas fa-comment-dots mr-3 fill-current"></i>
+      <span>Winners</span>
+    <% end %>
+  </div>
+</div>
