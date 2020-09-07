@@ -3,8 +3,8 @@ class MembershipsController < ApplicationController
   before_action :set_filter_status, only: [:show]
 
   def show
-    filtering_params.present? ? @picks = @membership.picks.includes(:picked_team, match: [:home_team, :visit_team, :winning_team]).filt(filtering_params) :
-      @picks = @membership.current_week_picks.includes(:picked_team, match: [:home_team, :visit_team, :winning_team])
+    filtering_params.present? ? @picks = @membership.picks.includes(:picked_team, match: [:home_team, :visit_team, :winning_team]).filt(filtering_params).joins(:match).order('matches.start_time') :
+      @picks = @membership.current_week_picks.includes(:picked_team, match: [:home_team, :visit_team, :winning_team]).joins(:match).order('matches.start_time')
     @group_weeks = @membership.group.group_weeks.includes(:week)
   end
 
