@@ -1,10 +1,6 @@
 Rails.application.routes.draw do
   root to: 'dashboard#home'
-  devise_for :users, controllers: {
-    sessions: 'sessions',
-    confirmations: 'confirmations',
-    registrations: 'registrations'
-  }
+  devise_for :users
   namespace :admin do
     root to: 'dashboard#home'
     resources :groups do

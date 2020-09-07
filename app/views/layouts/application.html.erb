@@ -11,6 +11,22 @@
   </head>
 
   <body class='antialiased bg-indigo-100'>
+    <% if notice %>
+      <script>
+        toaster.fire({
+          icon: 'success',
+          title: "<%= notice %>",
+        });
+      </script>
+    <% end %>
+    <% if alert %>
+      <script>
+        toaster.fire({
+          icon: 'error',
+          title: "<%= alert %>",
+        });
+      </script>
+    <% end %>
     <%= render 'layouts/header' %>
     <%= yield %>
   </body>

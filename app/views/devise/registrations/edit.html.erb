@@ -1,10 +1,9 @@
 <div class='flex flex-col items-center px-4'>
   <div class='w-full md:w-1/3  bg-gray-300 shadow-xl rounded-xl p-6'>
-  <div class='flex items-center justify-between mb-4'>
-    <h2 class='text-2xl font-light '>Editar <%= resource_name.to_s.humanize %></h2>
-    <%= link_to "Regresar", :back, class: 'bg-white shadow px-3 py-2 text-indigo-900 rounded-lg text-sm self-end' %>
-  </div>
-
+    <div class='flex items-center justify-between mb-4'>
+      <h2 class='text-2xl font-light '>Editar <%= resource_name.to_s.humanize %></h2>
+      <%= link_to "Regresar", :back, class: 'bg-white shadow px-3 py-2 text-indigo-900 rounded-lg text-sm self-end' %>
+    </div>
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
       <%= render "devise/shared/error_messages", resource: resource %>
 
