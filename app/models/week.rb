@@ -6,6 +6,10 @@ class Week < ApplicationRecord
   after_create :generate_group_weeks
   after_save :update_picks, if: :will_save_change_to_finished?
 
+  def start_time
+    first_match.start_time
+  end
+
   def first_match
     matches.order(start_time: :desc).limit(1).first
   end
