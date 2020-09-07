@@ -32,7 +32,7 @@
   </p>
   <div class='flex justify-between'>
     <% if Time.now < pick.match.start_time - 1.hour && pick.picked_team != pick.match.visit_team %>
-      <%= form_with model: [:admin, pick] do |f| %>
+      <%= form_with model: pick do |f| %>
         <%= f.hidden_field :picked_team_id, value: pick.match.visit_team.id %>
         <%= f.submit pick.match.visit_team.short_name, class: 'btn btn--primary' %>
       <% end %>
@@ -42,7 +42,7 @@
       </h2>
     <% end %>
     <% if Time.now < pick.match.start_time - 1.hour && pick.picked_team != pick.match.home_team %>
-      <%= form_with model: [:admin, pick] do |f| %>
+      <%= form_with model: pick do |f| %>
         <%= f.hidden_field :picked_team_id, value: pick.match.home_team.id %>
         <%= f.submit pick.match.home_team.short_name, class: 'btn btn--primary' %>
       <% end %>
