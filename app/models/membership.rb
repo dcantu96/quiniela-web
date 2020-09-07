@@ -12,7 +12,7 @@ class Membership < ApplicationRecord
   private
 
   def generate_picks
-    group.group_weeks.each do |group_week|
+    group.group_weeks.includes(week: [:matches]).each do |group_week|
       group_week.week.matches.each do |match|
         picks.create match: match, group_week: group_week
       end

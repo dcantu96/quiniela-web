@@ -4,10 +4,18 @@ class Week < ApplicationRecord
   has_many :groups, through: :group_weeks
   has_many :matches
   after_create :generate_group_weeks
-  # after_save :update_picks, if: :will_save_change_to_finished?
+  after_save :update_picks, if: :will_save_change_to_finished?
 
   def first_match
     matches.order(start_time: :desc).limit(1).first
+  end
+
+  def next_week
+    Week.find_by number: number + 1, tournament: tournament
+  end
+
+  def previous_week
+    Week.find_by number: number - 1, tournament: tournament
   end
 
   private
@@ -18,9 +26,11 @@ class Week < ApplicationRecord
     end
   end
 
-  # def update_picks
-  #   group_weeks.each do |group_week|
-  #     correct: pick.picked_team == winning_team
-  #   end
-  # end
+  def update_picks
+    group_weeks.each do |group_week|
+      group_week.picks.each do |pick| 
+        pick.update correct: pick.picked_team == pick.match.winning_team
+      end
+    end
+  end
 end

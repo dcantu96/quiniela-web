@@ -4,10 +4,12 @@
   <div class='mb-4'>
     <div class='flex items-center mb-2'>
       <h1 class='text-xl text-indigo-900 mr-4'>Week <%= @week.number %></h1>
-      <%= link_to 'New Match', new_admin_week_match_path(@week), class: 'btn btn--secondary' %>
+      <%= link_to 'New Match', new_admin_week_match_path(@week), class: 'btn btn--secondary mr-4' %>
+      <%= link_to 'Previous Week', admin_week_path(@week.previous_week), class: 'btn btn--primary mr-4' if @week.number > 1 %>
+      <%= link_to 'Next Week', admin_week_path(@week.next_week), class: 'btn btn--primary mr-4' if @week.number < 17 %>
     </div>
   </div>
   <div class='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-8'>
-    <%= render @week.matches %>
+    <%= render @matches %>
   </div>
 </div>

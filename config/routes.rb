@@ -27,6 +27,9 @@ Rails.application.routes.draw do
     end
     resources :weeks do
       resources :matches, only: [:new, :create]
+      member do
+        post :generate
+      end
     end
     resources :matches
     resources :sports do

@@ -44,13 +44,14 @@ TEAMS = [
   ['OAK', 'Oakland Raiders'],
   ['PHI', 'Philadelphia Eagles'],
   ['PIT', 'Pittsburgh Steelers'],
-  ['SD', 'San Diego Chargers'],
+  ['LAC', 'Los Angeles Chargers'],
   ['SEA', 'Seattle Seahawks'],
   ['SF', 'San Francisco 49ers'],
-  ['STL', 'Saint Louis Rams'],
+  ['LAR', 'Los Angeles Rams'],
+  ['LV', 'Las Vegas Raiders'],
   ['TB', 'Tampa Bay Buccaneers'],
   ['TEN', 'Tennessee Titans'],
-  ['WSH', 'Washington Warriors']
+  ['WSH', 'Washington']
 ]
 
 TEAMS.each do |team|
@@ -74,3 +75,21 @@ Week.create tournament: Tournament.first, number: 14
 Week.create tournament: Tournament.first, number: 15
 Week.create tournament: Tournament.first, number: 16
 Week.create tournament: Tournament.first, number: 17
+
+# Create all weeks
+Tournament.first.weeks.each do |week|
+  doc = Nokogiri::HTML(open("https://www.espn.com/nfl/schedule/_/week/#{week.number}"))
+  dates = doc.xpath('//td/@data-date').map { |d| d.text }
+  co = 0
+  doc.css('div .responsive-table-wrap').each do |table|
+    table.css('tbody').each do |body|
+      body.css('tr').each do |match|
+        Match.create visit_team: Team.find_by(short_name: match.css('td .team-name abbr').first.text),
+                     home_team: Team.find_by(short_name: match.css('td .team-name abbr').last.text),
+                     start_time: dates[co],
+                     week: week
+        co = co + 1
+      end
+    end
+  end
+end
