@@ -1,5 +1,6 @@
 class MembershipsController < ApplicationController
   before_action :set_membership, only: [:show]
+  before_action :validate_user
   before_action :set_filter_status, only: [:show]
 
   def show
@@ -20,5 +21,9 @@ class MembershipsController < ApplicationController
 
   def set_membership
     @membership = Membership.find(params[:id])
+  end
+
+  def validate_user
+    redirect_to root_path if !current_user.admin? && @membership.account.user != current_user
   end
 end
