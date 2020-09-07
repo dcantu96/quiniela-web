@@ -1,0 +1,26 @@
+<div class='bg-white px-6 pt-3 shadow-sm'>
+  <div class='flex flex-wrap justify-start lg:justify-between mb-6'>
+    <div class="flex items-center">
+      <i class="fas fa-handshake fa-2x p-1 mr-3 fill-current transition-all duration-300 text-indigo-900"></i>
+      <%= link_to @membership.group.name, group_path(@membership.group), class: 'text-md text-indigo-900 mr-3 underline' %>
+      <div class="text-md text-indigo-900 mr-3">&#x2f;</div>
+      <h1 class='text-xl text-indigo-900 mr-3'><b><%= @membership.account.username %></b></h1>
+    </div>
+    <div class="flex items-center">
+      <% if @membership.group.tournament.weeks.present? %>
+        <%= link_to week_path(@membership.group.tournament.current_week), class: "text-md text-gray-600 flex items-center hover:text-indigo-900 py-3 px-3" do %>
+          <i class="fas fa-user mr-2 fill-current"></i>
+          <span><%= @membership.group.tournament.current_week.number %></span>
+        <% end %>
+      <% end %>
+      <div class='text-md flex items-center hover:text-indigo-900 py-3 px-3'>
+        <i class="fas fa-shoe-prints mr-2 fill-current"></i>
+      <span><%= @membership.group.tournament.name %></span>
+      </div>
+      <div class='text-md flex items-center hover:text-indigo-900 py-3 px-3'>
+        <i class="fas fa-play-circle mr-2 fill-current"></i>
+        <span><%= @membership.group.tournament.sport.name %></span>
+      </div>
+    </div>
+  </div>
+</div>
