@@ -40,7 +40,13 @@ Rails.application.routes.draw do
 
   resources :accounts
   resources :picks
-  resources :memberships
+  resources :weeks
+  resources :memberships do
+    member do
+      get :winners
+      get :group
+    end
+  end
   resources :groups do
     resources :weeks, only: [:show]
   end

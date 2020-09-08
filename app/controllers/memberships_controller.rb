@@ -1,5 +1,5 @@
 class MembershipsController < ApplicationController
-  before_action :set_membership, only: [:show]
+  before_action :set_membership, only: [:show, :group, :winners]
   before_action :validate_user
   before_action :set_filter_status, only: [:show]
 
@@ -7,6 +7,14 @@ class MembershipsController < ApplicationController
     filtering_params.present? ? @picks = @membership.picks.includes(:picked_team, match: [:home_team, :visit_team, :winning_team]).filt(filtering_params).joins(:match).order('matches.start_time') :
       @picks = @membership.current_week_picks.includes(:picked_team, match: [:home_team, :visit_team, :winning_team]).joins(:match).order('matches.start_time')
     @group_weeks = @membership.group.group_weeks.includes(:week)
+  end
+
+  def group
+    @group = @membership.group
+  end
+
+  def winners
+
   end
 
   private
