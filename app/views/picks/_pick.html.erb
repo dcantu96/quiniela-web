@@ -1,33 +1,33 @@
 <div class="rounded-xl p-6 shadow-lg bg-white" id="pick-<%= pick.id %>">
-  <div class='flex justify-between items-center mb-4'>
+  <div class='grid grid-cols-2 gap-6 mb-4'>
     <div class='flex flex-col'>
       <p class='text-xs font-light text-gray-500'>
         Visit Team
       </p>
-      <h2 class='text-lg mb-4'>
+      <h2 class='text-md md:text-lg'>
         <%= pick.match.visit_team.name %>
       </h2>
     </div>
-    <div class='flex flex-col items-end'>
-      <p class='text-xs font-light text-gray-500 scal'>
+    <div class='flex flex-col items-end text-right'>
+      <p class='text-xs font-light text-gray-500'>
         Home Team
       </p>
-      <h2 class='text-lg mb-4'>
+      <h2 class='text-md md:text-lg'>
         <%= pick.match.home_team.name %>
       </h2>
     </div>
   </div>
   <div class='flex justify-between text-center mb-4 items-center'>
-    <%= image_pack_tag 'helmet.svg', class: 'w-20' %>
+    <%= image_pack_tag 'helmet.svg', class: 'w-16 md:w-20' %>
     <div>
       <p class='text-xs font-light text-gray-500'>
         Start Time
       </p>
-      <h2 class='text-lg mb-4'>
+      <h2 class='text-md md:text-lg mb-4'>
         <%= pick.match.start_time.in_time_zone(current_user.time_zone).to_formatted_s(:short)  %>
       </h2>
     </div>
-    <%= image_pack_tag 'helmet-reverse.svg', class: 'w-20' %>
+    <%= image_pack_tag 'helmet-reverse.svg', class: 'w-16 md:w-20' %>
   </div>
   <%= render 'admin/picks/pick_buttons', pick: pick %>
 </div>
