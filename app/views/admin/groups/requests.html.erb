@@ -3,8 +3,6 @@
 <div class='p-6 container mx-auto'>
   <h2 class='text-lg mb-4'>Requests</h2>
   <div class='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-8'>
-    <% cache @group do %>
-      <%= render @group.requests %>
-    <% end %>
+    <%= render @group.requests %>
   </div>
 </div>
