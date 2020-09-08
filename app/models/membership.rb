@@ -3,6 +3,7 @@ class Membership < ApplicationRecord
   belongs_to :group
   has_many :picks
   after_create :generate_picks
+  validates :account, uniqueness: { scope: :group }
 
   def current_week_picks
     picks.where group_week: GroupWeek.find_by(group: group,
