@@ -20,17 +20,17 @@ class Admin::AccountsController < Admin::BaseController
   def create
     @account = Account.new account_params
     if @account.save
-      redirect_to admin_root_path
+      redirect_to root_path, notice: 'Account created successfully'
     else
-      render :new
-    end       
+      redirect_to new_account_path, alert: @account.errors.full_messages.first
+    end      
   end
 
   def update
     if @account.update account_params
-      redirect_to admin_root_path
+      redirect_to admin_root_path, notice: 'Account updated successfully'
     else
-      render :edit
+      redirect_to edit_account_path(@account), alert: @account.errors.full_messages.first
     end
   end
 

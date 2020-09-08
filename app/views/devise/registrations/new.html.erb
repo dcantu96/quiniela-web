@@ -21,6 +21,11 @@
       </div>
 
       <div class='mb-4'>
+        <%= f.label :time_zone, class: 'label' %><br />
+        <%= f.time_zone_select(:time_zone) %>
+      </div>
+
+      <div class='mb-4'>
         <%= f.label :password, class: 'label' %>
         <%= f.password_field :password, placeholder: "Password", autocomplete: 'new-password', class: 'input', required: true %>
       </div>

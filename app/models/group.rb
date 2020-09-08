@@ -9,6 +9,13 @@ class Group < ApplicationRecord
   validates_presence_of :name
   after_create :generate_group_weeks
 
+  # def team_size
+  #   Rails.cache.fetch(:team_size, expires_in: 4.hour) do
+  #     analytics_client = AnalyticsClient.query!(self)
+  #     analytics_client.team_size
+  #   end
+  # end
+
   private
 
   def generate_group_weeks

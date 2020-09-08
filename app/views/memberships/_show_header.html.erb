@@ -2,7 +2,7 @@
   <div class='flex flex-wrap justify-start lg:justify-between mb-6'>
     <div class="flex items-center">
       <i class="fas fa-handshake fa-2x p-1 mr-3 fill-current transition-all duration-300 text-indigo-900"></i>
-      <%= link_to @membership.group.name, group_path(@membership.group), class: 'text-md text-indigo-900 mr-3 underline' %>
+      <h1 class='text-xl text-indigo-900 mr-3'><b><%= @membership.group.name %></b></h1>
       <div class="text-md text-indigo-900 mr-3">&#x2f;</div>
       <h1 class='text-xl text-indigo-900 mr-3'><b><%= @membership.account.username %></b></h1>
     </div>
@@ -22,5 +22,19 @@
         <span><%= @membership.group.tournament.sport.name %></span>
       </div>
     </div>
+  </div>
+  <div class="flex">
+    <%= link_to group_path(@membership.group), class: "text-md text-indigo-900 flex items-center border-b-2 pb-3 px-2 #{current_page?(group_path(@membership.group)) ? 'border-orange-400' : 'border-transparent hover:border-gray-400'}" do %>
+      <i class="fas fa-home mr-3 fill-current"></i>
+      <span><%= @membership.group.name %></span>
+    <% end %>
+    <%= link_to membership_path(@membership), class: "text-md text-indigo-900 flex items-center border-b-2 pb-3 px-2 #{current_page?(membership_path(@membership)) ? 'border-orange-400' : 'border-transparent hover:border-gray-400'}" do %>
+      <i class="fas fa-cog mr-3 fill-current"></i>
+      <span>My Picks</span>
+    <% end %>
+    <%= link_to winners_group_path(@membership.group), class: "text-md text-indigo-900 flex items-center border-b-2 pb-3 px-2 #{current_page?(winners_group_path(@membership.group)) ? 'border-orange-400' : 'border-transparent hover:border-gray-400'}" do %>
+      <i class="fas fa-comment-dots mr-3 fill-current"></i>
+      <span>Winners</span>
+    <% end %>
   </div>
 </div>

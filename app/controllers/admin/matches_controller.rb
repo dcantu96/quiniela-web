@@ -19,17 +19,17 @@ class Admin::MatchesController < Admin::BaseController
   def create
     @match = Match.new match_params
     if @match.save
-      redirect_to admin_week_path(@match.week)
+      redirect_to admin_week_path(@match.week), notice: 'Match created successfully'
     else
-      render :new
+      redirect_to new_admin_match_path, alert: @match.errors.full_messages.first
     end       
   end
 
   def update
     if @match.update match_params
-      redirect_to admin_week_path(@match.week)
+      redirect_to admin_week_path(@match.week), notice: 'Match updated successfully'
     else
-      render :edit
+      redirect_to edit_admin_match_path(@match), alert: @match.errors.full_messages.first
     end
   end
 
