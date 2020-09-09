@@ -1,6 +1,7 @@
 class Week < ApplicationRecord
   belongs_to :tournament
   has_many :group_weeks
+  has_many :membership_weeks
   has_many :groups, through: :group_weeks
   has_many :matches
   after_create :generate_group_weeks

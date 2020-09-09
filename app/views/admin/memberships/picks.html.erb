@@ -1,0 +1,23 @@
+<%= render 'show_header' %>
+
+<div class='p-6 container mx-auto'>
+  <div data-controller="toggle" class='mb-4'>
+    <div class='flex items-center mb-2'>
+      <h1 class='text-xl text-indigo-900 mr-4'>Picks</h1>
+      <button class="btn btn--primary"
+        data-action="toggle#toggle"
+        data-target="checkbox-list.count"
+      >
+        Filters
+      </button>
+    </div>
+    <%= render 'filters' %>
+  </div>
+  <div class='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-8'>
+    <%= render 'picks' %>
+  </div>
+  <% if @untie_pick.present? %>
+    <h1 class='text-xl text-indigo-900 mb-4'>Monday Night Untie</h1>
+    <%= render 'untie_pick' %>
+  <% end %>
+</div>

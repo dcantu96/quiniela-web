@@ -15,7 +15,15 @@ Rails.application.routes.draw do
         get :requests
       end
     end
-    resources :memberships
+    resources :memberships do
+      member do
+        get :table
+        get :picks
+        get :members
+        get :requests
+        get :winners
+      end
+    end
     resources :picks, only: [:update]
     resources :accounts
     resources :requests
@@ -43,8 +51,11 @@ Rails.application.routes.draw do
   resources :weeks
   resources :memberships do
     member do
+      get :table
+      get :picks
+      get :members
+      get :requests
       get :winners
-      get :group
     end
   end
   resources :groups do

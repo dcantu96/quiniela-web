@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_09_002644) do
+ActiveRecord::Schema.define(version: 2020_09_09_051835) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -64,6 +64,18 @@ ActiveRecord::Schema.define(version: 2020_09_09_002644) do
     t.index ["winning_team_id"], name: "index_matches_on_winning_team_id"
   end
 
+  create_table "membership_weeks", force: :cascade do |t|
+    t.bigint "membership_id", null: false
+    t.bigint "week_id", null: false
+    t.integer "points", default: 0, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "group_id"
+    t.index ["group_id"], name: "index_membership_weeks_on_group_id"
+    t.index ["membership_id"], name: "index_membership_weeks_on_membership_id"
+    t.index ["week_id"], name: "index_membership_weeks_on_week_id"
+  end
+
   create_table "memberships", force: :cascade do |t|
     t.bigint "account_id", null: false
     t.bigint "group_id", null: false
@@ -74,17 +86,15 @@ ActiveRecord::Schema.define(version: 2020_09_09_002644) do
   end
 
   create_table "picks", force: :cascade do |t|
-    t.bigint "membership_id", null: false
     t.bigint "match_id", null: false
-    t.bigint "group_week_id", null: false
     t.bigint "picked_team_id"
     t.boolean "correct", default: false, null: false
     t.integer "points", default: 0, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["group_week_id"], name: "index_picks_on_group_week_id"
+    t.bigint "membership_week_id"
     t.index ["match_id"], name: "index_picks_on_match_id"
-    t.index ["membership_id"], name: "index_picks_on_membership_id"
+    t.index ["membership_week_id"], name: "index_picks_on_membership_week_id"
     t.index ["picked_team_id"], name: "index_picks_on_picked_team_id"
   end
 
@@ -179,11 +189,13 @@ ActiveRecord::Schema.define(version: 2020_09_09_002644) do
   add_foreign_key "matches", "teams", column: "visit_team_id"
   add_foreign_key "matches", "teams", column: "winning_team_id"
   add_foreign_key "matches", "weeks"
+  add_foreign_key "membership_weeks", "groups"
+  add_foreign_key "membership_weeks", "memberships"
+  add_foreign_key "membership_weeks", "weeks"
   add_foreign_key "memberships", "accounts"
   add_foreign_key "memberships", "groups"
-  add_foreign_key "picks", "group_weeks"
   add_foreign_key "picks", "matches"
-  add_foreign_key "picks", "memberships"
+  add_foreign_key "picks", "membership_weeks"
   add_foreign_key "picks", "teams", column: "picked_team_id"
   add_foreign_key "requests", "accounts"
   add_foreign_key "requests", "groups"

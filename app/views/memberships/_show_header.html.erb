@@ -1,39 +1,33 @@
 <div class='bg-white px-6 pt-3 shadow-sm'>
   <div class='flex flex-wrap justify-start lg:justify-between mb-6'>
     <div class="flex items-center">
-      <i class="fas fa-handshake fa-2x p-1 mr-3 fill-current transition-all duration-300 text-indigo-900"></i>
+      <i class="fas fa-users fa-2x p-1 mr-3 fill-current transition-all duration-300 text-indigo-900"></i>
       <h1 class='text-xl text-indigo-900 mr-3'><b><%= @membership.group.name %></b></h1>
       <div class="text-md text-indigo-900 mr-3">&#x2f;</div>
       <h1 class='text-xl text-indigo-900 mr-3'><b><%= @membership.account.username %></b></h1>
     </div>
     <div class="flex items-center">
-      <% if @membership.group.tournament.weeks.present? %>
-        <div class='text-md flex items-center hover:text-indigo-900 py-3 px-3'>
-          <i class="fas fa-user mr-2 fill-current"></i>
-          <span><%= @membership.group.tournament.current_week.number %></span>
-        </div>
-      <% end %>
       <div class='text-md flex items-center hover:text-indigo-900 py-3 px-3'>
-        <i class="fas fa-shoe-prints mr-2 fill-current"></i>
-        <span><%= @membership.group.tournament.name %></span>
-      </div>
-      <div class='text-md flex items-center hover:text-indigo-900 py-3 px-3'>
-        <i class="fas fa-play-circle mr-2 fill-current"></i>
-        <span><%= @membership.group.tournament.sport.name %></span>
+        <i class="fas fa-user mr-2 fill-current"></i>
+        <span><%= @membership.group.memberships.count %></span>
       </div>
     </div>
   </div>
   <div class="flex">
-    <%= link_to group_membership_path(@membership), class: "text-md text-indigo-900 flex items-center border-b-2 pb-3 px-2 #{current_page?(group_membership_path(@membership)) ? 'border-orange-400' : 'border-transparent hover:border-gray-400'}" do %>
-      <i class="fas fa-home mr-3 fill-current"></i>
-      <span><%= @membership.group.name %></span>
+    <%= link_to table_membership_path(@membership), class: "text-md text-indigo-900 flex items-center border-b-2 pb-3 px-2 #{current_page?(table_membership_path(@membership)) ? 'border-orange-400' : 'border-transparent hover:border-gray-400'}" do %>
+      <i class="fas fa-table mr-3 fill-current"></i>
+      <span>Week <%= @membership.group.tournament.current_week.number %> Table</span>
     <% end %>
-    <%= link_to membership_path(@membership), class: "text-md text-indigo-900 flex items-center border-b-2 pb-3 px-2 #{current_page?(membership_path(@membership)) ? 'border-orange-400' : 'border-transparent hover:border-gray-400'}" do %>
-      <i class="fas fa-cog mr-3 fill-current"></i>
+    <%= link_to picks_membership_path(@membership), class: "text-md text-indigo-900 flex items-center border-b-2 pb-3 px-2 #{current_page?(picks_membership_path(@membership)) ? 'border-orange-400' : 'border-transparent hover:border-gray-400'}" do %>
+      <i class="fas fa-money-bill-wave-alt mr-3 fill-current"></i>
       <span>My Picks</span>
     <% end %>
+    <%= link_to members_membership_path(@membership), class: "text-md text-indigo-900 flex items-center border-b-2 pb-3 px-2 #{current_page?(members_membership_path(@membership)) ? 'border-orange-400' : 'border-transparent hover:border-gray-400'}" do %>
+      <i class="fas fa-users mr-3 fill-current"></i>
+      <span>Members List</span>
+    <% end %>
     <%= link_to winners_membership_path(@membership), class: "text-md text-indigo-900 flex items-center border-b-2 pb-3 px-2 #{current_page?(winners_membership_path(@membership)) ? 'border-orange-400' : 'border-transparent hover:border-gray-400'}" do %>
-      <i class="fas fa-comment-dots mr-3 fill-current"></i>
+      <i class="fas fa-star mr-3 fill-current"></i>
       <span>Winners</span>
     <% end %>
   </div>

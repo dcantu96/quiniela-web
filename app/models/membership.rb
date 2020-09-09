@@ -2,21 +2,19 @@ class Membership < ApplicationRecord
   belongs_to :account
   belongs_to :group
   has_many :picks
-  after_create :generate_picks
+  has_many :membership_weeks
+  after_create :generate_weeks
   validates :account, uniqueness: { scope: :group }
 
   def current_week_picks
-    picks.where group_week: GroupWeek.find_by(group: group,
-                                              week: group.tournament.current_week)
+    membership_weeks.find_by(week: group.tournament.current_week).picks
   end
 
   private
 
-  def generate_picks
-    group.group_weeks.includes(week: [:matches]).each do |group_week|
-      group_week.week.matches.each do |match|
-        picks.create match: match, group_week: group_week
-      end
+  def generate_weeks
+    group.tournament.weeks.includes(:matches).each do |week|
+      membership_weeks.create group: group, week: week
     end
   end
 end

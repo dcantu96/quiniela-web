@@ -1,9 +1,8 @@
 class Group < ApplicationRecord
   belongs_to :tournament
-  has_many :group_weeks
-  has_many :weeks, through: :group_weeks
   has_many :requests
   has_many :memberships
+  has_many :membership_weeks
   has_many :accounts, through: :memberships
   validates_uniqueness_of :name
   validates_presence_of :name

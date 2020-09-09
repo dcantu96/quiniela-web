@@ -8,8 +8,6 @@ require("turbolinks").start()
 require("@rails/activestorage").start()
 require("channels")
 require("jquery")
-require("chart.js")
-require("chartkick")
 import './src/application.scss'
 import 'sweetalert'
 import swal from 'sweetalert2'

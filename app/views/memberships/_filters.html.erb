@@ -5,7 +5,7 @@
       <div class='relative'>
         <%= select_tag :week_number,
           options_from_collection_for_select(
-            @group_weeks, 'id', 'number', params[:week_number]
+            @weeks, 'id', 'number', params[:week_number]
           ),
           include_blank: "Current",
           class: "select",

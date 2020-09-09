@@ -5,15 +5,14 @@ class Match < ApplicationRecord
   belongs_to :winning_team, class_name: 'Team', inverse_of: :wins, optional: true
   has_many :picks, dependent: :destroy
   after_create :generate_picks
+  before_create :set_show_time
   after_save :update_picks, if: :will_save_change_to_winning_team_id?
 
   private
 
   def generate_picks
-    week.group_weeks.each do |group_week|
-      group_week.group.memberships.each do |membership|
-        picks.create group_week: group_week, membership: membership
-      end
+    week.membership_weeks.each do |membership_week|
+      picks.create membership_week: membership_week
     end
   end
 
@@ -21,5 +20,9 @@ class Match < ApplicationRecord
     picks.each do |pick|
       pick.update correct: pick.picked_team == winning_team
     end
+  end
+
+  def set_show_time
+    self.show_time = start_time - 30.minutes if show_time.nil?
   end
 end
