@@ -23,7 +23,7 @@
             <tr>
               <td><%= membership_week.membership.account.username %></td>
               <td><%= membership_week.points%></td>
-              <% membership_week.picks.joins(:match).order(start_time: :asc).each do |pick| %>
+              <% membership_week.picks.joins(:match).order(order: :asc).each do |pick| %>
                 <td class='text-center'>
                   <%= pick.correct ? 'bien' : pick.picked_team.short_name if pick.picked_team %>
                 </td>

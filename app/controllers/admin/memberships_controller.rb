@@ -10,7 +10,7 @@ class Admin::MembershipsController < Admin::BaseController
 
   def table
     @membership_weeks = @membership.group.membership_weeks.where(week: @membership.group.tournament.current_week).order(points: :desc).limit(40).includes(picks: [:picked_team, match: [:winning_team]])
-    @matches = @membership.group.tournament.current_week.matches.includes(:home_team, :visit_team, :winning_team).order('matches.start_time')
+    @matches = @membership.group.tournament.current_week.matches.includes(:home_team, :visit_team, :winning_team).order(order: :asc)
   end
 
   def picks

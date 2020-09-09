@@ -44,6 +44,6 @@ class Admin::MatchesController < Admin::BaseController
       .require(:match)
       .permit :start_time, :week_id, :visit_team_id, :home_team_id,
               :winning_team_id, :untie, :premium, :visit_team_score,
-              :home_team_score, :show_time
+              :home_team_score, :show_time, :order
   end
 end
