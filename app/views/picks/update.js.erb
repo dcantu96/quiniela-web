@@ -1,7 +1,6 @@
 toaster.fire({
   icon: 'success',
-  title: 'Pick actualizado correctamente a <%= @pick.picked_team.short_name %>',
+  title: 'Pick successfully locked to <%= @pick.picked_team.short_name %>',
 });
-$("#pick-buttons-<%= @pick.id %>").remove();
-$("#pick-<%= @pick.id %>").append(`<%= j render 'admin/picks/pick_buttons', pick: @pick %>`);
+$("#pick-<%= @pick.id %>").html(`<%= j render @pick %>`);
 

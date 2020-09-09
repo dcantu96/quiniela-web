@@ -1,13 +1,13 @@
 <div class="rounded-xl p-6 shadow-lg bg-white">
-  <div class='flex justify-between items-center mb-4'>
-    <div>
+  <div class='grid grid-cols-2 gap-6 mb-4'>
+    <div class='flex flex-col'>
       <p class='text-xs font-light text-gray-500'>
         Visit Team
       </p>
       <h2 class='text-lg mb-4'>
         <%= match.visit_team.name %>
       </h2>
-    </div>
+    </div class='flex flex-col items-end text-right'>
     <div class='text-right'>
       <p class='text-xs font-light text-gray-500'>
         Home Team
@@ -17,13 +17,21 @@
       </h2>
     </div>
   </div>
-  <div class='flex justify-between items-center mb-4'>
-    <div class='mr-4'>
+  <div class='grid grid-cols-2 gap-6 mb-4'>
+    <div class='flex flex-col'>
       <p class='text-xs font-light text-gray-500'>
         Start Time
       </p>
       <h2 class='text-lg mb-4'>
         <%= match.start_time.in_time_zone(current_user.time_zone).to_formatted_s(:short)  %>
+      </h2>
+    </div>
+    <div class='flex flex-col items-end text-right'>
+      <p class='text-xs font-light text-gray-500'>
+        Show Time
+      </p>
+      <h2 class='text-lg mb-4'>
+        <%= match.show_time.in_time_zone(current_user.time_zone).to_formatted_s(:short)  %>
       </h2>
     </div>
   </div>

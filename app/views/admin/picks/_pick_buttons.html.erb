@@ -1,6 +1,4 @@
-<div id="pick-buttons-<%= pick.id %>">
-
-<% if Time.current < pick.match.start_time - 1.hour %>
+<% if Time.current < pick.match.show_time - 30.minutes %>
   <p class='text-xs font-light text-gray-500 text-center mb-2'>
     Choose Pick
   </p>
@@ -49,5 +47,3 @@
     No Team Picked :(
   </p>
 <% end %>
-
-</div>
