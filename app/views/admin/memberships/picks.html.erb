@@ -3,13 +3,15 @@
 <div class='p-6 container mx-auto'>
   <div data-controller="toggle" class='mb-4'>
     <div class='flex items-center mb-2'>
-      <h1 class='text-xl text-indigo-900 mr-4'>Picks</h1>
-      <button class="btn btn--primary"
+      <h1 class='text-xl text-indigo-900 mr-4'><%= @membership.account.username %>'s Picks</h1>
+      <h1 class='text-xl text-indigo-900 mr-4'>Week <%= params[:week_number] || @current_week.number %></h1>
+      <button class="btn btn--primary mr-3"
         data-action="toggle#toggle"
         data-target="checkbox-list.count"
       >
         Filters
       </button>
+      <%= link_to 'Settings', settings_admin_group_membership_path(@membership.group, @membership), class: 'btn btn--danger' %>
     </div>
     <%= render 'filters' %>
   </div>
