@@ -1,8 +1,9 @@
 <%= render 'show_header' %>
-<div class='p-4 md:p-0 container mx-auto overflow-x-auto' data-controller='infinite-scroll' data-action='scroll@window->infinite-scroll#scroll'>
+<div class='p-4 md:p-0 container mx-auto overflow-x-auto' data-controller='infinite-scroll searchable' data-action='scroll@window->infinite-scroll#scroll'>
 <h3 class="text-sm uppercase text-gray-600 py-2">User Time Zone <b><%= current_user.time_zone %></b><span class='ml-2 font-bold underline'><%= link_to 'Edit', edit_user_registration_path %></span></h3>
 <h4 class="text-sm uppercase text-gray-600 pb-2"><%= Time.current.in_time_zone(current_user.time_zone).to_formatted_s(:long) %></h4>
-<table class="border-collapse w-full">
+<input type="text" class='input my-2' placeholder="Search usernames" data-action="keyup->searchable#search">
+<table class="border-collapse w-full" id='table'>
   <thead>
     <tr>
       <th class="p-3 font-bold text-sm uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">Username</th>
@@ -23,7 +24,7 @@
       <% end %>
     </tr>
   </thead>
-  <tbody data-target='infinite-scroll.entries'>
+  <tbody data-target='infinite-scroll.entries' id='table-rows'>
     <%= render 'members' %>
   </tbody>
 </table>

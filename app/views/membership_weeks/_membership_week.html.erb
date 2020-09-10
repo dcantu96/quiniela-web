@@ -1,0 +1,34 @@
+<tr class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+  <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block font-extrabold lg:table-cell relative lg:static hover:bg-gray-300">
+    <span class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Username</span>
+    <%= membership_week.membership.account.username %>
+  </td>
+  <td class="w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static">
+    <span class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Points</span>
+    <span class="rounded bg-green-400 py-1 px-3 text-xs font-bold"><%= membership_week.points%></span>
+  </td>
+  <% if membership_week.membership.account.user == current_user %>
+    <% membership_week.picks.includes(:picked_team, match: [:home_team, :visit_team]).order("matches.order").each do |pick| %>
+      <td class="w-full lg:w-auto p-3 font-extrabold text-center border border-b block lg:table-cell relative lg:static hover:bg-gray-300 <%= 'hidden' if pick.picked_team.nil? %> <%= pick.correct ? 'text-green-600' : 'text-gray-800'  %>">
+        <span class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase"><%= pick.match.visit_team.short_name %> @ <%= pick.match.home_team.short_name %></span>
+        <%= pick.picked_team.short_name if pick.picked_team %>
+      </td>
+    <% end %>
+  <% else %>
+    <% membership_week.picks.includes(:picked_team, match: [:home_team, :visit_team]).order("matches.order").each do |pick| %>
+      <% if pick.correct %>
+        <td class="w-full lg:w-auto p-3 text-green-700 text-center border border-b block lg:table-cell relative lg:static hover:bg-gray-300">
+          <span class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase"><%= pick.match.visit_team.short_name %> @ <%= pick.match.home_team.short_name %></span>
+          <%= pick.picked_team.short_name %>
+        </td>
+      <% else %>
+        <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static hover:bg-gray-300 <%= 'hidden' if pick.picked_team.nil? %>">
+          <span class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase"><%= pick.match.visit_team.short_name %> @ <%= pick.match.home_team.short_name %></span>
+          <% if pick.picked_team && Time.current > pick.match.show_time %>
+            <%= pick.picked_team.short_name %>
+          <% end %>
+        </td>
+      <% end %>
+    <% end %>
+  <% end %>
+</tr>

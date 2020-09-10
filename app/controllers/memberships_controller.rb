@@ -11,8 +11,19 @@ class MembershipsController < ApplicationController
   end
 
   def table
-    @membership_weeks = @membership.group.membership_weeks.where(week: @membership.group.tournament.current_week).order(points: :desc).limit(40).includes(picks: [:picked_team, match: [:winning_team]])
+    @pagy, @membership_weeks = pagy @membership.group.membership_weeks.where(week: @membership.group.tournament.current_week).order(points: :desc).includes(picks: [:picked_team, match: [:winning_team]], membership: [:account, :group])
     @matches = @membership.group.tournament.current_week.matches.includes(:home_team, :visit_team, :winning_team).order(order: :asc)
+
+    respond_to do |format|
+      format.html
+      format.json {
+        render json: { 
+          entries: render_to_string(partial: "members",
+                                    formats: [:html]),
+          pagination: view_context.pagy_nav(@pagy)
+        }
+      }
+    end
   end
 
   def picks
