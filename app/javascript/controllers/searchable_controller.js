@@ -4,11 +4,21 @@ export default class extends Controller {
   static targets = ['filter', 'rows']
 
   search(event) {
-    var searchValue = $.trim(event.target.value).replace(/ +/g, ' ').toLowerCase();
-
-    $('#table-rows tr').show().filter(function() {
-      var username = $('td:first', this).text().replace(/\s+/g, ' ').toLowerCase();
-      return !~username.indexOf(searchValue);
-    }).hide();
+    var input, filter, tableRows, tr, td, i, txtValue;
+    input = event.target;
+    filter = input.value.toUpperCase();
+    tableRows = document.getElementById("table-rows");
+    tr = tableRows.getElementsByTagName("tr");
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[0];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }       
+    }
   }
 }
