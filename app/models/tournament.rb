@@ -5,6 +5,6 @@ class Tournament < ApplicationRecord
   has_many :groups
 
   def current_week
-    weeks.where(finished: false).order(number: :asc).limit(1).first
+    @current_week ||= weeks.where(finished: false).order(number: :asc).limit(1).first
   end
 end
