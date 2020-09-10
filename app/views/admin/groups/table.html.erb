@@ -1,38 +1,34 @@
 <%= render 'show_header' %>
-
-<div class='p-6 container mx-auto'>
-  <div id='recipients' class="p-8 mt-6 lg:mt-0 rounded shadow bg-white">
-    <% cache do %>
-      <table id="zero-config"
-        data-controller="datatable"
-        class="stripe hover w-full py-4"
-        data-datatable-config="<%= { 
-          responsive: true
-        }.to_json %>">
-        <thead>
-          <tr>
-            <th data-priority="1">Username</th>
-            <th data-priority="2">Points</th>
-            <% @matches.each_with_index do |match, index| %>
-              <th data-priority="<%= index + 3 %>"><%= match.visit_team.short_name %> @ <%= match.home_team.short_name %></th>
-            <% end %>
-          </tr>
-        </thead>
-        <tbody>
-          <% @membership_weeks.each do |membership_week| %>
-            <tr>
-              <td><%= membership_week.membership.account.username %></td>
-              <td><%= membership_week.points%></td>
-              <% membership_week.picks.joins(:match).order(order: :asc).each do |pick| %>
-                <td class='text-center'>
-                  <%= pick.correct ? 'bien' : pick.picked_team.short_name if pick.picked_team %>
-                </td>
-              <% end %>
-            </tr>
-          <% end %>
-        </tbody>
-        
-      </table>
+<div class='p-4 md:p-0'>
+<table class="border-collapse w-full">
+  <thead>
+    <tr>
+      <th class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">Username</th>
+      <th class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">Points</th>
+      <% @matches.each_with_index do |match, index| %>
+        <th class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell"><%= match.visit_team.short_name %> @ <%= match.home_team.short_name %></th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <% @membership_weeks.each do |membership_week| %>
+      <tr class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+        <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static">
+          <span class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Username</span>
+          <%= membership_week.membership.account.username %>
+        </td>
+        <td class="w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static">
+          <span class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Points</span>
+          <span class="rounded bg-green-400 py-1 px-3 text-xs font-bold"><%= membership_week.points%></span>
+        </td>
+        <% membership_week.picks.joins(:match).order(order: :asc).each do |pick| %>
+          <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static <%= 'hidden' if pick.picked_team.nil? %>">
+            <span class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase"><%= pick.match.visit_team.short_name %> @ <%= pick.match.home_team.short_name %></span>
+            <%= pick.correct ? 'bien' : pick.picked_team.short_name if pick.picked_team %>
+          </td>
+        <% end %>
+      </tr>
     <% end %>
-  </div>
+  </tbody>
+</table>
 </div>
