@@ -1,28 +1,41 @@
 <%= render 'show_header' %>
-<div class='p-4 md:p-0'>
+<div class='p-4 md:p-0 container mx-auto overflow-x-auto'>
+<h3 class="text-sm uppercase text-gray-600 py-2">User Time Zone <b><%= current_user.time_zone %></b><span class='ml-2 font-bold underline'><%= link_to 'Edit', edit_user_registration_path %></span></h3>
+<h4 class="text-sm uppercase text-gray-600 pb-2"><%= Time.current.in_time_zone(current_user.time_zone).to_formatted_s(:long) %></h4>
 <table class="border-collapse w-full">
   <thead>
     <tr>
-      <th class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">Username</th>
-      <th class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">Points</th>
+      <th class="p-3 font-bold text-sm uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">Username</th>
+      <th class="p-3 font-bold text-sm uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">Points</th>
       <% @matches.each_with_index do |match, index| %>
-        <th class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell"><%= match.visit_team.short_name %> @ <%= match.home_team.short_name %></th>
+        <th class="p-3 font-bold text-sm uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">
+          <%= match.visit_team.short_name %> @ <%= match.home_team.short_name %>
+        </th>
+      <% end %>
+    </tr>
+    <tr>
+      <th class="p-3 font-bold text-sm uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">Show Time</th>
+      <th class="p-3 font-bold text-sm uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell"></th>
+      <% @matches.each_with_index do |match, index| %>
+        <th class="p-3 font-bold text-sm uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">
+          <span class="bg-blue-200 mt-1 px-2 py-1 text-xs uppercase block"><%= match.show_time.in_time_zone(current_user.time_zone).strftime("%a %H:%M")%></span>
+        </th>
       <% end %>
     </tr>
   </thead>
   <tbody>
     <% @membership_weeks.each do |membership_week| %>
       <tr class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
-        <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static">
+        <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static hover:bg-gray-300">
           <span class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Username</span>
-          <%= membership_week.membership.account.username %>
+          <%= link_to membership_week.membership.account.username, picks_admin_group_membership_path(membership_week.membership.group, membership_week.membership), class: 'hover:underline' %>
         </td>
         <td class="w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static">
           <span class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Points</span>
           <span class="rounded bg-green-400 py-1 px-3 text-xs font-bold"><%= membership_week.points%></span>
         </td>
         <% membership_week.picks.joins(:match).order(order: :asc).each do |pick| %>
-          <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static <%= 'hidden' if pick.picked_team.nil? %>">
+          <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static hover:bg-gray-300 <%= 'hidden' if pick.picked_team.nil? %>">
             <span class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase"><%= pick.match.visit_team.short_name %> @ <%= pick.match.home_team.short_name %></span>
             <%= pick.correct ? 'bien' : pick.picked_team.short_name if pick.picked_team %>
           </td>

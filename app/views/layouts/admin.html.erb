@@ -12,8 +12,8 @@
 	  <link href="https://cdn.datatables.net/responsive/2.2.5/css/responsive.dataTables.min.css" rel="stylesheet">
   </head>
 
-  <body class='antialiased'>
-    <div class='flex w-screen min-h-screen bg-indigo-100 overflow-x-hidden' data-controller='navigation'>
+  <body class='antialiased bg-indigo-100'>
+    <div class='flex min-w-full min-h-screen max-w-full' data-controller='navigation'>
       <div class='flex flex-shrink-0 flex-col bg-white items-center shadow-xl transition-all duration-1000 w-0 opacity-0 md:opacity-100 md:w-64' data-target='navigation.sidebar'>
         <div class="flex justify-center items-center bg-teal-200 select-none h-12 w-12 mt-8 text-xl rounded-lg overflow-hidden border-2 border-gray-400 focus:outline-none">
           <%= current_user.full_name.capitalize.chr %>
