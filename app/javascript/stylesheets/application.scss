@@ -71,8 +71,13 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
 }
 
 .flip {
+  -webkit-transform: scaleX(-1);
+  -moz-transform: scaleX(-1);
+  -o-transform: scaleX(-1);
   transform: scaleX(-1);
 }
+
+
 
 .pagy-nav, 
 .pagy-nav-js,
