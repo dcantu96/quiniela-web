@@ -1,5 +1,5 @@
 class Admin::WeeksController < Admin::BaseController
-  before_action :set_week, only: [:update, :show, :edit, :generate]
+  before_action :set_week, only: [:update, :show, :edit]
 
   def index
     @weeks = Week.all
@@ -10,12 +10,12 @@ class Admin::WeeksController < Admin::BaseController
   end
 
   def show
-    @matches = @week.matches.includes(:home_team, :visit_team, :winning_team).order(start_time: :asc)
+    @matches = @week.matches.includes(:home_team, :visit_team, :winning_team).order(order: :asc)
   end
 
-  def generate
-    @week_matches = @week.fetch_week_matches
-  end
+  # def generate
+  #   @week_matches = @week.fetch_week_matches
+  # end
 
   def edit
   end

@@ -1,17 +1,9 @@
 class Admin::AccountsController < Admin::BaseController
-  before_action :set_account, only: [:update, :show, :edit]
-
-  def index
-    @accounts = Account.all
-  end
+  before_action :set_account, only: [:update, :edit]
 
   def new
     @account = Account.new
     @account.requests.build
-  end
-
-  def show
-    @memberships = @account.memberships
   end
 
   def edit
@@ -20,7 +12,7 @@ class Admin::AccountsController < Admin::BaseController
   def create
     @account = Account.new account_params
     if @account.save
-      redirect_to root_path, notice: 'Account created successfully'
+      redirect_to admin_root_path, notice: 'Account created successfully'
     else
       redirect_to new_account_path, alert: @account.errors.full_messages.first
     end      

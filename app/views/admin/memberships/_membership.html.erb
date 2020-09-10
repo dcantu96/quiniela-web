@@ -6,6 +6,6 @@
     <%= membership.account.username %>
   </h2>
   <div class='flex justify-between'>
-    <%= link_to "View", admin_membership_path(membership), class: 'btn btn--primary' %>
+    <%= link_to "View", picks_admin_group_membership_path(membership.group, membership), class: 'btn btn--primary' %>
   </div>
 </div>

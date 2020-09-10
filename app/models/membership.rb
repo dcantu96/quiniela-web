@@ -2,7 +2,7 @@ class Membership < ApplicationRecord
   belongs_to :account
   belongs_to :group
   has_many :picks
-  has_many :membership_weeks
+  has_many :membership_weeks, dependent: :destroy
   after_create :generate_weeks
   validates :account, uniqueness: { scope: :group }
 

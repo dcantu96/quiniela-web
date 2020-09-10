@@ -1,5 +1,5 @@
 class Admin::GroupsController < Admin::BaseController
-  before_action :set_group, only: [:edit, :update, :show, :requests, :picks, :winners]
+  before_action :set_group, only: [:edit, :update, :requests, :winners, :members, :table]
 
   def index
     @groups = Group.includes(:tournament)
@@ -9,22 +9,24 @@ class Admin::GroupsController < Admin::BaseController
     @group = Group.new
   end
 
-  def show
+  def edit
   end
 
-  def edit
+  def table
+    @membership_weeks = @group.membership_weeks.where(week: @group.tournament.current_week).order(points: :desc).limit(40).includes(picks: [:picked_team, match: [:winning_team]])
+    @matches = @group.tournament.current_week.matches.includes(:home_team, :visit_team, :winning_team).order(order: :asc)
+  end
+
+  def members
+    @memberships = @group.memberships
+  end
+
+  def winners
+    @winners = @group.memberships
   end
 
   def requests
     @requests = @group.requests
-  end
-
-  def picks
-    @weeks = @group.group_weeks
-  end
-
-  def winners
-    @weeks = @group.group_weeks
   end
 
   def create

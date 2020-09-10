@@ -4,6 +4,12 @@
     <h2 class='text-2xl text-indigo-900 mr-4'>Hello, <%= current_user.full_name %></h2>
     <%= link_to "New Account", new_account_path, class: 'btn btn--primary' %>
   </div>
+  <% if @memberships.present? %>
+    <h2 class='text-lg mb-4'>Groups</h2>
+    <div class='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-8'>
+      <%= render @groups %>
+    </div>
+  <% end %>
   <% if @requests.present? || @memberships.present? %>
     <% if @memberships.present? %>
       <h2 class='text-lg mb-4'>Memberships</h2>

@@ -11,12 +11,12 @@ Rails.confirm = function (message, element) {
   })
 
   swalCustomStyle.fire({
-    title: '¿Estas Seguro?',
+    title: 'Are you sure?',
     text: message,
     icon: 'warning',
     showCancelButton: true,
-    confirmButtonText: 'Si, adelante!',
-    cancelButtonText: 'Cancelar',
+    confirmButtonText: 'Yes!',
+    cancelButtonText: 'Back',
     reverseButtons: true
   }).then((result) => {
     if (result.value) {

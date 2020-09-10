@@ -1,17 +1,6 @@
 class Admin::RequestsController < Admin::BaseController
-  before_action :set_request, only: [:update, :show, :matches, :requests]
-
-  def show
-  end
-
-  def matches
-    @weeks = @group.group_weeks
-  end
-
-  def requests
-    @requests = @group.requests
-  end
-
+  before_action :set_request, only: [:update]
+  
   def update
     if params[:commit] == 'Accept'
       @membership = Membership.new(group: @request.group, account: @request.account)

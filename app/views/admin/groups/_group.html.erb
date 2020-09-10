@@ -1,13 +1,9 @@
 <div class="rounded-xl p-6 shadow-lg bg-white">
-  <p class='text-xs font-light text-gray-500'>
-    Group
-  </p>
   <h2 class='text-lg mb-4'>
     <%= group.name %>
   </h2>
   <div class='flex justify-between'>
-    <%= link_to "View", admin_group_path(group), class: 'btn btn--primary' %>
+    <%= link_to "View", members_admin_group_path(group), class: 'btn btn--primary' %>
     <%= link_to "Requests", requests_admin_group_path(group), class: 'btn btn--warning' %>
-    <%= link_to "Picks", picks_admin_group_path(group), class: 'btn btn--primary' %>
   </div>
 </div>

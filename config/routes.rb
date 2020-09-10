@@ -9,25 +9,19 @@ Rails.application.routes.draw do
   namespace :admin do
     root to: 'dashboard#home'
     resources :groups do
-      member do
-        get :winners
-        get :picks
-        get :requests
+      resources :memberships, only: [:destroy, :update] do 
+        member do
+          get :picks
+          get :settings
+        end
       end
-    end
-    resources :memberships do
       member do
         get :table
-        get :picks
-        get :members
-        get :requests
         get :winners
+        get :requests
+        get :members
       end
     end
-    resources :picks, only: [:update]
-    resources :accounts
-    resources :requests
-    resources :teams
     resources :tournaments do
       resources :weeks, only: [:new, :create]
       member do
@@ -36,14 +30,16 @@ Rails.application.routes.draw do
     end
     resources :weeks do
       resources :matches, only: [:new, :create]
-      member do
-        post :generate
-      end
     end
-    resources :matches
     resources :sports do
       resources :teams, only: [:new, :create]
     end
+
+    resources :accounts, only: [:new, :edit, :create, :update]
+    resources :matches, only: [:update, :destroy]
+    resources :teams, only: [:update]
+    resources :requests, only: [:update]
+    resources :picks, only: [:update]
   end
 
   resources :accounts
@@ -54,7 +50,6 @@ Rails.application.routes.draw do
       get :table
       get :picks
       get :members
-      get :requests
       get :winners
     end
   end
