@@ -36,8 +36,8 @@ Rails.application.routes.draw do
     end
 
     resources :accounts, only: [:new, :edit, :create, :update]
-    resources :matches, only: [:update, :destroy]
-    resources :teams, only: [:update]
+    resources :matches, only: [:edit, :update, :destroy]
+    resources :teams, only: [:edit, :update]
     resources :requests, only: [:update]
     resources :picks, only: [:update]
   end
