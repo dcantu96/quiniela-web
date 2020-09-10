@@ -12,4 +12,12 @@ class Pick < ApplicationRecord
   #     errors.add :date, 'Match or week has started.'
   #   end
   # end
+
+  def pick_viewable?
+    Time.current > pick.match.show_time
+  end
+
+  def pick_not_viewable?
+    Time.current < pick.match.show_time
+  end
 end
