@@ -70,6 +70,10 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
   background-color: #667eea !important; /*bg-indigo-500*/
 }
 
+.flip {
+  transform: scaleX(-1);
+}
+
 @import "tailwindcss/utilities";
 
 @import '@fortawesome/fontawesome-free';

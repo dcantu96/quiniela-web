@@ -28,7 +28,7 @@
     </div>
   </div>
   <div class='flex justify-between text-center mb-4 items-center'>
-    <%= image_pack_tag 'home-team.svg', class: 'w-16 md:w-20' %>
+    <%= image_pack_tag "#{pick.match.visit_team.short_name}.svg", class: 'w-24 md:w-20' %>
     <div>
       <p class='text-xs font-light text-gray-500'>
         Start Time
@@ -43,7 +43,7 @@
         <%= (pick.match.show_time - 30.minutes).in_time_zone(current_user.time_zone).to_formatted_s(:short)  %>
       </h2>
     </div>
-    <%= image_pack_tag 'visit-team.svg', class: 'w-16 md:w-20' %>
+    <%= image_pack_tag "#{pick.match.home_team.short_name}.svg", class: 'w-24 md:w-20 flip' %>
   </div>
   <%= render 'admin/picks/pick_buttons', pick: pick %>
 </div>
