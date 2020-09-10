@@ -13,11 +13,11 @@ class Pick < ApplicationRecord
   #   end
   # end
 
-  def pick_viewable?
+  def viewable?
     Time.current > pick.match.show_time
   end
 
-  def pick_not_viewable?
+  def not_viewable?
     Time.current < pick.match.show_time
   end
 end

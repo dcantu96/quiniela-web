@@ -22,7 +22,7 @@
           <%= pick.picked_team.short_name %>
         </td>
       <% else %>
-        <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static hover:bg-gray-300 <%= 'hidden' if pick.picked_team.nil? || pick.pick_not_viewable? %>">
+        <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static hover:bg-gray-300 <%= 'hidden' if pick.picked_team.nil? || pick.not_viewable? %>">
           <span class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase"><%= pick.match.visit_team.short_name %> @ <%= pick.match.home_team.short_name %></span>
           <% if pick.picked_team && pick.viewable? %>
             <%= pick.picked_team.short_name %>
