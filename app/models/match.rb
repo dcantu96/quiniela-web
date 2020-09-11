@@ -6,19 +6,22 @@ class Match < ApplicationRecord
   has_many :picks, dependent: :destroy
   after_create :generate_picks
   before_create :set_show_time
-  after_save :update_picks, if: :will_save_change_to_winning_team_id?
+
+  def update_picks
+    picks.includes(:picked_team).each do |p|
+      p.update correct: p.picked_team == winning_team
+      if p.correct
+        new_points = premium ? 2 : 1
+        p.membership_week.update points: p.membership_week.points + new_points
+      end
+    end
+  end
 
   private
 
   def generate_picks
     week.membership_weeks.each do |membership_week|
       picks.create membership_week: membership_week
-    end
-  end
-
-  def update_picks
-    picks.each do |pick|
-      pick.update correct: pick.picked_team == winning_team
     end
   end
 

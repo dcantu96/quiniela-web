@@ -1,5 +1,5 @@
 class Admin::MatchesController < Admin::BaseController
-  before_action :set_match, only: [:update, :show, :edit]
+  before_action :set_match, only: [:update, :show, :edit, :set_winner]
 
   def index
     @matches = Match.all
@@ -30,6 +30,18 @@ class Admin::MatchesController < Admin::BaseController
       redirect_to admin_week_path(@match.week), notice: 'Match updated successfully'
     else
       redirect_to edit_admin_match_path(@match), alert: @match.errors.full_messages.first
+    end
+  end
+
+  def set_winner
+    if params[:commit] == "Winner #{@match.home_team.short_name}"
+      @match.winning_team = @match.home_team
+    elsif params[:commit] == "Winner #{@match.visit_team.short_name}"
+      @match.winning_team = @match.visit_team
+    end
+    if @match.save
+      @match.update_picks
+      redirect_to admin_week_path(@match.week), notice: 'Match updated successfully'
     end
   end
 

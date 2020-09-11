@@ -1,14 +1,20 @@
 <div class="rounded-xl p-6 shadow-lg bg-white">
   <div class='grid grid-cols-2 gap-6 mb-4'>
     <div class='flex flex-col'>
+      <% if match.winning_team == match.visit_team %>
+        <span class='font-extrabold'>WIN</span>
+      <% end %>
       <p class='text-xs font-light text-gray-500'>
         Visit Team
       </p>
       <h2 class='text-lg mb-4'>
         <%= match.visit_team.name %>
       </h2>
-    </div class='flex flex-col items-end text-right'>
-    <div class='text-right'>
+    </div>
+    <div class='flex flex-col text-right'>
+      <% if match.winning_team == match.home_team %>
+        <span class='font-extrabold'>WIN</span>
+      <% end %>
       <p class='text-xs font-light text-gray-500'>
         Home Team
       </p>
@@ -37,5 +43,9 @@
   </div>
   <div class='flex justify-between'>
     <%= link_to "Edit", edit_admin_match_path(match), class: 'btn btn--warning' %>
+    <% if match.winning_team.nil? %>
+      <%= button_to "Winner #{match.visit_team.short_name}", set_winner_admin_match_path(match), name: 'commit', remote: true, class: 'btn btn--success', data: { confirm: 'This will set the winner', disable_with: 'loading...' } %>
+      <%= button_to "Winner #{match.home_team.short_name}", set_winner_admin_match_path(match), name: 'commit', remote: true, class: 'btn btn--success', data: { confirm: 'This will set the winner', disable_with: 'loading...' } %>
+    <% end %>
   </div>
 </div>

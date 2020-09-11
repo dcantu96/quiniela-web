@@ -36,7 +36,11 @@ Rails.application.routes.draw do
     end
 
     resources :accounts, only: [:new, :edit, :create, :update]
-    resources :matches, only: [:edit, :update, :destroy]
+    resources :matches, only: [:edit, :update, :destroy] do
+      member do
+        post :set_winner
+      end
+    end
     resources :teams, only: [:edit, :update]
     resources :requests, only: [:update]
     resources :picks, only: [:update]
