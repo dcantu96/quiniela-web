@@ -12,7 +12,7 @@
 	  <link href="https://cdn.datatables.net/responsive/2.2.5/css/responsive.dataTables.min.css" rel="stylesheet">
   </head>
 
-  <body class='antialiased bg-indigo-100' data-controller='ininite-scroll'>
+  <body class='antialiased bg-indigo-100' data-controller='infinite-scroll'>
     <% if notice %>
       <script>
         toaster.fire({
@@ -66,7 +66,7 @@
         <% end %>
       </div>
     </header>
-    <main class='mb-16 md:mb-0'>
+    <main class='mb-24 md:mb-0'>
       <%= yield %>
     </main>
     <nav class="fixed bg-white bottom-0 w-screen m-0 z-50 <%= @pagy && @pagy.pages > 1 ? 'h-24' : 'h-16' %>">
