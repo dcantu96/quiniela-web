@@ -1,9 +1,9 @@
-<div class='p-4 md:p-0 container mx-auto overflow-x-auto' data-controller='searchable'>
+<div class='container mx-auto overflow-x-auto' data-controller='searchable'>
   <div class='hidden md:flex flex-col pb-2'>
     <h3 class="text-sm uppercase text-gray-600 pb-2">User Time Zone <b><%= current_user.time_zone %></b><span class='ml-2 font-bold underline'><%= link_to 'Edit', edit_user_registration_path %></span></h3>
     <h4 class="text-sm uppercase text-gray-600"><%= Time.current.in_time_zone(current_user.time_zone).to_formatted_s(:long) %></h4>
   </div>
-  <input type="text" class='input my-2' placeholder="Search usernames" data-action="keyup->searchable#search">
+  <input type="text" class='input my-2 mx-2' placeholder="Search usernames" data-action="keyup->searchable#search">
   <div class='overflow-hidden' data-controller='infinite-scroll'>
     <div class='overflow-scroll h-screen w-full'>
       <table class='mb-2'>
