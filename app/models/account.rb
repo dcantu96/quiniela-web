@@ -6,5 +6,8 @@ class Account < ApplicationRecord
   has_many :requests
   validates_uniqueness_of :username
   validates_presence_of :username
+  validates :username,
+    length: {in: 3..10, message: "should be 3-10 characters long" },
+    format: { with: /\A[a-z0-9_]{3,10}\z/, message: "contains invalid characters" }
   accepts_nested_attributes_for :requests
 end

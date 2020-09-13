@@ -1,15 +1,7 @@
 <%= form_with model: @account do |f| %>
   <%= f.hidden_field :user_id, value: current_user.id %>
-  <% if @account.errors.any? %>
-    <div>
-      <ul>
-        <% @account.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
   <div class='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-8'>
+    <p>Please make sure your username is between 5-10 word length and only contains letters, numbers or dots</p>
     <div>
       <%= f.label :username, class: 'label' %>
       <%= f.text_field :username, class: 'input', required: true %>

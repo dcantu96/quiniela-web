@@ -95,27 +95,27 @@
     <nav class='md:hidden group fixed bg-white bottom-0 w-screen h-20 m-0 z-50'>
       <ul class='list-none p-0 m-0 flex items-center h-full'>
         <li class='w-full'>
-          <%= link_to table_admin_group_path(@group), class: "flex flex-col items-center justify-center h-20 border-t-2 #{ current_page?(table_admin_group_path(@group)) ? 'text-indigo-900 bg-indigo-200 border-orange-400' : 'text-gray-400'}" do %>
+          <%= link_to table_admin_group_path(@group), class: "flex flex-col text-xs items-center justify-center h-20 border-t-2 #{ current_page?(table_admin_group_path(@group)) ? 'text-indigo-900 bg-indigo-200 border-orange-400' : 'text-gray-400'}" do %>
             <i class="fas fa-table fa-2x mx-6 mb-1"></i>
-            <span class="text-xs font-light uppercase">Week 1</span>
+            <span class="font-light uppercase">Week 1</span>
           <% end %>
         </li>
         <li class='w-full'>
-          <%= link_to members_admin_group_path(@group), class: "flex flex-col items-center justify-center h-20 border-t-2 #{ current_page?(members_admin_group_path(@group)) ? 'text-indigo-900 bg-indigo-200 border-orange-400' : 'text-gray-400'}" do %>
+          <%= link_to members_admin_group_path(@group), class: "flex flex-col text-xs items-center justify-center h-20 border-t-2 #{ current_page?(members_admin_group_path(@group)) ? 'text-indigo-900 bg-indigo-200 border-orange-400' : 'text-gray-400'}" do %>
             <i class="fas fa-users fa-2x mx-6 mb-1"></i>
-            <span class="text-xs font-light uppercase">Members</span>
+            <span class="font-light uppercase">Members</span>
           <% end %>
         </li>
         <li class='w-full'>
-          <%= link_to requests_admin_group_path(@group), class: "flex flex-col items-center justify-center h-20 border-t-2 #{ current_page?(requests_admin_group_path(@group)) ? 'text-indigo-900 bg-indigo-200 border-orange-400' : 'text-gray-400'}" do %>
+          <%= link_to requests_admin_group_path(@group), class: "flex flex-col text-xs items-center justify-center h-20 border-t-2 #{ current_page?(requests_admin_group_path(@group)) ? 'text-indigo-900 bg-indigo-200 border-orange-400' : 'text-gray-400'}" do %>
             <i class="fas fa-user fa-2x mx-6 mb-1"></i>
-            <span class="text-xs font-light uppercase">Requests</span>
+            <span class="font-light uppercase">Requests</span>
           <% end %>
         </li>
         <li class='w-full'>
-          <%= link_to winners_admin_group_path(@group), class: "flex flex-col items-center justify-center h-20 border-t-2 #{ current_page?(winners_admin_group_path(@group)) ? 'text-indigo-900 bg-indigo-200 border-orange-400' : 'text-gray-400'}" do %>
+          <%= link_to winners_admin_group_path(@group), class: "flex flex-col text-xs items-center justify-center h-20 border-t-2 #{ current_page?(winners_admin_group_path(@group)) ? 'text-indigo-900 bg-indigo-200 border-orange-400' : 'text-gray-400'}" do %>
             <i class="fas fa-star fa-2x mx-6 mb-1"></i>
-            <span class="text-xs font-light uppercase">Winners</span>
+            <span class="font-light uppercase">Winners</span>
           <% end %>
         </li>
       </ul>
