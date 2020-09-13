@@ -42,6 +42,7 @@ export default class extends Controller {
         let new_pagination = this.paginationTarget.querySelector("a[rel='next']")
         if (new_pagination == null) { 
           this.paginationTarget.remove()
+          this.buttonTarget.remove()
         }
       }
     })
