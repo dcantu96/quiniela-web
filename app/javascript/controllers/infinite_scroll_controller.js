@@ -1,7 +1,7 @@
 import { Controller } from "stimulus"
 
 export default class extends Controller {
-  static targets = ["entries", "pagination"]
+  static targets = ['entries', 'pagination', 'button']
 
   initialize() {
     let options = {
@@ -39,6 +39,7 @@ export default class extends Controller {
       success: (data) => {
         this.entriesTarget.insertAdjacentHTML('beforeend', data.entries)
         this.paginationTarget.innerHTML = data.pagination
+        console.log(data.pagination)
       }
     })
   }
