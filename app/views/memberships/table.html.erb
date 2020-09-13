@@ -1,34 +1,39 @@
-<%= render 'show_header' %>
 <div class='p-4 md:p-0 container mx-auto overflow-x-auto' data-controller='infinite-scroll searchable' data-action='scroll@window->infinite-scroll#scroll'>
-<h3 class="text-sm uppercase text-gray-600 py-2">User Time Zone <b><%= current_user.time_zone %></b><span class='ml-2 font-bold underline'><%= link_to 'Edit', edit_user_registration_path %></span></h3>
-<h4 class="text-sm uppercase text-gray-600 pb-2"><%= Time.current.in_time_zone(current_user.time_zone).to_formatted_s(:long) %></h4>
-<input type="text" class='input my-2' placeholder="Search usernames" data-action="keyup->searchable#search">
-<table class="border-collapse w-full" id='table'>
-  <thead>
-    <tr>
-      <th class="p-3 font-bold text-sm uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">Username</th>
-      <th class="p-3 font-bold text-sm uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">Points</th>
-      <% @matches.each_with_index do |match, index| %>
-        <th class="p-3 font-bold text-sm uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">
-          <%= match.visit_team.short_name %> @ <%= match.home_team.short_name %>
-        </th>
-      <% end %>
-    </tr>
-    <tr>
-      <th class="p-3 font-bold text-sm uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">Show Time</th>
-      <th class="p-3 font-bold text-sm uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell"></th>
-      <% @matches.each_with_index do |match, index| %>
-        <th class="p-3 font-bold text-sm uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">
-          <span class="bg-blue-200 mt-1 px-2 py-1 text-xs uppercase block"><%= match.show_time.in_time_zone(current_user.time_zone).strftime("%a %H:%M")%></span>
-        </th>
-      <% end %>
-    </tr>
-  </thead>
-  <tbody data-target='infinite-scroll.entries' id='table-rows'>
-    <%= render 'members' %>
-  </tbody>
-</table>
-  <div data-target='infinite-scroll.pagination'>
-    <%== pagy_nav(@pagy) %>
+  <div class='hidden md:flex flex-col pb-2'>
+    <h3 class="text-sm uppercase text-gray-600 pb-2">User Time Zone <b><%= current_user.time_zone %></b><span class='ml-2 font-bold underline'><%= link_to 'Edit', edit_user_registration_path %></span></h3>
+    <h4 class="text-sm uppercase text-gray-600"><%= Time.current.in_time_zone(current_user.time_zone).to_formatted_s(:long) %></h4>
+  </div>
+  <input type="text" class='input my-2' placeholder="Search usernames" data-action="keyup->searchable#search">
+<div data-controller='infinite-scroll'>
+    <div class='overflow-scroll h-screen w-full'>
+      <table>
+        <thead>
+          <tr>
+            <th class="sticky z-40 left-0 top-0 p-3 font-bold text-sm uppercase bg-gray-300 text-gray-700 table-cell">Username</th>
+            <th class="sticky z-30 top-0 p-3 font-bold text-sm uppercase bg-gray-200 text-gray-600 table-cell">Points</th>
+            <% @matches.each_with_index do |match, index| %>
+              <th class="sticky z-30 top-0 p-3 font-bold text-sm uppercase bg-gray-200 text-gray-600 table-cell">
+                <%= match.visit_team.short_name %> @ <%= match.home_team.short_name %>
+              </th>
+            <% end %>
+          </tr>
+          <tr>
+            <th class="p-3 sticky left-0 font-bold text-sm uppercase bg-gray-300 text-gray-700 table-cell">Show Time</th>
+            <th class="p-3 font-bold text-sm uppercase bg-gray-200 text-gray-600 table-cell"></th>
+            <% @matches.each_with_index do |match, index| %>
+              <th class="p-3 font-bold text-sm uppercase bg-gray-200 text-gray-600 table-cell">
+                <span class="bg-blue-200 mt-1 px-2 py-1 text-xs uppercase block"><%= match.show_time.in_time_zone(current_user.time_zone).strftime("%a %H:%M")%></span>
+              </th>
+            <% end %>
+          </tr>
+        </thead>
+        <tbody data-target='infinite-scroll.entries' id='table-rows'>
+          <%= render 'members' %>
+        </tbody>
+      </table>
+    </div>
+    <div data-target='infinite-scroll.pagination'>
+      <%== pagy_nav(@pagy) %>
+    </div>
   </div>
 </div>

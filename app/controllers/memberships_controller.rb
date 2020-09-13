@@ -2,6 +2,7 @@ class MembershipsController < ApplicationController
   before_action :set_membership, only: [:show, :table, :picks, :members, :winners]
   before_action :validate_user
   before_action :set_filter_status, only: [:show]
+  layout 'membership'
 
   def show
     filtering_params.present? ? @picks = @membership.membership_weeks.find_by(week: Week.find_by(number: filtering_params[:week_number])).picks.includes(:picked_team, match: [:home_team, :visit_team, :winning_team]).joins(:match).order('matches.start_time') :
