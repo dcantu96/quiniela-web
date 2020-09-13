@@ -39,7 +39,10 @@ export default class extends Controller {
       success: (data) => {
         this.entriesTarget.insertAdjacentHTML('beforeend', data.entries)
         this.paginationTarget.innerHTML = data.pagination
-        console.log(data.pagination)
+        let new_pagination = this.paginationTarget.querySelector("a[rel='next']")
+        if (new_pagination == null) { 
+          this.paginationTarget.remove()
+        }
       }
     })
   }
