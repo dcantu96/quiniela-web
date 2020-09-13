@@ -1,5 +1,6 @@
 class Admin::GroupsController < Admin::BaseController
   before_action :set_group, only: [:edit, :update, :requests, :winners, :members, :table]
+  layout 'admin_group', except: [:index]
 
   def index
     @groups = Group.includes(:tournament)

@@ -10,6 +10,18 @@
 @import "components/pill";
 
 /*Overrides for Tailwind CSS */
+
+body::-webkit-scrollbar {
+  width: 0.25rem;
+}
+
+body::-webkit-scrollbar-track {
+  background: #1e1e24;
+}
+
+body::-webkit-scrollbar-thumb {
+  background: #6649b8;
+}
 		
 /*Form fields*/
 .dataTables_wrapper select,
@@ -118,6 +130,8 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
  .pagy-combo-nav-js .next {
   @apply text-gray-900 border-r border-transparent;
 }
+
+
 
 @import "tailwindcss/utilities";
 

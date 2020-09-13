@@ -1,16 +1,13 @@
-<tr class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
-  <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static hover:bg-gray-300">
-    <span class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Username</span>
+<tr class="bg-white lg:hover:bg-gray-100 table-row flex-row flex-no-wrap mb-2 lg:mb-0">
+  <th class="sticky left-0 z-20 p-3 text-center text-indigo-900 table-cell bg-gray-200">
     <%= link_to membership_week.membership.account.username, picks_admin_group_membership_path(membership_week.membership.group, membership_week.membership), class: 'hover:underline' %>
-  </td>
-  <td class="w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static">
-    <span class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Points</span>
+  </th>
+  <td class="p-3 text-gray-800 text-center border-gray-300 table-cell hover:bg-gray-300">
     <span class="rounded bg-green-400 py-1 px-3 text-xs font-bold"><%= membership_week.points%></span>
   </td>
   <% membership_week.picks.includes(:picked_team, match: [:home_team, :visit_team]).order("matches.order").each do |pick| %>
-    <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static hover:bg-gray-300 <%= 'hidden' if pick.picked_team.nil? %>">
-      <span class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase"><%= pick.match.visit_team.short_name %> @ <%= pick.match.home_team.short_name %></span>
-      <%= pick.correct ? 'bien' : pick.picked_team.short_name if pick.picked_team %>
+    <td class="p-3 text-center border-gray-300 table-cell hover:bg-gray-300  <%= pick.correct ? 'text-green-600' : 'text-gray-800' %>">
+      <%= pick.picked_team.short_name if pick.picked_team %>
     </td>
   <% end %>
 </tr>
