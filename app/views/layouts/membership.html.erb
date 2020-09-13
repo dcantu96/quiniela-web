@@ -69,11 +69,11 @@
     <main class='mb-16 md:mb-0'>
       <%= yield %>
     </main>
-    <nav class="md:hidden fixed bg-white bottom-0 w-screen m-0 z-50 <%= @pagy && @pagy.pages > 1 ? 'h-24' : 'h-16' %>">
+    <nav class="fixed bg-white bottom-0 w-screen m-0 z-50 <%= @pagy && @pagy.pages > 1 ? 'h-24' : 'h-16' %>">
       <% if @pagy && @pagy.pages > 1 %>
         <button data-action="click->infinite-scroll#loadMore" class='btn btn--info w-full container rounded-none h-8'>Load More</button>
       <% end %>
-      <ul class='list-none p-0 m-0 flex items-center h-16'>
+      <ul class='md:hidden list-none p-0 m-0 flex items-center h-16'>
         <li class='w-full'>
           <%= link_to table_membership_path(@membership), class: "flex flex-col text-xs items-center justify-center h-16 border-t-2 #{ current_page?(table_membership_path(@membership)) ? 'text-indigo-900 bg-indigo-200 border-orange-400' : 'text-gray-400'}" do %>
             <i class="fas fa-table fa-2x mx-6 mb-1"></i>
