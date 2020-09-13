@@ -5,7 +5,7 @@
   </div>
   <input type="text" class='input my-2 mx-2' placeholder="Search usernames" data-action="keyup->searchable#search">
   <div class='overflow-hidden' data-controller='infinite-scroll'>
-    <div class='overflow-scroll h-screen w-full'>
+    <div class='overflow-scroll h-screen w-full relative'>
       <table class='mb-2'>
         <thead>
           <tr>
@@ -30,7 +30,7 @@
         </tbody>
       </table>
       <% if @pagy.pages > 1 %>
-        <button data-action="click->infinite-scroll#loadMore" class='btn btn--info w-full md:w-auto md:ml-3'>Load More</button>
+        <button data-action="click->infinite-scroll#loadMore" class='absolute bottom-0 left-0 btn btn--info w-full md:w-auto md:ml-3'>Load More</button>
       <% end %>
     </div>
     <div class='hidden' data-target='infinite-scroll.pagination' data-target='infinite-scroll.button'>
