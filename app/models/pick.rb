@@ -14,6 +14,10 @@ class Pick < ApplicationRecord
     Time.current < match.show_time
   end
 
+  def updatable?
+    Time.current < match.show_time - 30.minutes
+  end
+
   private
 
   def check_if_correct

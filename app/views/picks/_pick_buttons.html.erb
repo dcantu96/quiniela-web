@@ -1,4 +1,4 @@
-<% if Time.current < pick.match.show_time - 30.minutes %>
+<% if pick.updatable? %>
   <p class='text-xs font-light text-gray-500 text-center mb-2'>
     Choose Pick
   </p>
