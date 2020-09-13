@@ -4,7 +4,7 @@
     <h4 class="text-sm uppercase text-gray-600"><%= Time.current.in_time_zone(current_user.time_zone).to_formatted_s(:long) %></h4>
   </div>
   <input type="text" class='input my-2 w-full md:w-64' placeholder="Search usernames" data-action="keyup->searchable#search">
-  <div data-controller='infinite-scroll'>
+  <div class='overflow-hidden' data-controller='infinite-scroll'>
     <div class='overflow-scroll h-screen w-full'>
       <table>
         <thead>
