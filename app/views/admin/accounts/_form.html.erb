@@ -1,14 +1,5 @@
 <%= form_with model: [:admin, @account] do |f| %>
   <%= f.hidden_field :user_id, value: current_user.id %>
-  <% if @account.errors.any? %>
-    <div>
-      <ul>
-        <% @account.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
   <div class='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-8'>
     <div>
       <%= f.label :username, class: 'label' %>

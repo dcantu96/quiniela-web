@@ -1,19 +1,25 @@
 <%= form_with model: @account do |f| %>
-  <%= f.hidden_field :user_id, value: current_user.id %>
-  <div class='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-8'>
-    <p>Please make sure your username is between 5-10 word length and only contains letters, numbers or dots</p>
-    <div>
-      <%= f.label :username, class: 'label' %>
-      <%= f.text_field :username, class: 'input', required: true %>
-    </div>
-    <%= f.fields_for :requests do |request_form| %>
-      <div data-controller='select'> 
-        <%= request_form.label :group, class: 'label' %>
-        <%= request_form.collection_select :group_id, Group.all, :id, :name, {}, { class: 'select2 w-full' } %>
+  <div class='w-full md:w-1/3 md:mx-auto'>
+    <%= f.hidden_field :user_id, value: current_user.id %>
+    <div class='grid grid-cols-1 gap-6 mb-8'>
+      <ul>
+        <li>Please make sure your username is between <b>3 to 12 characters long</b></li>
+        <li>Only letters and numbers are allowed</li>
+        <li>Any character other than numbers and letters are <b>NOT allowed</b></li>
+      </ul>
+      <div>
+        <%= f.label :username, class: 'label' %>
+        <%= f.text_field :username, class: 'input', required: true %>
       </div>
-    <% end %>
+      <%= f.fields_for :requests do |request_form| %>
+        <div data-controller='select'> 
+          <%= request_form.label :group, class: 'label' %>
+          <%= request_form.collection_select :group_id, Group.all, :id, :name, {}, { class: 'select2 w-full' } %>
+        </div>
+      <% end %>
+    </div>
+    <%= f.submit class: 'btn btn--primary' %>
   </div>
-  <%= f.submit class: 'btn btn--primary' %>
 <% end %>
 
 
