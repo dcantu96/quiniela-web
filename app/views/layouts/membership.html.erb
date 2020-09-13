@@ -71,7 +71,7 @@
     </main>
     <nav class="fixed bg-white bottom-0 w-screen m-0 z-50 <%= @pagy && @pagy.pages > 1 ? 'h-24 md:h-8' : 'h-16 md:hidden' %>">
       <% if @pagy && @pagy.pages > 1 %>
-        <button data-action="click->infinite-scroll#loadMore" data-target='infinite-scroll.button' class='btn btn--info w-full container rounded-none h-8'>Load More</button>
+        <button data-action="click->infinite-scroll#loadMore" data-target='infinite-scroll.button' class='btn btn--info w-full container mx-auto rounded-none h-8'>Load More</button>
       <% end %>
       <ul class='md:hidden list-none p-0 m-0 flex items-center h-16'>
         <li class='w-full'>
