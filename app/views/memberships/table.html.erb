@@ -1,4 +1,4 @@
-<div class='p-4 md:p-0 container mx-auto overflow-x-auto' data-controller='infinite-scroll searchable' data-action='scroll@window->infinite-scroll#scroll'>
+<div class='p-4 md:p-0 container mx-auto overflow-x-auto' data-controller='searchable'>
   <div class='hidden md:flex flex-col pb-2'>
     <h3 class="text-sm uppercase text-gray-600 pb-2">User Time Zone <b><%= current_user.time_zone %></b><span class='ml-2 font-bold underline'><%= link_to 'Edit', edit_user_registration_path %></span></h3>
     <h4 class="text-sm uppercase text-gray-600"><%= Time.current.in_time_zone(current_user.time_zone).to_formatted_s(:long) %></h4>
@@ -6,7 +6,7 @@
   <input type="text" class='input my-2' placeholder="Search usernames" data-action="keyup->searchable#search">
   <div class='overflow-hidden' data-controller='infinite-scroll'>
     <div class='overflow-scroll h-screen w-full'>
-      <table>
+      <table class='mb-2'>
         <thead>
           <tr>
             <th class="sticky z-40 left-0 top-0 p-3 font-bold text-sm uppercase bg-gray-300 text-gray-700 table-cell">Username</th>
@@ -29,8 +29,11 @@
           <%= render 'members' %>
         </tbody>
       </table>
+      <% if @pagy.pages > 1 %>
+        <button data-action="click->infinite-scroll#loadMore" class='btn btn--info w-full md:w-auto md:ml-3'>Load More</button>
+      <% end %>
     </div>
-    <div data-target='infinite-scroll.pagination'>
+    <div class='hidden' data-target='infinite-scroll.pagination'>
       <%== pagy_nav(@pagy) %>
     </div>
   </div>
