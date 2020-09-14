@@ -5,8 +5,13 @@ class MembershipsController < ApplicationController
   layout 'membership'
 
   def show
-    filtering_params.present? ? @picks = @membership.membership_weeks.find_by(week: Week.find_by(number: filtering_params[:week_number])).picks.includes(:picked_team, match: [:home_team, :visit_team, :winning_team]).joins(:match).order('matches.start_time') :
+    filtering_params.present? ? (
+      @picks = @membership.membership_weeks.find_by(week: Week.find_by(number: filtering_params[:week_number])).picks.includes(:picked_team, match: [:home_team, :visit_team, :winning_team]).joins(:match).order('matches.start_time')
+      @week = @membership.group.tournament.weeks.find_by(number: filtering_params[:week_number])
+      ) : (
       @picks = @membership.current_week_picks.includes(:picked_team, match: [:home_team, :visit_team, :winning_team]).joins(:match).order('matches.start_time')
+      @week = @membership.group.tournament.current_week
+    )
     @untie_pick = @picks.joins(:match).where(matches: { untie: true }).first
     @weeks = @membership.group.tournament.weeks
   end
@@ -28,9 +33,12 @@ class MembershipsController < ApplicationController
   end
 
   def picks
-    filtering_params.present? ? @picks = @membership.membership_weeks.find_by(week: Week.find_by(number: filtering_params[:week_number])).picks.includes(:picked_team, match: [:home_team, :visit_team, :winning_team]).joins(:match).order('matches.start_time') : (
+    filtering_params.present? ? (
+      @picks = @membership.membership_weeks.find_by(week: Week.find_by(number: filtering_params[:week_number])).picks.includes(:picked_team, match: [:home_team, :visit_team, :winning_team]).joins(:match).order('matches.start_time')
+      @week = @membership.group.tournament.weeks.find_by(number: filtering_params[:week_number])
+      ) : (
       @picks = @membership.current_week_picks.includes(:picked_team, match: [:home_team, :visit_team, :winning_team]).joins(:match).order('matches.start_time')
-      @current_week = @membership.group.tournament.current_week
+      @week = @membership.group.tournament.current_week
     )
     @untie_pick = @picks.joins(:match).where(matches: { untie: true }).first
     @weeks = @membership.group.tournament.weeks
