@@ -1,5 +1,5 @@
 class Admin::GroupsController < Admin::BaseController
-  before_action :set_group, only: [:edit, :update, :requests, :winners, :members, :table]
+  before_action :set_group, only: [:edit, :update, :matches, :requests, :winners, :members, :table]
   layout 'admin_group', except: [:index]
 
   def index
@@ -11,6 +11,11 @@ class Admin::GroupsController < Admin::BaseController
   end
 
   def edit
+  end
+
+  def matches
+    @week = @group.tournament.current_week
+    @matches = @week.matches.includes(:home_team, :visit_team, :winning_team).order(order: :asc)
   end
 
   def table

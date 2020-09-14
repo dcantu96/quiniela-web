@@ -44,8 +44,7 @@
   <div class='flex justify-between'>
     <%= link_to "Edit", edit_admin_match_path(match), class: 'btn btn--warning' %>
     <% if match.winning_team.nil? %>
-      <%= button_to "Winner #{match.visit_team.short_name}", set_winner_admin_match_path(match), name: 'commit', remote: true, class: 'btn btn--success', data: { confirm: 'This will set the winner', disable_with: 'loading...' } %>
-      <%= button_to "Winner #{match.home_team.short_name}", set_winner_admin_match_path(match), name: 'commit', remote: true, class: 'btn btn--success', data: { confirm: 'This will set the winner', disable_with: 'loading...' } %>
+      <%= button_to "Fetch winner", fetch_winner_admin_match_path(match), remote: true, class: 'btn btn--success', data: { confirm: 'This will fetch the winner from espn and will not do anything if no winner is set.', disable_with: 'loading...' } %>
     <% end %>
   </div>
 </div>

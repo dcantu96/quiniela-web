@@ -1,5 +1,5 @@
 class Admin::MatchesController < Admin::BaseController
-  before_action :set_match, only: [:update, :show, :edit, :set_winner]
+  before_action :set_match, only: [:update, :show, :edit, :set_winner, :fetch_winner]
 
   def index
     @matches = Match.all
@@ -41,7 +41,15 @@ class Admin::MatchesController < Admin::BaseController
     end
     if @match.save
       @match.update_picks
-      redirect_to admin_week_path(@match.week), notice: 'Match updated successfully'
+      redirect_to matches_admin_group_path(@match.week), notice: 'Match updated successfully'
+    end
+  end
+
+  def fetch_winner
+    if @match.fetch_winner
+      redirect_to matches_admin_group_path(@match.week), notice: 'Match updated successfully'
+    else
+      redirect_to matches_admin_group_path(@match.week), alert: 'Match not result not found yet'
     end
   end
 

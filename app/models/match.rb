@@ -22,8 +22,12 @@ class Match < ApplicationRecord
   end
 
   def fetch_winner
+    # For this fetch to work team short names must be identical to ESPN's
     doc = Nokogiri::HTML(URI.open("https://www.espn.com/nfl/schedule/_/week/#{week.number}"))
-    score_text = doc.at("td a[name='&lpos=nfl:schedule:score']:contains('#{home_team.short_name}')").children.text
+    td = doc.at("td a[name='&lpos=nfl:schedule:score']:contains('#{home_team.short_name}')")
+    return false if td.nil?
+
+    score_text = td.children.text
     scores = score_text.split(',')
     scores.each do |score|
       team_score = score.split(' ')
@@ -40,6 +44,7 @@ class Match < ApplicationRecord
         update_picks
       end
     end
+    true
   end
 
   private

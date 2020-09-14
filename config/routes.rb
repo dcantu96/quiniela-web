@@ -20,6 +20,7 @@ Rails.application.routes.draw do
         get :winners
         get :requests
         get :members
+        get :matches
       end
     end
     resources :tournaments do
@@ -39,6 +40,7 @@ Rails.application.routes.draw do
     resources :matches, only: [:edit, :update, :destroy] do
       member do
         post :set_winner
+        post :fetch_winner
       end
     end
     resources :teams, only: [:edit, :update]
