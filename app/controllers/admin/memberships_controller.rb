@@ -31,13 +31,13 @@ class Admin::MembershipsController < Admin::BaseController
 
   def set_week_and_picks
     filtering_params.present? ? (
-      @picks = @membership.membership_weeks.find_by(week: Week.find_by(number: filtering_params[:week_number])).picks
       @week = @membership.group.tournament.weeks.find_by(number: filtering_params[:week_number])
+      @picks = @membership.membership_weeks.find_by(week: @week).picks
       ) : (
-      @picks = @membership.current_week_picks
       @week = @membership.group.tournament.current_week
+      @picks = @membership.current_week_picks
     )
-    @picks.includes(:picked_team, match: [:home_team, :visit_team, :winning_team]).order('matches.order')
+    @picks = @picks.includes(:picked_team, match: [:home_team, :visit_team, :winning_team]).order('matches.order')
   end
 
   def filtering_params
