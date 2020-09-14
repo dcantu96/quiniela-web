@@ -9,10 +9,35 @@ class Match < ApplicationRecord
 
   def update_picks
     picks.includes(:picked_team).each do |p|
+      pick_incorrect_previously = !p.correct
+      pick_correct_previously = p.correct
       p.update correct: p.picked_team == winning_team
-      if p.correct
-        new_points = premium ? 2 : 1
+      new_points = premium ? 2 : 1
+      if p.correct && pick_incorrect_previously
         p.membership_week.update points: p.membership_week.points + new_points
+      elsif !p.correct && pick_correct_previously
+        p.membership_week.update points: p.membership_week.points - new_points
+      end
+    end
+  end
+
+  def fetch_winner
+    doc = Nokogiri::HTML(URI.open("https://www.espn.com/nfl/schedule/_/week/#{week.number}"))
+    score_text = doc.at("td a[name='&lpos=nfl:schedule:score']:contains('#{home_team.short_name}')").children.text
+    scores = score_text.split(',')
+    scores.each do |score|
+      team_score = score.split(' ')
+      self.update home_team_score: team_score.second if team_score.first == home_team.short_name
+      self.update visit_team_score: team_score.second if team_score.first == visit_team.short_name
+    end
+    if home_team_score.present?
+      if home_team_score != visit_team_score
+        if home_team_score > visit_team_score
+          self.update winning_team: home_team
+        else
+          self.update winning_team: visit_team
+        end
+        update_picks
       end
     end
   end

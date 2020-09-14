@@ -22,11 +22,13 @@ class Pick < ApplicationRecord
 
   def check_if_correct
     if match.winning_team
+      pick_incorrect_previously = !correct
+      pick_correct_previously = correct
       self.correct = picked_team == match.winning_team
       new_points = match.premium ? 2 : 1
-      if correct
+      if correct && pick_incorrect_previously
         membership_week.update points: membership_week.points + new_points 
-      else
+      elsif !correct && pick_correct_previously
         membership_week.update points: membership_week.points - new_points
       end
     end
