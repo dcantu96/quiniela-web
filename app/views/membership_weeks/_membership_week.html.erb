@@ -17,6 +17,9 @@
         <% if pick.picked_team && pick.viewable? %>
           <%= pick.picked_team.short_name %>
         <% end %>
+        <% if pick.match.untie %>
+          <span class="rounded bg-black py-1 px-3 text-xs text-white font-bold ml-2"><%= pick.points %></span>
+        <% end %>
       </td>
     <% end %>
   <% end %>
