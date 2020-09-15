@@ -9,6 +9,9 @@
     <% membership_week.picks.includes(:picked_team, match: [:home_team, :visit_team]).order("matches.order").each do |pick| %>
       <td class="p-3 text-center border-gray-300 font-extrabold table-cell hover:bg-gray-300  <%= pick.correct ? 'text-green-600' : 'text-gray-800' %>">
         <%= pick.picked_team.short_name if pick.picked_team %>
+        <% if pick.match.untie %>
+          <span class="rounded bg-black py-1 px-3 text-xs text-white font-bold ml-2"><%= pick.points %></span>
+        <% end %>
       </td>
     <% end %>
   <% else %>

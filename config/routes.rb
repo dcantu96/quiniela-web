@@ -35,7 +35,7 @@ Rails.application.routes.draw do
     resources :sports do
       resources :teams, only: [:new, :create]
     end
-
+    resources :winners, only: [:create]
     resources :accounts, only: [:new, :edit, :create, :update]
     resources :matches, only: [:edit, :update, :destroy] do
       member do

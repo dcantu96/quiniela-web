@@ -36,7 +36,8 @@ class MembershipsController < ApplicationController
   end
 
   def winners
-    @winners = @membership.group.memberships
+    @untie_match = @membership.group.tournament.current_week.matches.where(untie: true).first
+    @winners = @membership.group.winners.joins(:membership_week).where(membership_weeks: { week: @membership.group.tournament.current_week })
   end
 
   private

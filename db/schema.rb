@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_09_083404) do
+ActiveRecord::Schema.define(version: 2020_09_15_041020) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -184,6 +184,13 @@ ActiveRecord::Schema.define(version: 2020_09_09_083404) do
     t.index ["tournament_id"], name: "index_weeks_on_tournament_id"
   end
 
+  create_table "winners", force: :cascade do |t|
+    t.bigint "membership_week_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["membership_week_id"], name: "index_winners_on_membership_week_id"
+  end
+
   add_foreign_key "accounts", "users"
   add_foreign_key "group_weeks", "accounts", column: "winner_id"
   add_foreign_key "group_weeks", "groups"
@@ -206,4 +213,5 @@ ActiveRecord::Schema.define(version: 2020_09_09_083404) do
   add_foreign_key "teams", "sports"
   add_foreign_key "tournaments", "sports"
   add_foreign_key "weeks", "tournaments"
+  add_foreign_key "winners", "membership_weeks"
 end

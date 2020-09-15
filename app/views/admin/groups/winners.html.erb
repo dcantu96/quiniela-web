@@ -1,3 +1,93 @@
 <div class='p-6 container mx-auto'>
   <h1>This is the winners page<h1>
+  <% @winners.each do |winner| %>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 rounded-xl p-6 bg-green-200 shadow-lg border-green-700 border-2 mb-4">
+      <div>
+        <p class='text-sm text-gray-500 mb-1'>
+          Week
+        </p>
+        <p class='text-md text-indigo-900 font-bold'>
+          <%= winner.membership_week.week.number %>
+        </p>
+      </div>
+      <div>
+        <p class='text-sm text-gray-500 mb-1'>
+          Winner
+        </p>
+        <p class='text-md text-indigo-900 font-bold'>
+          <%= winner.membership_week.membership.account.username %>
+        </p>
+      </div>
+      <div>
+        <p class='text-sm text-gray-500 mb-1'>
+          Points
+        </p>
+        <p class='text-md text-indigo-900 font-bold'>
+          <%= winner.membership_week.points %>
+        </p>
+      </div>
+      <div>
+        <p class='text-sm text-gray-500 mb-1'>
+          Untie Match Total points
+        </p>
+        <p class='text-md text-indigo-900 font-bold'>
+          <%= @untie_match.home_team_score + @untie_match.visit_team_score if @untie_match.winning_team %>
+        </p>
+      </div>
+      <div>
+        <p class='text-sm text-gray-500 mb-1'>
+          Untie Points
+        </p>
+        <p class='text-md text-indigo-900 font-bold'>
+          <%= winner.membership_week.picks.joins(:match).where(matches: {untie: true}).first.points %>
+        </p>
+      </div>
+    </div>
+  <% end %>
+  <% if @possible_winners %>
+    <div class='grid grid-cols-1 gap-6 mb-4'>
+      <% @possible_winners.each do |winner| %>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 rounded-xl p-6 bg-white shadow-lg border-2">
+          <div>
+            <p class='text-sm text-gray-500 mb-1'>
+              Member
+            </p>
+            <p class='text-md text-indigo-900 font-bold'>
+              <%= winner.membership.account.username %>
+            </p>
+          </div>
+          <div>
+            <p class='text-sm text-gray-500 mb-1'>
+              Points
+            </p>
+            <p class='text-md text-indigo-900 font-bold'>
+              <%= winner.points %>
+            </p>
+          </div>
+          <div>
+            <p class='text-sm text-gray-500 mb-1'>
+              Untie Match Total points
+            </p>
+            <p class='text-md text-indigo-900 font-bold'>
+              <%= @untie_match.home_team_score + @untie_match.visit_team_score if @untie_match.winning_team %>
+            </p>
+          </div>
+          <div>
+            <p class='text-sm text-gray-500 mb-1'>
+              Untie Points
+            </p>
+            <p class='text-md text-indigo-900 font-bold'>
+              <%= winner.picks.joins(:match).where(matches: {untie: true}).first.points %>
+            </p>
+          </div>
+          <div>
+            <%= form_with model: [:admin, Winner.new] do |f| %>
+              <%= f.hidden_field :membership_week_id, value: winner.id %>
+              <%= f.submit 'Choose', class: 'btn btn--primary', data: { confirm: "This will set the winner for the week" } %>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
 </div>

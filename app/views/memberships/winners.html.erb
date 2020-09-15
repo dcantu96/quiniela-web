@@ -1,5 +1,47 @@
 <div class='p-6 container mx-auto'>
-  <div>
-    This is the winners page
-  </div>
+  <h1 class='mb-4 text-indigo-900'>This is the winners page<h1>
+  <% @winners.each do |winner| %>
+    <div class="grid grid-cols-2 md:grid-cols-5 gap-4 rounded-xl p-4 bg-white shadow-lg border-green-700 border-2">
+      <div>
+        <p class='text-sm text-gray-500 mb-1'>
+          Week
+        </p>
+        <p class='text-md text-indigo-900 font-bold'>
+          <%= winner.membership_week.week.number %>
+        </p>
+      </div>
+      <div>
+        <p class='text-sm text-gray-500 mb-1'>
+          Winner
+        </p>
+        <p class='text-md text-indigo-900 font-bold'>
+          <%= winner.membership_week.membership.account.username %>
+        </p>
+      </div>
+      <div>
+        <p class='text-sm text-gray-500 mb-1'>
+          Points
+        </p>
+        <p class='text-md text-indigo-900 font-bold'>
+          <%= winner.membership_week.points %>
+        </p>
+      </div>
+      <div>
+        <p class='text-sm text-gray-500 mb-1'>
+          Untie Match Total points
+        </p>
+        <p class='text-md text-indigo-900 font-bold'>
+          <%= @untie_match.home_team_score + @untie_match.visit_team_score if @untie_match.winning_team %>
+        </p>
+      </div>
+      <div>
+        <p class='text-sm text-gray-500 mb-1'>
+          Untie Points
+        </p>
+        <p class='text-md text-indigo-900 font-bold'>
+          <%= winner.membership_week.picks.joins(:match).where(matches: {untie: true}).first.points %>
+        </p>
+      </div>
+    </div>
+  <% end %>
 </div>
