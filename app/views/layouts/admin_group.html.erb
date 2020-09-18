@@ -12,7 +12,7 @@
 	  <link href="https://cdn.datatables.net/responsive/2.2.5/css/responsive.dataTables.min.css" rel="stylesheet">
   </head>
 
-  <body class='antialiased bg-indigo-100'>
+  <body class='antialiased bg-indigo-100' data-controller='infinite-scroll'>
     <%= render 'layouts/notifications' %>
     <nav class='hidden md:inline group fixed bg-white transition-all duration-500 overflow-scroll bottom-0 w-screen h-20 md:h-screen md:w-20 md:hover:w-64 m-0 z-50 md:shadow-xl'>
       <ul class='list-none p-0 m-0 flex flex-col items-center h-full'>
@@ -92,9 +92,11 @@
       </div>
       <%= yield %>
     </main>
-    <nav data-controller='infinite-scroll' class="md:hidden fixed bg-white bottom-0 w-screen h-20 m-0 z-50 <%= @pagy && @pagy.pages > 1 ? 'h-24 md:h-8' : 'h-16 md:hidden' %>">
+    <nav class="md:hidden fixed bg-white bottom-0 w-screen h-20 m-0 z-50 <%= @pagy && @pagy.pages > 1 ? 'h-24 md:h-8' : 'h-16 md:hidden' %>">
       <% if @pagy && @pagy.pages > 1 %>
-        <button data-action="click->infinite-scroll#loadMore" data-target='infinite-scroll.button' class='btn btn--info w-full container mx-auto rounded-none h-8'>Load More</button>
+        <div class='container mx-auto'>
+          <button data-action="click->infinite-scroll#loadMore" data-target='infinite-scroll.button' class='btn btn--info w-full rounded-none h-8'>Load More</button>
+        </div>
       <% end %>
       <ul class='list-none p-0 m-0 flex items-center h-full'>
         <li class='w-full'>
