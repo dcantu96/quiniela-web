@@ -92,7 +92,7 @@
       </div>
       <%= yield %>
     </main>
-    <nav class="md:hidden fixed bg-white bottom-0 w-screen h-20 m-0 z-50 <%= @pagy && @pagy.pages > 1 ? 'h-24 md:h-8' : 'h-16 md:hidden' %>">
+    <nav data-controller='infinite-scroll' class="md:hidden fixed bg-white bottom-0 w-screen h-20 m-0 z-50 <%= @pagy && @pagy.pages > 1 ? 'h-24 md:h-8' : 'h-16 md:hidden' %>">
       <% if @pagy && @pagy.pages > 1 %>
         <button data-action="click->infinite-scroll#loadMore" data-target='infinite-scroll.button' class='btn btn--info w-full container mx-auto rounded-none h-8'>Load More</button>
       <% end %>
