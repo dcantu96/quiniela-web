@@ -7,6 +7,7 @@ export default class extends Controller {
     let next_page = this.paginationTarget.querySelector("a[rel='next']")
     if (next_page == null) { return }
     let url = next_page.href
+    console.log(this.buttonTarget)
     this.buttonTarget.text = 'Loading ...'
 
     Rails.ajax({
