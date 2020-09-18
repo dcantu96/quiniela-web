@@ -7,8 +7,8 @@ export default class extends Controller {
     let next_page = this.paginationTarget.querySelector("a[rel='next']")
     if (next_page == null) { return }
     let url = next_page.href
-    console.log(this.buttonTarget)
-    this.buttonTarget.text = 'Loading ...'
+    this.buttonTarget.innerText = 'Loading ...'
+    this.buttonTarget.disabled = true
 
     Rails.ajax({
       type: 'GET',
@@ -16,7 +16,8 @@ export default class extends Controller {
       dataType: 'json',
       success: (data) => {
         this.entriesTarget.insertAdjacentHTML('beforeend', data.entries)
-        this.buttonTarget.text = 'Finished, Load More'
+        this.buttonTarget.innerText = 'Finished, Load More'
+        this.buttonTarget.disabled = false
         this.paginationTarget.innerHTML = data.pagination
         let new_pagination = this.paginationTarget.querySelector("a[rel='next']")
         if (new_pagination == null) { 
@@ -25,7 +26,8 @@ export default class extends Controller {
         }
       },
       error: (data) => {
-        this.buttonTarget.text = 'Failed to load, try again'
+        this.buttonTarget.disabled = false
+        this.buttonTarget.innerText = 'Failed to load, try again'
       }
     })
   }
