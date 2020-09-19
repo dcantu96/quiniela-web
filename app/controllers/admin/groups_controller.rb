@@ -41,7 +41,9 @@ class Admin::GroupsController < Admin::BaseController
   def winners
     @untie_match = @group.tournament.current_week.matches.where(untie: true).first
     @winners = @group.winners.joins(:membership_week).where(membership_weeks: { week: @group.tournament.current_week })
-    @possible_winners = @group.membership_weeks.where(week: @group.tournament.current_week).order(points: :desc).limit(10).includes(membership: [:account, :group])
+    if @group.tournament.current_week.untie_match.started?
+      @possible_winners = @group.membership_weeks.where(week: @group.tournament.current_week).order(points: :desc).limit(10).includes(membership: [:account, :group])
+    end
   end
 
   def requests

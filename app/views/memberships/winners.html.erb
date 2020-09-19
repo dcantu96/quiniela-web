@@ -26,22 +26,6 @@
           <%= winner.membership_week.points %>
         </p>
       </div>
-      <div>
-        <p class='text-sm text-gray-500 mb-1'>
-          Untie Match Total points
-        </p>
-        <p class='text-md text-indigo-900 font-bold'>
-          <%= winner.membership_week.week.untie_match.home_team_score + winner.membership_week.week.untie_match.visit_team_score if winner.membership_week.week.untie_match.winning_team %>
-        </p>
-      </div>
-      <div>
-        <p class='text-sm text-gray-500 mb-1'>
-          Untie Points
-        </p>
-        <p class='text-md text-indigo-900 font-bold'>
-          <%= winner.membership_week.untie_pick(winner.membership_week.week.untie_match).points %>
-        </p>
-      </div>
     </div>
   <% end %>
 </div>

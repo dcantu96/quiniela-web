@@ -21,6 +21,10 @@ class Match < ApplicationRecord
     end
   end
 
+  def started?
+    start_time < Time.current
+  end
+
   def fetch_winner
     # For this fetch to work team short names must be identical to ESPN's
     doc = Nokogiri::HTML(URI.open("https://www.espn.com/nfl/schedule/_/week/#{week.number}"))
