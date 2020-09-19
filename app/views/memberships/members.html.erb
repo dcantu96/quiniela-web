@@ -13,11 +13,13 @@
           <% @memberships.each_with_index do |membership, index| %>
             <tr class="bg-white lg:hover:bg-gray-100 table-row flex-row flex-no-wrap mb-2 lg:mb-0" data-target='searchable.member' data-username="<%= membership.account.username %>">
               <td class="p-3 text-center border-gray-300 table-cell hover:bg-gray-300 text-gray-800">
-                <span><%= index + 1 %></span>
-                <span><%= membership.account.username %></span>
+                <div class='grid grid-cols-2'>
+                  <span><%= index + 1 %></span>
+                  <span><%= membership.account.username %></span>
+                </div>
               </td>
               <td class="p-3 text-center border-gray-300 table-cell hover:bg-gray-300 text-gray-800">
-                <span><%= membership.membership_weeks.sum(:points) %></span>
+                <span><%= membership.total %></span>
               </td>
             </tr>
           <% end %>
