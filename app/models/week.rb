@@ -23,6 +23,11 @@ class Week < ApplicationRecord
     Week.find_by number: number - 1, tournament: tournament
   end
 
+
+  def untie_match
+    matches.find_by untie: true
+  end
+
   private
 
   def generate_group_weeks

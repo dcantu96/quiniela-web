@@ -31,7 +31,7 @@
           Untie Match Total points
         </p>
         <p class='text-md text-indigo-900 font-bold'>
-          <%= @untie_match.home_team_score + @untie_match.visit_team_score if @untie_match.winning_team %>
+          <%= winner.membership_week.week.untie_match.home_team_score + winner.membership_week.week.untie_match.visit_team_score if winner.membership_week.week.untie_match.winning_team %>
         </p>
       </div>
       <div>
@@ -39,7 +39,7 @@
           Untie Points
         </p>
         <p class='text-md text-indigo-900 font-bold'>
-          <%= winner.membership_week.picks.joins(:match).where(matches: {untie: true}).first.points %>
+          <%= winner.membership_week.untie_pick(winner.membership_week.week.untie_match).points %>
         </p>
       </div>
     </div>

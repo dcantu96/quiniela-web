@@ -9,6 +9,13 @@ class Group < ApplicationRecord
   validates_presence_of :name
   after_create :generate_group_weeks
 
+  def membership_weeks_of(week)
+    membership_weeks
+      .where(week: week)
+      .order(points: :desc)
+      .includes(picks: [:picked_team, match: [:winning_team]], membership: [:account, :group])
+  end
+
   private
 
   def generate_group_weeks

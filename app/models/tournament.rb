@@ -7,4 +7,10 @@ class Tournament < ApplicationRecord
   def current_week
     @current_week ||= weeks.where(finished: false).order(number: :asc).limit(1).first
   end
+
+  def current_week_matches
+    @current_week_matches ||= current_week.matches
+      .includes(:home_team, :visit_team, :winning_team)
+      .order(order: :asc)
+  end
 end

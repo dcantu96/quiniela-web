@@ -10,16 +10,21 @@
         <thead>
           <tr>
             <th class="sticky z-40 left-0 top-0 p-3 font-bold text-sm uppercase bg-gray-300 text-gray-700 table-cell">Username</th>
-            <% @matches.each_with_index do |match, index| %>
-              <th class="sticky z-30 top-0 p-3 font-bold text-sm uppercase bg-gray-200 text-gray-600 table-cell">
-                <%= match.visit_team.short_name %> @ <%= match.home_team.short_name %>
+            <% @matches.each do |match| %>
+              <th class="sticky z-30 top-0 p-3 font-bold text-sm uppercase text-gray-600 table-cell bg-gray-200">
+                <div class="w-24">
+                  <% if match.untie %>
+                    <span class="bg-black mt-1 px-2 py-1 text-xs text-white uppercase block">MNF</span>
+                  <% end %>
+                  <%= match.visit_team.short_name %> @ <%= match.home_team.short_name %>
+                </div>
               </th>
             <% end %>
           </tr>
           <tr>
             <th class="p-3 sticky left-0 font-bold text-sm uppercase bg-gray-300 text-gray-700 table-cell">Show Time</th>
-            <% @matches.each_with_index do |match, index| %>
-              <th class="p-3 font-bold text-sm uppercase bg-gray-200 text-gray-600 table-cell">
+            <% @matches.each do |match| %>
+              <th class="p-3 font-bold text-sm uppercase text-gray-600 bg-gray-200 table-cell">
                 <span class="bg-blue-200 mt-1 px-2 py-1 text-xs uppercase block"><%= match.show_time.in_time_zone(current_user.time_zone).strftime("%a %H:%M")%></span>
               </th>
             <% end %>

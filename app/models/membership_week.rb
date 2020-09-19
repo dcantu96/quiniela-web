@@ -7,6 +7,10 @@ class MembershipWeek < ApplicationRecord
   after_create :generate_picks
   validates :membership, uniqueness: { scope: :week }
 
+  def untie_pick(untie_match)
+    picks.find_by match: untie_match
+  end
+
   private
 
   def generate_picks

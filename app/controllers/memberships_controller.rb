@@ -11,8 +11,8 @@ class MembershipsController < ApplicationController
   end
 
   def table
-    @pagy, @membership_weeks = pagy @membership.group.membership_weeks.where(week: @membership.group.tournament.current_week).order(points: :desc).includes(picks: [:picked_team, match: [:winning_team]], membership: [:account, :group])
-    @matches = @membership.group.tournament.current_week.matches.includes(:home_team, :visit_team, :winning_team).order(order: :asc)
+    @pagy, @membership_weeks = pagy @membership.group.membership_weeks_of @membership.group.tournament.current_week
+    @matches = @membership.group.tournament.current_week_matches
 
     respond_to do |format|
       format.html
@@ -36,8 +36,7 @@ class MembershipsController < ApplicationController
   end
 
   def winners
-    @untie_match = @membership.group.tournament.current_week.matches.where(untie: true).first
-    @winners = @membership.group.winners.joins(:membership_week).where(membership_weeks: { week: @membership.group.tournament.current_week })
+    @winners = @membership.group.winners.includes(membership_week: [:week])
   end
 
   private
