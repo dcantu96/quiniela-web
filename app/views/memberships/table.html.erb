@@ -30,13 +30,10 @@
             <% end %>
           </tr>
         </thead>
-        <tbody data-target='infinite-scroll.entries'>
+        <tbody>
           <%= render 'members' %>
         </tbody>
       </table>
-    </div>
-    <div class='hidden' data-target='infinite-scroll.pagination'>
-      <%== pagy_nav(@pagy) %>
     </div>
   </div>
 </div>

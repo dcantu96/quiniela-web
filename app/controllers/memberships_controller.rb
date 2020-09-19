@@ -11,19 +11,19 @@ class MembershipsController < ApplicationController
   end
 
   def table
-    @pagy, @membership_weeks = pagy @membership.group.membership_weeks_of @membership.group.tournament.current_week
+    @membership_weeks = @membership.group.membership_weeks_of @membership.group.tournament.current_week
     @matches = @membership.group.tournament.current_week_matches
 
-    respond_to do |format|
-      format.html
-      format.json {
-        render json: { 
-          entries: render_to_string(partial: "members",
-                                    formats: [:html]),
-          pagination: view_context.pagy_nav(@pagy)
-        }
-      }
-    end
+    # respond_to do |format|
+    #   format.html
+    #   format.json {
+    #     render json: { 
+    #       entries: render_to_string(partial: "members",
+    #                                 formats: [:html]),
+    #       pagination: view_context.pagy_nav(@pagy)
+    #     }
+    #   }
+    # end
   end
 
   def picks
