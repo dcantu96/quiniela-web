@@ -74,11 +74,11 @@
         <div class="hidden md:flex mb-20 md:mb-0">
           <%= link_to table_admin_group_path(@group), class: "text-md text-indigo-900 flex items-center border-b-2 pb-3 px-2 #{current_page?(table_admin_group_path(@group)) ? 'border-orange-400' : 'border-transparent hover:border-gray-400'}" do %>
             <i class="fas fa-table mr-3 fill-current"></i>
-            <span>Week <%= @group.tournament.current_week.number %> Table</span>
+            <span>Consolidado</span>
           <% end %>
           <%= link_to members_admin_group_path(@group), class: "text-md text-indigo-900 flex items-center border-b-2 pb-3 px-2 #{current_page?(members_admin_group_path(@group)) ? 'border-orange-400' : 'border-transparent hover:border-gray-400'}" do %>
             <i class="fas fa-users mr-3 fill-current"></i>
-            <span>Members List</span>
+            <span>Tabla de Posiciones</span>
           <% end %>
           <%= link_to requests_admin_group_path(@group), class: "text-md text-indigo-900 flex items-center border-b-2 pb-3 px-2 #{current_page?(requests_admin_group_path(@group)) ? 'border-orange-400' : 'border-transparent hover:border-gray-400'}" do %>
             <i class="fas fa-users mr-3 fill-current"></i>
@@ -86,7 +86,11 @@
           <% end %>
           <%= link_to winners_admin_group_path(@group), class: "text-md text-indigo-900 flex items-center border-b-2 pb-3 px-2 #{current_page?(winners_admin_group_path(@group)) ? 'border-orange-400' : 'border-transparent hover:border-gray-400'}" do %>
             <i class="fas fa-star mr-3 fill-current"></i>
-            <span>Winners</span>
+            <span>Ganadores</span>
+          <% end %>
+          <%= link_to matches_admin_group_path(@group), class: "text-md text-indigo-900 flex items-center border-b-2 pb-3 px-2 #{current_page?(winners_admin_group_path(@group)) ? 'border-orange-400' : 'border-transparent hover:border-gray-400'}" do %>
+            <i class="fas fa-football-ball mr-3 fill-current"></i>
+            <span>Juegos</span>
           <% end %>
         </div>
       </div>
@@ -102,13 +106,13 @@
         <li class='w-full'>
           <%= link_to table_admin_group_path(@group), class: "flex flex-col text-xs items-center justify-center h-20 border-t-2 #{ current_page?(table_admin_group_path(@group)) ? 'text-indigo-900 bg-indigo-200 border-orange-400' : 'text-gray-400'}" do %>
             <i class="fas fa-table fa-2x mx-6 mb-1"></i>
-            <span class="font-light uppercase">Week</span>
+            <span class="font-light uppercase">Consolidado</span>
           <% end %>
         </li>
         <li class='w-full'>
           <%= link_to members_admin_group_path(@group), class: "flex flex-col text-xs items-center justify-center h-20 border-t-2 #{ current_page?(members_admin_group_path(@group)) ? 'text-indigo-900 bg-indigo-200 border-orange-400' : 'text-gray-400'}" do %>
             <i class="fas fa-users fa-2x mx-6 mb-1"></i>
-            <span class="font-light uppercase">Members</span>
+            <span class="font-light uppercase">Posiciones</span>
           <% end %>
         </li>
         <li class='w-full'>
@@ -120,13 +124,13 @@
         <li class='w-full'>
           <%= link_to winners_admin_group_path(@group), class: "flex flex-col text-xs items-center justify-center h-20 border-t-2 #{ current_page?(winners_admin_group_path(@group)) ? 'text-indigo-900 bg-indigo-200 border-orange-400' : 'text-gray-400'}" do %>
             <i class="fas fa-star fa-2x mx-6 mb-1"></i>
-            <span class="font-light uppercase">Winners</span>
+            <span class="font-light uppercase">Ganadores</span>
           <% end %>
         </li>
         <li class='w-full'>
           <%= link_to matches_admin_group_path(@group), class: "flex flex-col text-xs items-center justify-center h-20 border-t-2 #{ current_page?(matches_admin_group_path(@group)) ? 'text-indigo-900 bg-indigo-200 border-orange-400' : 'text-gray-400'}" do %>
             <i class="fas fa-football-ball fa-2x mx-6 mb-1"></i>
-            <span class="font-light uppercase">Matches</span>
+            <span class="font-light uppercase">Juegos</span>
           <% end %>
         </li>
       </ul>
