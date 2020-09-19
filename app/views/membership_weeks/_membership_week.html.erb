@@ -1,4 +1,4 @@
-<tr class="bg-white lg:hover:bg-gray-100 table-row flex-row flex-no-wrap mb-2 lg:mb-0">
+<tr class="bg-white lg:hover:bg-gray-100 table-row flex-row flex-no-wrap mb-2 lg:mb-0" data-target='searchable.member' data-username="<%= membership_week.membership.account.username %>">
   <th class="sticky text-xs left-0 z-20 p-3 text-center text-indigo-900 table-cell bg-gray-200 <%= 'font-extrabold' if membership_week.membership.account.user == current_user %>">
     <div class='flex items-center'>
       <span class="rounded bg-green-400 py-1 px-3 text-xs font-bold mr-2"><%= membership_week.points %></span>
