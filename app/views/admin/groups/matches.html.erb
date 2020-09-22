@@ -2,6 +2,12 @@
   <div class='mb-4'>
     <div class='flex items-center mb-2'>
       <h1 class='text-xl text-indigo-900 mr-4'>Week <%= @week.number %></h1>
+      <% if @week.matches_settled? %>
+        <%= form_with model: [:admin, @week] do |f| %>
+          <%= f.hidden_field :finished, value: true %>
+          <%= f.submit 'Advance to next week', class: 'btn btn--primary' %>
+        <% end %>
+      <% end %>
     </div>
   </div>
   <div class='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-8'>

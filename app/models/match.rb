@@ -19,6 +19,11 @@ class Match < ApplicationRecord
         p.membership_week.update points: p.membership_week.points - new_points
       end
     end
+    Group.update_member_positions
+  end
+
+  def settled?
+    winning_team.present? || tie
   end
 
   def started?
@@ -30,7 +35,7 @@ class Match < ApplicationRecord
     doc = Nokogiri::HTML(URI.open("https://www.espn.com/nfl/schedule/_/week/#{week.number}"))
     td = doc.at("td a[name='&lpos=nfl:schedule:score']:contains('#{home_team.short_name}')")
     return false if td.nil?
-
+    
     score_text = td.children.text
     scores = score_text.split(',')
     scores.each do |score|

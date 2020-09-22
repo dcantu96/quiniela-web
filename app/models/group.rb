@@ -16,6 +16,17 @@ class Group < ApplicationRecord
       .includes(picks: [:picked_team, match: [:winning_team]], membership: [:account, :group])
   end
 
+  def self.update_member_positions
+    Group.all.each do |group|
+      group.memberships
+        .select('*, (select sum(points) from membership_weeks where membership_id = memberships.id) as new_total')
+        .order('new_total desc')
+        .each_with_index do |membership, index|
+          membership.update position: index + 1, total: membership.new_total
+        end
+    end
+  end
+
   private
 
   def generate_group_weeks

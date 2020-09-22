@@ -1,6 +1,5 @@
 class Admin::WeeksController < Admin::BaseController
   before_action :set_week, only: [:update, :show, :edit]
-
   def index
     @weeks = Week.all
   end
@@ -31,7 +30,7 @@ class Admin::WeeksController < Admin::BaseController
 
   def update
     if @week.update week_params
-      redirect_to admin_weeks_path
+      redirect_to admin_root_path, notice: 'Week updated successfully'
     else
       render :edit
     end
@@ -44,6 +43,6 @@ class Admin::WeeksController < Admin::BaseController
   end
 
   def week_params
-    params.require(:week).permit :number, :tournament_id
+    params.require(:week).permit :number, :tournament_id, :finished
   end
 end

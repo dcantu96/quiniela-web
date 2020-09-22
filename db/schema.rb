@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_15_041020) do
+ActiveRecord::Schema.define(version: 2020_09_22_021203) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -59,6 +59,7 @@ ActiveRecord::Schema.define(version: 2020_09_15_041020) do
     t.datetime "updated_at", precision: 6, null: false
     t.datetime "show_time"
     t.integer "order"
+    t.boolean "tie", default: false
     t.index ["home_team_id"], name: "index_matches_on_home_team_id"
     t.index ["visit_team_id"], name: "index_matches_on_visit_team_id"
     t.index ["week_id"], name: "index_matches_on_week_id"
@@ -85,6 +86,8 @@ ActiveRecord::Schema.define(version: 2020_09_15_041020) do
     t.boolean "paid", default: false
     t.boolean "suspended", default: false
     t.string "notes"
+    t.integer "position", default: 0
+    t.integer "total", default: 0
     t.index ["account_id"], name: "index_memberships_on_account_id"
     t.index ["group_id"], name: "index_memberships_on_group_id"
   end

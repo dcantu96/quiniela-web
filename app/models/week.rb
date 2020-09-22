@@ -15,6 +15,10 @@ class Week < ApplicationRecord
     matches.order(start_time: :desc).limit(1).first
   end
 
+  def matches_settled?
+    matches.where('(winning_team_id is null AND tie = false) or (winning_team_id is not null AND tie = true)').empty?
+  end
+
   def next_week
     Week.find_by number: number + 1, tournament: tournament
   end

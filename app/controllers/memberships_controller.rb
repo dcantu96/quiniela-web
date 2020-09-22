@@ -32,9 +32,7 @@ class MembershipsController < ApplicationController
   end
 
   def members
-    @memberships = @membership.group.memberships
-      .select('*, (select sum(points) from membership_weeks where membership_id = memberships.id) as total')
-      .order('total desc')
+    @memberships = @membership.group.memberships.order(position: :asc)
   end
 
   def winners

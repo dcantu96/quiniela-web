@@ -1,49 +1,48 @@
-<div class='p-6 container mx-auto'>
-  <div class="p-8 mt-6 lg:mt-0 rounded shadow bg-white">
-    <table id="zero-config"
-      data-controller="datatable"
-      class="stripe hover w-full py-4"
-      data-datatable-config="<%= { 
-        responsive: true
-      }.to_json %>">
-      <thead>
-        <tr class='text-left'>
-          <th data-priority="1">Username</th>
-          <th data-priority="2">Points</th>
-          <th data-priority="3">Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @memberships.each do |membership| %>
+<div class='container mx-auto overflow-x-auto' data-controller='searchable'>
+  <input type="text" class='input my-2 mx-2' placeholder="Search usernames" data-action="keyup->searchable#search">
+  <div class='overflow-hidden'>
+    <div class='overflow-scroll h-screen w-full'>
+      <table>
+        <thead>
           <tr>
-            <td>
-              <%= link_to membership.account.username, picks_admin_group_membership_path(membership.group, membership), class: 'text-lg text-indigo-900 underline' %>
-              <% if membership.suspended %>
-                <div class="relative inline-block group">
-                  <i class="fas fa-exclamation-triangle fa-lg ml-2 fill-current text-red-600"></i>
-                  <div class="bg-black text-center text-white text-xs rounded py-1 px-2 left-0 top-0 transform -translate-y-8 translate-x-2 bottom-full invisible absolute group-hover:visible w-18 z-20">
-                    Suspended
-                    <svg class="absolute text-black h-2 left-0 ml-3 top-full z-10" x="0px" y="0px" viewBox="0 0 255 255" xml:space="preserve"><polygon class="fill-current" points="0,0 127.5,127.5 255,0"/></svg>
-                  </div>
-                </div>
-              <% end %>
-              <% if membership.paid %>
-                <div class="relative inline-block group">
-                  <i class="fas fa-money-bill-wave-alt fa-lg ml-2 fill-current text-green-700"></i>
-                  <div class="bg-black text-center text-white text-xs rounded py-1 px-2 left-0 top-0 transform -translate-y-8 translate-x-2 bottom-full invisible absolute group-hover:visible w-18 z-20">
-                    Paid
-                    <svg class="absolute text-black h-2 left-0 ml-3 top-full z-10" x="0px" y="0px" viewBox="0 0 255 255" xml:space="preserve"><polygon class="fill-current" points="0,0 127.5,127.5 255,0"/></svg>
-                  </div>
-                </div>
-              <% end %>
-            </td>
-            <td><%= membership.membership_weeks.sum(:points) %></td>
-            <td>
-              <%= link_to 'Settings', settings_admin_group_membership_path(membership.group, membership), class: 'btn btn--danger' %>
-            </td>
+            <th class="p-3 sticky left-0 font-bold text-sm uppercase bg-gray-300 text-gray-700 table-cell">Username</th>
+            <th class="p-3 sticky left-0 font-bold text-sm uppercase bg-gray-300 text-gray-700 table-cell">Points</th>
           </tr>
-        <% end %>
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          <% @memberships.each_with_index do |membership, index| %>
+            <tr class="bg-white lg:hover:bg-gray-100 table-row flex-row flex-no-wrap mb-2 lg:mb-0" data-target='searchable.member' data-username="<%= membership.account.username %>">
+              <td class="p-3 text-center border-gray-300 table-cell hover:bg-gray-300 text-gray-800">
+                <%= link_to picks_admin_group_membership_path(membership.group, membership), class: 'grid grid-cols-4' do %>
+                  <span><%= membership.position %></span>
+                  <span><%= membership.account.username %></span>
+                  <% if membership.suspended %>
+                    <div class="relative inline-block group">
+                      <i class="fas fa-exclamation-triangle fa-lg ml-2 fill-current text-red-600"></i>
+                      <div class="bg-black text-center text-white text-xs rounded py-1 px-2 left-0 top-0 transform -translate-y-8 translate-x-2 bottom-full invisible absolute group-hover:visible w-18 z-20">
+                        Suspended
+                        <svg class="absolute text-black h-2 left-0 ml-3 top-full z-10" x="0px" y="0px" viewBox="0 0 255 255" xml:space="preserve"><polygon class="fill-current" points="0,0 127.5,127.5 255,0"/></svg>
+                      </div>
+                    </div>
+                  <% end %>
+                  <% if membership.paid %>
+                    <div class="relative inline-block group">
+                      <i class="fas fa-money-bill-wave-alt fa-lg ml-2 fill-current text-green-700"></i>
+                      <div class="bg-black text-center text-white text-xs rounded py-1 px-2 left-0 top-0 transform -translate-y-8 translate-x-2 bottom-full invisible absolute group-hover:visible w-18 z-20">
+                        Paid
+                        <svg class="absolute text-black h-2 left-0 ml-3 top-full z-10" x="0px" y="0px" viewBox="0 0 255 255" xml:space="preserve"><polygon class="fill-current" points="0,0 127.5,127.5 255,0"/></svg>
+                      </div>
+                    </div>
+                  <% end %>
+                <% end %>
+              </td>
+              <td class="p-3 text-center border-gray-300 table-cell hover:bg-gray-300 text-gray-800">
+                <span><%= membership.total %></span>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
