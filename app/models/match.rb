@@ -5,7 +5,6 @@ class Match < ApplicationRecord
   belongs_to :winning_team, class_name: 'Team', inverse_of: :wins, optional: true
   has_many :picks, dependent: :destroy
   after_create :generate_picks
-  before_create :set_show_time
 
   def update_picks
     picks.includes(:picked_team).each do |p|
@@ -27,7 +26,7 @@ class Match < ApplicationRecord
   end
 
   def started?
-    start_time < Time.current
+    Time.current > start_time
   end
 
   def fetch_winner
@@ -44,7 +43,9 @@ class Match < ApplicationRecord
       self.update visit_team_score: team_score.second if team_score.first == visit_team.short_name
     end
     if home_team_score.present?
-      if home_team_score != visit_team_score
+      if home_team_score == visit_team_score
+        self.update tie: true
+      else
         if home_team_score > visit_team_score
           self.update winning_team: home_team
         else
@@ -62,9 +63,5 @@ class Match < ApplicationRecord
     week.membership_weeks.each do |membership_week|
       picks.create membership_week: membership_week
     end
-  end
-
-  def set_show_time
-    self.show_time = start_time - 30.minutes if show_time.nil?
   end
 end

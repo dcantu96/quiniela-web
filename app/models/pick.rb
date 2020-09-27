@@ -7,15 +7,15 @@ class Pick < ApplicationRecord
   validate :check_if_correct, if: :picked_team_id_changed?
 
   def viewable?
-    Time.current > match.show_time
+    match.started?
   end
 
   def not_viewable?
-    Time.current < match.show_time
+    !match.started?
   end
 
   def updatable?
-    Time.current < match.show_time - 30.minutes && !match.started?
+    !match.started?
   end
 
   private
