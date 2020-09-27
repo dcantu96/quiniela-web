@@ -15,7 +15,7 @@ class Pick < ApplicationRecord
   end
 
   def updatable?
-    Time.current < match.show_time - 30.minutes
+    Time.current < match.show_time - 30.minutes && !match.started?
   end
 
   private

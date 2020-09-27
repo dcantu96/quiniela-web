@@ -3,7 +3,7 @@ class PicksController < ApplicationController
 
   def update
     respond_to do |format|
-      if @pick.update pick_params
+      if @pick.updatable? && @pick.update(pick_params)
         format.html { redirect_to picks_membership_path(@pick.membership_week.membership), notice: "Monday night score successfully set to #{@pick.points}" }
         format.js
       else
