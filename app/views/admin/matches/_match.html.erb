@@ -37,7 +37,7 @@
         Show Time
       </p>
       <h2 class='text-lg mb-4'>
-        <%= match.show_time.in_time_zone(current_user.time_zone).to_formatted_s(:short)  %>
+        <%= match.start_time.in_time_zone(current_user.time_zone).to_formatted_s(:short)  %>
       </h2>
     </div>
   </div>
