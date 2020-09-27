@@ -44,7 +44,7 @@
         Lock Time
       </p>
       <h2 class='text-sm md:text-md'>
-        <%= (pick.match.show_time - 30.minutes).in_time_zone(current_user.time_zone).to_formatted_s(:short)  %>
+        <%= (pick.match.start_time - 1.minute).in_time_zone(current_user.time_zone).to_formatted_s(:short)  %>
       </h2>
     </div>
     <%= image_pack_tag "#{pick.match.home_team.short_name}.svg", class: 'w-20 flip' %>
