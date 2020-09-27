@@ -12,7 +12,8 @@ class Group < ApplicationRecord
   def membership_weeks_of(week)
     membership_weeks
       .where(week: week)
-      .order(points: :desc)
+      .joins(:membership)
+      .order('membership_weeks.points DESC, memberships.position ASC')
       .includes(picks: [:picked_team, match: [:winning_team]], membership: [:account, :group])
   end
 
