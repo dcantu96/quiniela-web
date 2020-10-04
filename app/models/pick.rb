@@ -4,6 +4,7 @@ class Pick < ApplicationRecord
   belongs_to :membership_week
   belongs_to :picked_team, class_name: 'Team', inverse_of: :picks, optional: true
   scope :filter_by_week_number, -> (group_week) { where group_week: group_week }
+  scope :viewable, -> { joins(:match).where('matches.start_time < ?', Time.current) }
   validate :check_if_correct, if: :picked_team_id_changed?
 
   def viewable?

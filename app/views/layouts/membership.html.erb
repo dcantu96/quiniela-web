@@ -32,21 +32,28 @@
         <%= render 'layouts/account_button' %>
       </div>
       <div class="hidden md:flex mb-20 md:mb-0">
-        <%= link_to table_membership_path(@membership), class: "text-md text-indigo-900 flex items-center border-b-2 pb-3 px-2 #{current_page?(table_membership_path(@membership)) ? 'border-orange-400' : 'border-transparent hover:border-gray-400'}" do %>
-          <i class="fas fa-table mr-3 fill-current"></i>
-          <span>Conso Week <%= @membership.group.tournament.current_week.number %></span>
-        <% end %>
-        <%= link_to picks_membership_path(@membership), class: "text-md text-indigo-900 flex items-center border-b-2 pb-3 px-2 #{current_page?(picks_membership_path(@membership)) ? 'border-orange-400' : 'border-transparent hover:border-gray-400'}" do %>
-          <i class="fas fa-money-bill-wave-alt mr-3 fill-current"></i>
-          <span>Picks</span>
-        <% end %>
-        <%= link_to members_membership_path(@membership), class: "text-md text-indigo-900 flex items-center border-b-2 pb-3 px-2 #{current_page?(members_membership_path(@membership)) ? 'border-orange-400' : 'border-transparent hover:border-gray-400'}" do %>
-          <i class="fas fa-users mr-3 fill-current"></i>
-          <span>Tabla de Posiciones</span>
-        <% end %>
-        <%= link_to winners_membership_path(@membership), class: "text-md text-indigo-900 flex items-center border-b-2 pb-3 px-2 #{current_page?(winners_membership_path(@membership)) ? 'border-orange-400' : 'border-transparent hover:border-gray-400'}" do %>
-          <i class="fas fa-star mr-3 fill-current"></i>
-          <span>Ganadores</span>
+        <% if @membership.account.user == current_user %>
+          <%= link_to table_membership_path(@membership), class: "text-md text-indigo-900 flex items-center border-b-2 pb-3 px-2 #{current_page?(table_membership_path(@membership)) ? 'border-orange-400' : 'border-transparent hover:border-gray-400'}" do %>
+            <i class="fas fa-table mr-3 fill-current"></i>
+            <span>Conso Week <%= @membership.group.tournament.current_week.number %></span>
+          <% end %>
+          <%= link_to picks_membership_path(@membership), class: "text-md text-indigo-900 flex items-center border-b-2 pb-3 px-2 #{current_page?(picks_membership_path(@membership)) ? 'border-orange-400' : 'border-transparent hover:border-gray-400'}" do %>
+            <i class="fas fa-money-bill-wave-alt mr-3 fill-current"></i>
+            <span>Picks</span>
+          <% end %>
+          <%= link_to members_membership_path(@membership), class: "text-md text-indigo-900 flex items-center border-b-2 pb-3 px-2 #{current_page?(members_membership_path(@membership)) ? 'border-orange-400' : 'border-transparent hover:border-gray-400'}" do %>
+            <i class="fas fa-users mr-3 fill-current"></i>
+            <span>Tabla de Posiciones</span>
+          <% end %>
+          <%= link_to winners_membership_path(@membership), class: "text-md text-indigo-900 flex items-center border-b-2 pb-3 px-2 #{current_page?(winners_membership_path(@membership)) ? 'border-orange-400' : 'border-transparent hover:border-gray-400'}" do %>
+            <i class="fas fa-star mr-3 fill-current"></i>
+            <span>Ganadores</span>
+          <% end %>
+        <% else %>
+          <%= link_to public_picks_membership_path(@membership), class: "text-md text-indigo-900 flex items-center border-b-2 pb-3 px-2 #{current_page?(public_picks_membership_path(@membership)) ? 'border-orange-400' : 'border-transparent hover:border-gray-400'}" do %>
+            <i class="fas fa-money-bill-wave-alt mr-3 fill-current"></i>
+            <span>Public Picks</span>
+          <% end %>
         <% end %>
       </div>
     </header>

@@ -1,5 +1,5 @@
 class Admin::GroupsController < Admin::BaseController
-  before_action :set_group, only: [:edit, :update, :matches, :requests, :winners, :members, :table]
+  before_action :set_group, only: [:edit, :update, :matches, :requests, :winners, :members, :table, :autocomplete]
   layout 'admin_group', except: [:index]
 
   def index
@@ -53,6 +53,17 @@ class Admin::GroupsController < Admin::BaseController
       redirect_to admin_groups_path
     else
       render :edit
+    end
+  end
+
+  def autocomplete
+    @accounts = Account.where(memberships: @group.memberships)
+      .ransack(username_cont: params[:q]).result(distinct: true).limit(5)
+    
+    respond_to do |format|
+      format.json {
+        render json: { results: render_to_string(partial: "autocomplete", formats: [:html]) }
+      }
     end
   end
 

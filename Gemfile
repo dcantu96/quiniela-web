@@ -38,6 +38,7 @@ gem 'rolify'
 gem 'mini_magick'
 gem 'pagy'
 gem 'ajax-datatables-rails'
+gem 'ransack'
 
 group :development, :test do
   gem 'pry'

@@ -14,6 +14,7 @@ class Group < ApplicationRecord
       .where(week: week)
       .joins(:membership)
       .order('membership_weeks.points DESC, memberships.position ASC')
+      .limit(40)
       .includes(picks: [:picked_team, match: [:winning_team]], membership: [:account, :group])
   end
 

@@ -10,6 +10,10 @@ class Membership < ApplicationRecord
     membership_weeks.find_by(week: group.tournament.current_week).picks
   end
 
+  def current_membership_week
+    membership_weeks.find_by(week: group.tournament.current_week)
+  end
+
   private
 
   def generate_weeks

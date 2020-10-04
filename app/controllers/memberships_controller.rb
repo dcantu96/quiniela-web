@@ -1,8 +1,8 @@
 class MembershipsController < ApplicationController
-  before_action :set_membership, only: [:show, :table, :picks, :members, :winners]
-  before_action :validate_user
+  before_action :set_membership, only: [:show, :table, :picks, :members, :winners, :autocomplete, :public_picks]
+  before_action :validate_user, except: [:public_picks]
   before_action :set_filter_status, only: [:show]
-  before_action :set_week_and_picks, only: [:show, :picks]
+  before_action :set_week_and_picks, only: [:show, :picks, :public_picks]
   layout 'membership'
 
   def show
@@ -13,20 +13,15 @@ class MembershipsController < ApplicationController
   def table
     @membership_weeks = @membership.group.membership_weeks_of @membership.group.tournament.current_week
     @matches = @membership.group.tournament.current_week_matches
-
-    # respond_to do |format|
-    #   format.html
-    #   format.json {
-    #     render json: { 
-    #       entries: render_to_string(partial: "members",
-    #                                 formats: [:html]),
-    #       pagination: view_context.pagy_nav(@pagy)
-    #     }
-    #   }
-    # end
   end
 
   def picks
+    @untie_pick = @picks.joins(:match).where(matches: { untie: true }).first
+    @weeks = @membership.group.tournament.weeks
+  end
+
+  def public_picks
+    @picks = @picks.viewable
     @untie_pick = @picks.joins(:match).where(matches: { untie: true }).first
     @weeks = @membership.group.tournament.weeks
   end
@@ -37,6 +32,17 @@ class MembershipsController < ApplicationController
 
   def winners
     @winners = @membership.group.winners.includes(membership_week: [:week])
+  end
+
+  def autocomplete
+    @accounts = Account.where(memberships: @membership.group.memberships)
+      .ransack(username_cont: params[:q]).result(distinct: true).limit(5)
+    
+    respond_to do |format|
+      format.json {
+        render json: { results: render_to_string(partial: "autocomplete", formats: [:html]) }
+      }
+    end
   end
 
   private

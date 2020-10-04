@@ -21,6 +21,7 @@ Rails.application.routes.draw do
         get :requests
         get :members
         get :matches
+        get :autocomplete
       end
     end
     resources :tournaments do
@@ -55,8 +56,10 @@ Rails.application.routes.draw do
     member do
       get :table
       get :picks
+      get :public_picks
       get :members
       get :winners
+      get :autocomplete
     end
   end
   resources :groups do
