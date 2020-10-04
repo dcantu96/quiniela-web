@@ -1,5 +1,5 @@
 <div class='container mx-auto overflow-x-auto' data-controller='searchable'>
-  <div class='hidden md:flex flex-col pb-2'>
+  <div class='hidden md:flex flex-col pb-2 px-4'>
     <h3 class="text-sm uppercase text-gray-600 pb-2">User Time Zone <b><%= current_user.time_zone %></b><span class='ml-2 font-bold underline'><%= link_to 'Edit', edit_user_registration_path %></span></h3>
     <h4 class="text-sm uppercase text-gray-600"><%= Time.current.in_time_zone(current_user.time_zone).to_formatted_s(:long) %></h4>
   </div>
@@ -8,7 +8,6 @@
     <div class='absolute z-70 mt-1 mr-4 bg-white w-full overflow-hidden rounded-lg shadow-lg' data-target='search.results'>
     </div>
   </div>
-  <input type="text" class='input my-2 mx-2' placeholder="Search usernames" data-action="keyup->searchable#search">
   <div class='overflow-hidden'>
     <div class='overflow-scroll h-screen w-full'>
       <table>
