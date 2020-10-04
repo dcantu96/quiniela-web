@@ -17,6 +17,7 @@ Rails.application.routes.draw do
       end
       member do
         get :table
+        get :members_forgetting
         get :winners
         get :requests
         get :members

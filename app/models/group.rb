@@ -18,6 +18,16 @@ class Group < ApplicationRecord
       .includes(picks: [:picked_team, match: [:winning_team]], membership: [:account, :group])
   end
 
+  def membership_weeks_forgetting(week)
+    forgotten_members = membership_weeks.where(week: week).select do |membership_week|
+      membership_week.picks.forgotten.count > 0
+    end
+      
+      MembershipWeek.where(id: forgotten_members.pluck(:id)).joins(:membership)
+      .order('membership_weeks.points DESC, memberships.position ASC')
+      .includes(picks: [:picked_team, match: [:winning_team]], membership: [:account, :group])
+  end
+
   def self.update_member_positions
     Group.all.each do |group|
       group.memberships
