@@ -8,7 +8,14 @@
       </ul>
     </div>
   <% end %>
-  <%= f.hidden_field :week_id, value: @week.id if @week.present? %>
+  <% if @week.present? %>
+    <%= f.hidden_field :week_id, value: @week.id %>
+  <% else %>
+    <div class='mb-4'> 
+      <%= f.label 'Semana', class: 'label' %>
+      <%= f.collection_select :week_id, Week.all, :id, :number, {}, { class: 'select' } %>
+    </div>
+  <% end %>
   <div class='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-8'>
     <div class='mb-4' data-controller='select'> 
       <%= f.label :visit_team, class: 'label' %>
