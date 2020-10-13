@@ -7,7 +7,7 @@ class Pick < ApplicationRecord
   scope :viewable, -> { joins(:match).where('matches.start_time < ?', Time.current) }
   scope :forgotten, -> { joins(:match).where("picks.picked_team_id IS NULL AND matches.winning_team_id IS NULL AND matches.tie = false AND (:time_limit > matches.start_time)", time_limit: Time.current + 6.hours) }
   validate :check_if_correct, if: :picked_team_id_changed?
-  validate :update_points, if: :correct_changed?
+  before_save :update_points, if: :will_save_change_to_correct?
   validate :membership_week_must_be_same_as_match_week
 
   def viewable?
