@@ -5,8 +5,10 @@ class Pick < ApplicationRecord
   belongs_to :picked_team, class_name: 'Team', inverse_of: :picks, optional: true
   scope :filter_by_week_number, -> (group_week) { where group_week: group_week }
   scope :viewable, -> { joins(:match).where('matches.start_time < ?', Time.current) }
-  scope :forgotten, -> { joins(:match).where("picks.picked_team_id IS NULL AND matches.winning_team_id IS NULL AND matches.tie = false AND (:time_limit > matches.start_time)", time_limit: Time.current + 3.hours) }
+  scope :forgotten, -> { joins(:match).where("picks.picked_team_id IS NULL AND matches.winning_team_id IS NULL AND matches.tie = false AND (:time_limit > matches.start_time)", time_limit: Time.current + 6.hours) }
   validate :check_if_correct, if: :picked_team_id_changed?
+  validate :update_points, if: :correct_changed?
+  validate :membership_week_must_be_same_as_match_week
 
   def viewable?
     match.started?
@@ -22,17 +24,22 @@ class Pick < ApplicationRecord
 
   private
 
+  def membership_week_must_be_same_as_match_week
+    errors.add(:match, "Must have the same week as the membership week") unless match.week == membership_week.week
+  end
+
+  def update_points
+    new_points = match.premium ? 2 : 1
+    if correct
+      membership_week.update points: membership_week.points + new_points 
+    else
+      membership_week.update points: membership_week.points - new_points
+    end
+  end
+
   def check_if_correct
     if match.winning_team
-      pick_incorrect_previously = !correct
-      pick_correct_previously = correct
       self.correct = picked_team == match.winning_team
-      new_points = match.premium ? 2 : 1
-      if correct && pick_incorrect_previously
-        membership_week.update points: membership_week.points + new_points 
-      elsif !correct && pick_correct_previously
-        membership_week.update points: membership_week.points - new_points
-      end
     end
   end
 end

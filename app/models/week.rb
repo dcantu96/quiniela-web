@@ -32,19 +32,30 @@ class Week < ApplicationRecord
     matches.find_by untie: true
   end
 
+  def update_picks
+    matches.each do |match|
+      match.update_picks unless match.tie
+    end
+  end
+
+  def fetch_match_winners
+    matches.each do |match|
+      match.fetch_winner
+    end
+  end
+
+  def reset_points(group)
+    membership_weeks.where(group: group).each do |mw|
+      mw.picks.each { |p| p.update correct: false }
+      mw.update points: 0
+    end
+  end
+
   private
 
   def generate_group_weeks
     tournament.groups.each do |group|
       group_weeks.create group: group
-    end
-  end
-
-  def update_picks
-    group_weeks.each do |group_week|
-      group_week.picks.each do |pick| 
-        pick.update correct: pick.picked_team == pick.match.winning_team
-      end
     end
   end
 end

@@ -5,20 +5,19 @@ class Match < ApplicationRecord
   belongs_to :winning_team, class_name: 'Team', inverse_of: :wins, optional: true
   has_many :picks, dependent: :destroy
   after_create :generate_picks
+  after_save :set_new_membership_week_to_picks, if: :will_save_change_to_week_id?
 
   def update_picks
-    picks.includes(:picked_team).each do |p|
-      pick_incorrect_previously = !p.correct
-      pick_correct_previously = p.correct
-      p.update correct: p.picked_team == winning_team
-      new_points = premium ? 2 : 1
-      if p.correct && pick_incorrect_previously
-        p.membership_week.update points: p.membership_week.points + new_points
-      elsif !p.correct && pick_correct_previously
-        p.membership_week.update points: p.membership_week.points - new_points
+    picks.where(picked_team: winning_team).update_all correct: true
+  end
+
+  def set_new_membership_week_to_picks
+    picks.each do |pick|
+      if week != pick.membership_week.week
+        new_membership_week = pick.membership_week.membership.membership_weeks.find_by week: week
+        pick.update membership_week: new_membership_week
       end
     end
-    Group.update_member_positions
   end
 
   def settled?
@@ -30,6 +29,8 @@ class Match < ApplicationRecord
   end
 
   def fetch_winner
+
+    return if winning_team.present?
     # For this fetch to work team short names must be identical to ESPN's
     doc = Nokogiri::HTML(URI.open("https://www.espn.com/nfl/schedule/_/week/#{week.number}"))
     td = doc.at("td a[name='&lpos=nfl:schedule:score']:contains('#{home_team.short_name}')")
@@ -51,7 +52,6 @@ class Match < ApplicationRecord
         else
           self.update winning_team: visit_team
         end
-        update_picks
       end
     end
     true
