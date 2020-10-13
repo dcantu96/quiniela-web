@@ -8,7 +8,7 @@ class Match < ApplicationRecord
   after_save :set_new_membership_week_to_picks, if: :will_save_change_to_week_id?
 
   def update_picks
-    picks.where(picked_team: winning_team).update_all correct: true
+    picks.where(picked_team: winning_team).find_each { |p| p.update correct: true }
   end
 
   def set_new_membership_week_to_picks
