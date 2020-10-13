@@ -5,7 +5,7 @@ class Match < ApplicationRecord
   belongs_to :winning_team, class_name: 'Team', inverse_of: :wins, optional: true
   has_many :picks, dependent: :destroy
   after_create :generate_picks
-  after_save :set_new_membership_week_to_picks, if: :will_save_change_to_week_id?
+  before_save :set_new_membership_week_to_picks, if: :will_save_change_to_week_id?
 
   def update_picks
     picks.where(picked_team: winning_team).find_each { |p| p.update correct: true }
