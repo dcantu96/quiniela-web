@@ -1,5 +1,6 @@
 class Admin::GroupsController < Admin::BaseController
-  before_action :set_group, only: [:edit, :update, :matches, :requests, :winners, :members, :table, :members_forgetting, :autocomplete]
+  before_action :set_group, only: [:edit, :update, :matches, :requests, :winners, :members,
+    :table, :members_forgetting, :autocomplete, :reset_week_points, :update_picks, :fetch_match_results, :update_total_points]
   layout 'admin_group', except: [:index]
 
   def index
@@ -58,6 +59,30 @@ class Admin::GroupsController < Admin::BaseController
       redirect_to admin_groups_path
     else
       render :edit
+    end
+  end
+
+  def update_total_points
+    if @group.update_member_positions
+      redirect_to matches_admin_group_path(@group), notice: 'Member position updated'
+    end
+  end
+
+  def reset_week_points
+    if @group.tournament.current_week.reset_points(@group)
+      redirect_to matches_admin_group_path(@group), notice: 'Week points and picks Reset successfull'
+    end
+  end
+
+  def fetch_match_results
+    if @group.tournament.current_week.fetch_match_results
+      redirect_to matches_admin_group_path(@group), notice: 'Match results fetched successfully'
+    end
+  end
+
+  def update_picks
+    if @group.tournament.current_week.update_picks
+      redirect_to matches_admin_group_path(@group), notice: 'Match results fetched successfully'
     end
   end
 

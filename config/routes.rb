@@ -15,6 +15,11 @@ Rails.application.routes.draw do
           get :settings
         end
       end
+      resources :matches, only: [:update] do
+        member do
+          post :fetch_winner
+        end
+      end
       member do
         get :table
         get :members_forgetting
@@ -23,6 +28,10 @@ Rails.application.routes.draw do
         get :members
         get :matches
         get :autocomplete
+        post :reset_week_points
+        post :fetch_match_results
+        post :update_picks
+        post :update_total_points
       end
     end
     resources :tournaments do

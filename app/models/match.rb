@@ -28,9 +28,7 @@ class Match < ApplicationRecord
     Time.current > start_time
   end
 
-  def fetch_winner
-
-    return if winning_team.present?
+  def fetch_result
     # For this fetch to work team short names must be identical to ESPN's
     doc = Nokogiri::HTML(URI.open("https://www.espn.com/nfl/schedule/_/week/#{week.number}"))
     td = doc.at("td a[name='&lpos=nfl:schedule:score']:contains('#{home_team.short_name}')")

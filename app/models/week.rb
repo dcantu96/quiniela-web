@@ -38,9 +38,9 @@ class Week < ApplicationRecord
     end
   end
 
-  def fetch_match_winners
+  def fetch_match_results
     matches.each do |match|
-      match.fetch_winner
+      match.fetch_result
     end
   end
 
