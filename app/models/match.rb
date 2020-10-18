@@ -6,6 +6,7 @@ class Match < ApplicationRecord
   has_many :picks, dependent: :destroy
   after_create :generate_picks
   before_save :set_new_membership_week_to_picks, if: :will_save_change_to_week_id?
+  after_save :update_week_match_order, if: :will_save_change_to_start_time?
 
   def update_picks
     picks.where(picked_team: winning_team).find_each { |p| p.update correct: true }
@@ -56,6 +57,12 @@ class Match < ApplicationRecord
   end
 
   private
+
+  def update_week_match_order
+    week.matches.order(start_time: :asc).each_with_index do |match, i|
+      match.update order: i
+    end
+  end
 
   def generate_picks
     week.membership_weeks.each do |membership_week|
