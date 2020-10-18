@@ -17,10 +17,8 @@ class Tournament < ApplicationRecord
   def self.update_week_order
     Tournament.all.each do |tournament|
       tournament.weeks.each do |week|
-        if !week.finished
-          week.matches.order(start_time: :asc).each_with_index do |match, index|
-            match.update order: index
-          end
+        week.matches.order(start_time: :asc).each_with_index do |match, index|
+          match.update order: index
         end
       end
     end
