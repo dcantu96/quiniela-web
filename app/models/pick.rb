@@ -8,7 +8,7 @@ class Pick < ApplicationRecord
   scope :forgotten, -> { joins(:match).where("picks.picked_team_id IS NULL AND matches.winning_team_id IS NULL AND matches.tie = false AND (:time_limit > matches.start_time)", time_limit: Time.current + 6.hours) }
   before_save :check_if_correct, if: :will_save_change_to_picked_team_id?
   before_save :update_points, if: :will_save_change_to_correct?
-  validate :membership_week_must_be_same_as_match_week
+  validate :membership_week_must_be_same_as_match_week, :picked_team_must_be_in_match
 
   def viewable?
     match.started?
@@ -26,6 +26,12 @@ class Pick < ApplicationRecord
 
   def membership_week_must_be_same_as_match_week
     errors.add(:match, "Must have the same week as the membership week") unless match.week == membership_week.week
+  end
+
+  def picked_team_must_be_in_match
+    if picked_team.present? && match.home_team != picked_team && match.visit_team != picked_team
+      errors.add(:match, "Picked team must be from match")
+    end
   end
 
   def update_points
