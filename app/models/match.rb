@@ -7,9 +7,19 @@ class Match < ApplicationRecord
   after_create :generate_picks
   before_save :set_new_membership_week_to_picks, if: :will_save_change_to_week_id?
   after_save :update_week_match_order, if: :will_save_change_to_start_time?
+  before_save :update_picked_team, if: :will_save_change_to_home_team_id?
+  before_save :update_picked_team, if: :will_save_change_to_visit_team_id?
 
   def update_picks
     picks.where(picked_team: winning_team).find_each { |p| p.update correct: true }
+  end
+
+  def update_picked_team
+    if !settled?
+      picks.joins(:match)
+        .where('picked_team_id is not null and picked_team_id != matches.visit_team_id and picked_team_id != matches.home_team_id')
+        .find_each { |p| p.update picked_team: nil }
+    end
   end
 
   def set_new_membership_week_to_picks
