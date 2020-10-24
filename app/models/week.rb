@@ -34,7 +34,7 @@ class Week < ApplicationRecord
 
   def update_picks
     matches.each do |match|
-      match.update_picks unless match.tie
+      match.update_picks if match.winning_team.present?
     end
   end
 
