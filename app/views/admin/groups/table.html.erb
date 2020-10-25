@@ -6,6 +6,17 @@
   <div class='px-4 mb-4'>
     <%= link_to 'Members Forgetting Picks', members_forgetting_admin_group_path(@group), class: 'btn btn--primary py-1' %>
   </div>
+  <div data-controller="toggle" class='mb-4 px-4'>
+    <div class='flex items-center mb-2'>
+      <button class="btn btn--primary"
+        data-action="toggle#toggle"
+        data-target="checkbox-list.count"
+      >
+        Filters
+      </button>
+    </div>
+    <%= render 'filters' %>
+  </div>
   <div class='relative w-full md:w-1/3 px-4 pb-4' data-controller='search' data-search-url="autocomplete">
     <input type="text" class='input' placeholder="Search usernames" data-action="keyup->search#search">
     <div class='absolute z-70 mt-1 mr-4 bg-white w-full overflow-hidden rounded-lg shadow-lg' data-target='search.results'>

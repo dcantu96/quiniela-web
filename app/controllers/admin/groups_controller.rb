@@ -25,8 +25,15 @@ class Admin::GroupsController < Admin::BaseController
   end
 
   def table
-    @membership_weeks = @group.membership_weeks_of @group.tournament.current_week
-    @matches = @group.tournament.current_week_matches
+    @weeks = @group.tournament.weeks
+    if filtering_params.present?
+      week = @group.tournament.weeks.find_by(number: filtering_params[:week_number])
+      @membership_weeks = @group.membership_weeks_of week
+      @matches = week.matches
+    else
+      @membership_weeks = @group.membership_weeks_of @group.tournament.current_week
+      @matches = @group.tournament.current_week_matches
+    end
   end
 
   def members
@@ -34,9 +41,14 @@ class Admin::GroupsController < Admin::BaseController
   end
 
   def winners
-    @untie_match = @group.tournament.current_week.matches.where(untie: true).first
-    @winners = @group.winners.joins(:membership_week).where(membership_weeks: { week: @group.tournament.current_week })
-    if @group.tournament.current_week.untie_match.started?
+    @weeks = @group.tournament.weeks
+    @untie_match = @group.tournament.current_week.untie_match
+    if filtering_params.present?
+      week = @group.tournament.weeks.find_by(number: filtering_params[:week_number])
+      @winners = @group.winners.joins(:membership_week).where(membership_weeks: { week: week })
+      @possible_winners = @group.membership_weeks.where(week: week).order(points: :desc).limit(10).includes(membership: [:account, :group])
+    else
+      @winners = @group.winners.joins(:membership_week).where(membership_weeks: { week: @group.tournament.current_week })
       @possible_winners = @group.membership_weeks.where(week: @group.tournament.current_week).order(points: :desc).limit(10).includes(membership: [:account, :group])
     end
   end
@@ -98,6 +110,14 @@ class Admin::GroupsController < Admin::BaseController
   end
 
   private
+
+  def filtering_params
+    params.slice(:week_number)
+  end
+
+  def set_filter_status
+    @filters_empty = filtering_params.empty?
+  end
 
   def set_group
     @group = Group.find(params[:id])

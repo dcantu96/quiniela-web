@@ -11,8 +11,15 @@ class MembershipsController < ApplicationController
   end
 
   def table
-    @membership_weeks = @membership.group.membership_weeks_of @membership.group.tournament.current_week
-    @matches = @membership.group.tournament.current_week_matches
+    @weeks = @membership.group.tournament.weeks
+    if filtering_params.present?
+      week = @membership.group.tournament.weeks.find_by(number: filtering_params[:week_number])
+      @membership_weeks = @membership.group.membership_weeks_of week
+      @matches = week.matches
+    else
+      @membership_weeks = @membership.group.membership_weeks_of @membership.group.tournament.current_week
+      @matches = @membership.group.tournament.current_week_matches
+    end
   end
 
   def picks
@@ -31,7 +38,7 @@ class MembershipsController < ApplicationController
   end
 
   def winners
-    @winners = @membership.group.winners.includes(membership_week: [:week])
+    @winners = @membership.group.winners.joins(membership_week: [:week]).includes(membership_week: [:week]).order('"membership_weeks"."week_id" ASC')
   end
 
   def autocomplete

@@ -1,7 +1,17 @@
 <div class='p-6 container mx-auto'>
-  <h1>This is the winners page<h1>
+  <div data-controller="toggle" class='mb-4 px-4'>
+    <div class='flex items-center mb-2'>
+      <button class="btn btn--primary"
+        data-action="toggle#toggle"
+        data-target="checkbox-list.count"
+      >
+        Filters
+      </button>
+    </div>
+    <%= render 'filters' %>
+  </div>
   <% @winners.each do |winner| %>
-    <div class="grid grid-cols-2 md:grid-cols-5 gap-4 rounded-xl p-4 bg-white shadow-lg border-green-700 border-2">
+    <div class="grid grid-cols-2 md:grid-cols-5 mb-4 gap-4 rounded-xl p-4 bg-white shadow-lg border-green-700 border-2">
       <div>
         <p class='text-sm text-gray-500 mb-1'>
           Week
@@ -31,7 +41,9 @@
           Untie Match Total points
         </p>
         <p class='text-md text-indigo-900 font-bold'>
-          <%= winner.membership_week.week.untie_match.home_team_score + winner.membership_week.week.untie_match.visit_team_score if winner.membership_week.week.untie_match.winning_team %>
+          <% if winner.membership_week.week.untie_match.present? && winner.membership_week.week.untie_match.winning_team %>
+            <%= winner.membership_week.week.untie_match.home_team_score + winner.membership_week.week.untie_match.visit_team_score %>
+          <% end %>
         </p>
       </div>
       <div>
@@ -39,7 +51,9 @@
           Untie Points
         </p>
         <p class='text-md text-indigo-900 font-bold'>
-          <%= winner.membership_week.untie_pick(winner.membership_week.week.untie_match).points %>
+          <% if winner.membership_week.week.untie_match.present? && winner.membership_week.week.untie_match.winning_team %>
+            <%= winner.membership_week.untie_pick(winner.membership_week.week.untie_match).points %>
+          <% end %>
         </p>
       </div>
     </div>
@@ -53,7 +67,7 @@
               Member
             </p>
             <p class='text-md text-indigo-900 font-bold'>
-              <%= membership_week.account.username %>
+              <%= membership_week.membership.account.username %>
             </p>
           </div>
           <div>
@@ -69,7 +83,9 @@
               Untie Match Total points
             </p>
             <p class='text-md text-indigo-900 font-bold'>
-              <%= membership_week.week.untie_match.home_team_score + membership_week.week.untie_match.visit_team_score if membership_week.week.untie_match.winning_team %>
+              <% if membership_week.week.untie_match.present? && membership_week.week.untie_match.winning_team %>
+                <%= membership_week.week.untie_match.home_team_score + membership_week.week.untie_match.visit_team_score %>
+              <% end %>
             </p>
             </div>
           <div>
@@ -77,7 +93,9 @@
               Untie Points
             </p>
             <p class='text-md text-indigo-900 font-bold'>
-              <%= membership_week.untie_pick(membership_week.week.untie_match).points %>
+              <% if membership_week.week.untie_match.present? && membership_week.week.untie_match.winning_team %>
+                <%= membership_week.untie_pick(membership_week.week.untie_match).points %>
+              <% end %>
             </p>
           </div>
           <div>
