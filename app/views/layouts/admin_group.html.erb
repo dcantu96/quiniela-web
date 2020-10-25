@@ -80,15 +80,11 @@
             <i class="fas fa-users mr-3 fill-current"></i>
             <span>Tabla de Posiciones</span>
           <% end %>
-          <%= link_to requests_admin_group_path(@group), class: "text-md text-indigo-900 flex items-center border-b-2 pb-3 px-2 #{current_page?(requests_admin_group_path(@group)) ? 'border-orange-400' : 'border-transparent hover:border-gray-400'}" do %>
-            <i class="fas fa-users mr-3 fill-current"></i>
-            <span>Requests</span>
-          <% end %>
           <%= link_to winners_admin_group_path(@group), class: "text-md text-indigo-900 flex items-center border-b-2 pb-3 px-2 #{current_page?(winners_admin_group_path(@group)) ? 'border-orange-400' : 'border-transparent hover:border-gray-400'}" do %>
             <i class="fas fa-star mr-3 fill-current"></i>
             <span>Ganadores</span>
           <% end %>
-          <%= link_to matches_admin_group_path(@group), class: "text-md text-indigo-900 flex items-center border-b-2 pb-3 px-2 #{current_page?(winners_admin_group_path(@group)) ? 'border-orange-400' : 'border-transparent hover:border-gray-400'}" do %>
+          <%= link_to matches_admin_group_path(@group), class: "text-md text-indigo-900 flex items-center border-b-2 pb-3 px-2 #{current_page?(matches_admin_group_path(@group)) ? 'border-orange-400' : 'border-transparent hover:border-gray-400'}" do %>
             <i class="fas fa-football-ball mr-3 fill-current"></i>
             <span>Juegos</span>
           <% end %>
