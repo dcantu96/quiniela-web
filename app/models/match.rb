@@ -6,7 +6,7 @@ class Match < ApplicationRecord
   has_many :picks, dependent: :destroy
   after_create :generate_picks
   before_save :set_new_membership_week_to_picks, if: :will_save_change_to_week_id?
-  after_save :update_week_match_order, if: :will_save_change_to_start_time?
+  after_save :update_week_match_order,  if: :saved_change_to_start_time?
   before_save :update_picked_team, if: :will_save_change_to_home_team_id?
   before_save :update_picked_team, if: :will_save_change_to_visit_team_id?
 
@@ -39,31 +39,30 @@ class Match < ApplicationRecord
     Time.current > start_time
   end
 
-  def fetch_result
-    # For this fetch to work team short names must be identical to ESPN's
-    doc = Nokogiri::HTML(URI.open("https://www.espn.com/nfl/schedule/_/week/#{week.number}"))
+  def fetch_result(doc)
     td = doc.at("td a[name='&lpos=nfl:schedule:score']:contains('#{home_team.short_name}')")
     return false if td.nil?
     
     score_text = td.children.text
     scores = score_text.split(',')
+    new_home_team_score = nil
+    new_visit_team_score = nil
     scores.each do |score|
       team_score = score.split(' ')
-      self.update home_team_score: team_score.second if team_score.first == home_team.short_name
-      self.update visit_team_score: team_score.second if team_score.first == visit_team.short_name
+      new_home_team_score = team_score.second if team_score.first == home_team.short_name
+      new_visit_team_score = team_score.second if team_score.first == visit_team.short_name
     end
-    if home_team_score.present?
-      if home_team_score == visit_team_score
-        self.update tie: true
+    if new_home_team_score.present?
+      if new_home_team_score == new_visit_team_score
+        self.update tie: true, home_team_score: new_home_team_score, visit_team_score: new_visit_team_score
       else
-        if home_team_score > visit_team_score
-          self.update winning_team: home_team
+        if new_home_team_score > new_visit_team_score
+          self.update winning_team: home_team, home_team_score: new_home_team_score, visit_team_score: new_visit_team_score
         else
-          self.update winning_team: visit_team
+          self.update winning_team: visit_team, home_team_score: new_home_team_score, visit_team_score: new_visit_team_score
         end
       end
     end
-    true
   end
 
   private

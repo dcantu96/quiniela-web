@@ -39,9 +39,8 @@ class Week < ApplicationRecord
   end
 
   def fetch_match_results
-    matches.each do |match|
-      match.fetch_result
-    end
+    doc = espn_schedule_table
+    matches.each { |m| m.fetch_result(doc) }
   end
 
   def reset_points(group)
@@ -49,6 +48,11 @@ class Week < ApplicationRecord
       mw.picks.each { |p| p.update correct: false }
       mw.update points: 0
     end
+  end
+
+  def espn_schedule_table
+    # For this fetch to work team short names must be identical to ESPN's
+    Nokogiri::HTML(URI.open("https://www.espn.com/nfl/schedule/_/week/#{number}"))
   end
 
   private

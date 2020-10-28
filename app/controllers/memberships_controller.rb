@@ -11,14 +11,14 @@ class MembershipsController < ApplicationController
   end
 
   def table
-    @weeks = @membership.group.tournament.weeks
+    @weeks = @group.tournament.weeks
     if filtering_params.present?
-      week = @membership.group.tournament.weeks.find_by(number: filtering_params[:week_number])
-      @membership_weeks = @membership.group.membership_weeks_of week
-      @matches = week.matches
+      week = @group.tournament.weeks.find_by(number: filtering_params[:week_number])
+      @membership_weeks = @group.membership_weeks_of week
+      @matches = week.matches.includes(:home_team, :visit_team, :winning_team).order(order: :asc)
     else
-      @membership_weeks = @membership.group.membership_weeks_of @membership.group.tournament.current_week
-      @matches = @membership.group.tournament.current_week_matches
+      @membership_weeks = @group.membership_weeks_of @group.tournament.current_week
+      @matches = @group.tournament.current_week_matches.includes(:home_team, :visit_team, :winning_team).order(order: :asc)
     end
   end
 

@@ -1,6 +1,7 @@
 class Admin::GroupsController < Admin::BaseController
   before_action :set_group, only: [:edit, :update, :matches, :requests, :winners, :members,
     :table, :members_forgetting, :autocomplete, :reset_week_points, :update_picks, :fetch_match_results, :update_total_points]
+  before_action :set_week, only: [:reset_week_points, :update_picks, :fetch_match_results, :update_total_points]
   layout 'admin_group', except: [:index]
 
   def index
@@ -15,8 +16,14 @@ class Admin::GroupsController < Admin::BaseController
   end
 
   def matches
-    @week = @group.tournament.current_week
-    @matches = @week.matches.includes(:home_team, :visit_team, :winning_team).order(order: :asc)
+    @weeks = @group.tournament.weeks
+    if filtering_params.present?
+      @week = @group.tournament.weeks.find_by(number: filtering_params[:week_number])
+      @matches = @week.matches.includes(:home_team, :visit_team, :winning_team).order(order: :asc)
+    else
+      @week = @group.tournament.current_week
+      @matches = @group.tournament.current_week_matches.includes(:home_team, :visit_team, :winning_team).order(order: :asc)
+    end
   end
 
   def members_forgetting
@@ -29,10 +36,10 @@ class Admin::GroupsController < Admin::BaseController
     if filtering_params.present?
       week = @group.tournament.weeks.find_by(number: filtering_params[:week_number])
       @membership_weeks = @group.membership_weeks_of week
-      @matches = week.matches
+      @matches = week.matches.includes(:home_team, :visit_team, :winning_team).order(order: :asc)
     else
       @membership_weeks = @group.membership_weeks_of @group.tournament.current_week
-      @matches = @group.tournament.current_week_matches
+      @matches = @group.tournament.current_week_matches.includes(:home_team, :visit_team, :winning_team).order(order: :asc)
     end
   end
 
@@ -81,19 +88,19 @@ class Admin::GroupsController < Admin::BaseController
   end
 
   def reset_week_points
-    if @group.tournament.current_week.reset_points(@group)
+    if @week.reset_points(@group)
       redirect_to matches_admin_group_path(@group), notice: 'Week points and picks Reset successfull'
     end
   end
 
   def fetch_match_results
-    if @group.tournament.current_week.fetch_match_results
+    if @week.fetch_match_results
       redirect_to matches_admin_group_path(@group), notice: 'Match results fetched successfully'
     end
   end
 
   def update_picks
-    if @group.tournament.current_week.update_picks
+    if @week.update_picks
       redirect_to matches_admin_group_path(@group), notice: 'Match results fetched successfully'
     end
   end
@@ -121,6 +128,10 @@ class Admin::GroupsController < Admin::BaseController
 
   def set_group
     @group = Group.find(params[:id])
+  end
+
+  def set_week
+    @week = Week.find(params[:id])
   end
 
   def group_params

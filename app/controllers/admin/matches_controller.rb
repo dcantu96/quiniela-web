@@ -47,7 +47,7 @@ class Admin::MatchesController < Admin::BaseController
   end
 
   def fetch_winner
-    if @match.fetch_result
+    if @match.fetch_result @match.week.espn_schedule_table
       redirect_to matches_admin_group_path(@group), notice: "Match winner set to #{@match.winning_team.short_name} updated successfully"
     else
       redirect_to matches_admin_group_path(@group), alert: 'Match not result not found yet'

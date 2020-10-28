@@ -10,11 +10,22 @@
       <% end %>
     </div>
   </div>
+  <div data-controller="toggle" class='mb-4 px-4'>
+    <div class='flex items-center mb-2'>
+      <button class="btn btn--primary"
+        data-action="toggle#toggle"
+        data-target="checkbox-list.count"
+      >
+        Filters
+      </button>
+    </div>
+    <%= render 'filters' %>
+  </div>
   <div class='mb-4 flex flex-wrap'>
-    <%= link_to 'Reset Week Pick Points', reset_week_points_admin_group_path(@group), method: :post, class: 'btn btn--danger py-1 mr-2', data: { confirm: 'This will reset week picks', disable_with: 'loading...' } %>
-    <%= link_to 'Fetch All Match Results', fetch_match_results_admin_group_path(@group), method: :post, class: 'btn btn--danger py-1 mr-2', data: { confirm: 'This will fetch and assign all match results', disable_with: 'loading...' } %>
-    <%= link_to 'Update Picks and Week Points', update_picks_admin_group_path(@group), method: :post, class: 'btn btn--danger py-1', data: { confirm: 'This will update all picks of current week', disable_with: 'loading...' } %>
-    <%= link_to 'Update Total Points', update_total_points_admin_group_path(@group), method: :post, class: 'btn btn--danger py-1', data: { confirm: 'This will update all picks of current week', disable_with: 'loading...' } %>
+    <%= link_to 'Reset Week Pick Points', reset_week_points_admin_group_path(group: @group, week: @week), method: :post, class: 'btn btn--danger py-1 mr-2', data: { confirm: 'This will reset week picks', disable_with: 'loading...' } %>
+    <%= link_to '1 - Fetch All Match Results', fetch_match_results_admin_group_path(group: @group, week: @week), method: :post, class: 'btn btn--danger py-1 mr-2', data: { confirm: 'This will fetch and assign all match results', disable_with: 'loading...' } %>
+    <%= link_to '2 - Update Picks and Week Points', update_picks_admin_group_path(group: @group, week: @week), method: :post, class: 'btn btn--danger py-1 mr-2', data: { confirm: 'This will update all picks of current week', disable_with: 'loading...' } %>
+    <%= link_to '3 - Update Total Points', update_total_points_admin_group_path(group: @group, week: @week), method: :post, class: 'btn btn--danger py-1', data: { confirm: 'This will update all picks of current week', disable_with: 'loading...' } %>
   </div>
   <div class='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-8'>
     <%= render @matches %>

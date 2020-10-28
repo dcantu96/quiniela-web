@@ -15,7 +15,7 @@ class Group < ApplicationRecord
       .joins(:membership)
       .order('membership_weeks.points DESC, memberships.position ASC')
       .limit(40)
-      .includes(picks: [:picked_team, match: [:winning_team]], membership: [:account, :group])
+      .includes(picks: [:picked_team, match: [:winning_team, :home_team, :visit_team]], membership: [:account, :group])
   end
 
   def membership_weeks_forgetting(week)
