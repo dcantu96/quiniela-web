@@ -131,7 +131,7 @@ class Admin::GroupsController < Admin::BaseController
   end
 
   def set_week
-    @week = Week.find(params[:id])
+    @week = Week.find(params[:week_id])
   end
 
   def group_params

@@ -49,10 +49,10 @@ class Match < ApplicationRecord
     new_visit_team_score = nil
     scores.each do |score|
       team_score = score.split(' ')
-      new_home_team_score = team_score.second if team_score.first == home_team.short_name
-      new_visit_team_score = team_score.second if team_score.first == visit_team.short_name
+      new_home_team_score = team_score.second.to_i if team_score.first == home_team.short_name
+      new_visit_team_score = team_score.second.to_i if team_score.first == visit_team.short_name
     end
-    if new_home_team_score.present?
+    if new_home_team_score.present? && new_visit_team_score.present?
       if new_home_team_score == new_visit_team_score
         self.update tie: true, home_team_score: new_home_team_score, visit_team_score: new_visit_team_score
       else
