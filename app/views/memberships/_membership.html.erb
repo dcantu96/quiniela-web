@@ -1,11 +1,59 @@
-<div class="rounded-xl p-6 shadow-lg bg-white">
-  <p class='text-xs font-light text-gray-500'>
-    Membership
-  </p>
-  <h2 class='text-lg mb-4'>
-    <%= membership.account.username %>
-  </h2>
-  <div class='flex justify-between'>
-    <%= link_to "View", picks_membership_path(membership), class: 'btn btn--primary' %>
+<div class="rounded-xl pt-6 px-6 shadow-lg bg-white">
+  <div class='grid grid-cols-2 gap-4 mb-4'>
+    <div>
+      <div class='flex items-center'>
+        <h2 class='text-xs font-light text-gray-500 mr-2'>
+          Username
+        </h2>
+        <%= link_to edit_account_path(membership.account) do %>
+          <i class="fas fa-edit fill-current"></i>
+        <% end %>
+      </div>
+      <h2 class='text-lg'>
+        <%= membership.account.username %>
+      </h2>
+    </div>
+    <div>
+      <p class='text-xs font-light text-gray-500'>
+        Week <%= membership.group.tournament.current_week.number %>
+      </p>
+      <h2 class='text-lg'>
+        <%= membership.current_membership_week.points %> points
+      </h2>
+    </div>
+    <div>
+      <p class='text-xs font-light text-gray-500'>
+        Total
+      </p>
+      <h2 class='text-lg'>
+        <%= membership.total %>
+      </h2>
+    </div>
+    <div>
+      <p class='text-xs font-light text-gray-500'>
+        Position
+      </p>
+      <h2 class='text-lg'>
+        <%= membership.position %>
+      </h2>
+    </div>
+  </div>
+  <div class='grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-0'>
+    <%= link_to table_membership_path(membership), class: "text-md text-indigo-900 flex items-center border-b-2 pb-3 px-2 border-transparent hover:border-gray-400" do %>
+      <i class="fas fa-table mr-3 fill-current"></i>
+      <span>Conso</span>
+    <% end %>
+    <%= link_to picks_membership_path(membership), class: "text-md text-indigo-900 flex items-center border-b-2 pb-3 px-2 border-transparent hover:border-gray-400" do %>
+      <i class="fas fa-money-bill-wave-alt mr-3 fill-current"></i>
+      <span>Picks</span>
+    <% end %>
+    <%= link_to members_membership_path(membership), class: "text-md text-indigo-900 flex items-center border-b-2 pb-3 px-2 border-transparent hover:border-gray-400" do %>
+      <i class="fas fa-users mr-3 fill-current"></i>
+      <span>Tabla</span>
+    <% end %>
+    <%= link_to winners_membership_path(membership), class: "text-md text-indigo-900 flex items-center border-b-2 pb-3 px-2 border-transparent hover:border-gray-400" do %>
+      <i class="fas fa-star mr-3 fill-current"></i>
+      <span>Wins</span>
+    <% end %>
   </div>
 </div>

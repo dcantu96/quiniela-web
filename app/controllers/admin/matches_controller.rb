@@ -11,11 +11,9 @@ class Admin::MatchesController < Admin::BaseController
     @match = Match.new
   end
 
-  def show
-  end
+  def show; end
 
-  def edit
-  end
+  def edit; end
 
   def create
     @match = Match.new match_params
