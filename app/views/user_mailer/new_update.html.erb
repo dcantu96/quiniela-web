@@ -1,0 +1,45 @@
+<table class="email-table">
+  <tbody>
+    <tr class="header-row">
+      <td>
+        <h1><%= @update.title %></h1>
+      </td>
+    </tr>
+
+    <tr class="body-row">
+      <td>
+        <p class='text-light text-indigo'>
+          Actualización <%= @update.created_at.to_formatted_s(:short) %>
+        </p>
+        <p>Hola <%= @user.full_name %></p>
+        <%= @update.content %>
+      </td>
+    </tr>
+
+    <hr />
+
+    <tr class="footer-row">
+      <td class='text-indigo'>
+        <p>Nuevamente, sobre el pago y los premios</p>
+        <p>LA CUOTA POR PARTICIPAR SE MANTIENE EN $110.00 DÓLARES, pagaderos EN DÓLARES Y EN EFECTIVO, pero por razones de la PANDEMIA el pago se los vamos a pedir hasta el domingo 15 de noviembre del 2020, y los premios semanales se entregarán al final del año.</p>
+        <p>El pago lo puedes hacer en</p>
+        <ul>
+          <li>
+            Estamos ubicados en un edificio de oficinas cerca de Punto Central,
+            Av. R. Margáin 565, Torre A, 2° Piso, Suite A-4
+          </li>
+          <li>
+            Parque Corporativo Santa Engracia
+            San Pedro Garza García, N.L.
+          </li>
+        </ul>
+        <p>Lunes a Viernes: 9:00 am a 7:00 pm</p>
+        <p>Pero la entrada es por la Ave. Comercio (paralela a Margain).  Estamos en el edificio de oficinas después de la Torre del Campestre (TC).</p>
+        <p class='text-bold'>Se agradece la atención</p>
+        <p>SALUDOS</p>
+        <p>Phone: 81 8865-7711</p>
+        <p>EL 3xH COMITÉ (est 1992)</p>
+      </td>
+    </tr>
+  </tbody>
+</table>

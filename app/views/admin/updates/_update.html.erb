@@ -1,0 +1,13 @@
+<div class="rounded-xl p-6 shadow-lg bg-white">
+  <div class='flex justify-between items-center mb-4'>
+    <div class='mr-4'>
+      <h2 class='text-lg mb-4'>
+        <%= update.title %>
+      </h2>
+      <%= update.content %>
+    </div>
+  </div>
+  <div class='flex justify-between'>
+    <%= link_to "Edit", edit_admin_update_path(update), class: 'btn btn--primary' %>
+  </div>
+</div>

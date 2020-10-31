@@ -1,0 +1,11 @@
+<div class='bg-white px-6 py-3 shadow-sm'>
+  <div class="flex mb-6 items-center">
+    <i class="fas fa-users fa-2x p-1 mr-3 fill-current transition-all duration-300 text-indigo-900"></i>
+    <%= link_to 'Updates', admin_updates_path, class: 'text-md text-indigo-900 mr-3 underline' %>
+    <div class="text-md text-indigo-900 mr-3">&#x2f;</div>
+    <h1 class='text-xl text-indigo-900 mr-3'>New Update</h1>
+  </div>
+</div>
+<div class='p-6 container mx-auto'>
+  <%= render 'form' %>
+</div>

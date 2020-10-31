@@ -39,6 +39,7 @@ gem 'mini_magick'
 gem 'pagy'
 gem 'ajax-datatables-rails'
 gem 'ransack'
+gem 'premailer-rails'
 
 group :development, :test do
   gem 'pry'

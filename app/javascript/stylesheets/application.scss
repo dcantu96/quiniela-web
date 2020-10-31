@@ -136,3 +136,5 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
 @import "tailwindcss/utilities";
 
 @import '@fortawesome/fontawesome-free';
+@import "trix/dist/trix";
+@import "./actiontext.scss";

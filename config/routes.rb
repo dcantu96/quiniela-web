@@ -57,6 +57,7 @@ Rails.application.routes.draw do
     resources :teams, only: [:edit, :update]
     resources :requests, only: [:update]
     resources :picks, only: [:update]
+    resources :updates
   end
 
   resources :accounts

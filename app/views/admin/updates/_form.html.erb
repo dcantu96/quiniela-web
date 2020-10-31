@@ -1,0 +1,22 @@
+<%= form_with model: [:admin, @update] do |f| %>
+  <% if @update.errors.any? %>
+    <div>
+      <ul>
+        <% @update.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class='mb-4'>
+    <%= f.label :title, class: 'label' %>
+    <%= f.text_field :title, class: 'input', required: true %>
+  </div>
+  <div class="mb-4">
+    <%= f.label :content %>
+    <%= f.rich_text_area :content %>
+  </div>
+  <%= f.submit class: 'btn btn--primary' %>
+<% end %>
+
+
