@@ -7,7 +7,7 @@ class Update < ApplicationRecord
 
   def notify_users
     User.find_each do |user|
-      UserMailer.with(user: user).new_update(self).deliver_now
+      UserMailer.with(user: user).new_update(self).deliver_later
     end
   end
 end
