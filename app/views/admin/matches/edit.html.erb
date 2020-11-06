@@ -7,5 +7,60 @@
   </div>
 </div>
 <div class='p-6 container mx-auto'>
-  <%= render 'form' %>
+  <%= form_with model: [:admin, @match] do |f| %>
+    <% if @match.errors.any? %>
+      <div>
+        <ul>
+          <% @match.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <div class='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-8'>
+      <div> 
+        <%= f.label 'Semana', class: 'label' %>
+        <%= f.collection_select :week_id, Week.order(number: :asc), :id, :number, {}, { class: 'select' } %>
+      </div>
+      <div data-controller='select'> 
+        <%= f.label :visit_team, class: 'label' %>
+        <%= f.collection_select :visit_team_id, Team.all, :id, :name, {}, { class: 'select2 w-full' } %>
+      </div>
+      <div data-controller='select'> 
+        <%= f.label :home_team, class: 'label' %>
+        <%= f.collection_select :home_team_id, Team.all, :id, :name, {}, { class: 'select2 w-full' } %>
+      </div>
+      <div data-controller='select'> 
+        <%= f.label :winning_team, class: 'label' %>
+        <%= f.collection_select :winning_team_id, Team.all, :id, :name, { include_blank: 'None yet' }, { class: 'select2 w-full' } %>
+      </div>
+      <div>
+        <%= f.label :home_team_score, class: 'label' %>
+        <%= f.text_field :home_team_score, class: 'input', placeholder: 'Leave blank if match is not tie break' %>
+      </div>
+      <div>
+        <%= f.label :visit_team_score, class: 'label' %>
+        <%= f.text_field :visit_team_score, class: 'input', placeholder: 'Leave blank if match is not tie break' %>
+      </div>
+      <div > 
+        <%= f.label :start_time, class: 'label' %>
+        <%= f.datetime_field :start_time, class: 'input' %>
+      </div>
+      <div>
+        <%= f.label :untie, class: 'checkbox-toggle mb-4' do %>
+          <span class='checkbox-toggle__text'>Untie Match</span>
+          <%= f.check_box :untie, class: 'checkbox-toggle__input' %>
+          <div class='checkbox-toggle__fill'></div>
+        <% end %>
+      </div>
+      <div>
+        <%= f.label :premium, class: 'checkbox-toggle mb-4' do %>
+          <span class='checkbox-toggle__text'>Premium</span>
+          <%= f.check_box :premium, class: 'checkbox-toggle__input' %>
+          <div class='checkbox-toggle__fill'></div>
+        <% end %>
+      </div>
+    </div>
+    <%= f.submit class: 'btn btn--primary' %>
+  <% end %>
 </div>
