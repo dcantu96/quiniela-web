@@ -34,6 +34,9 @@
                   <% if match.untie %>
                     <span class="bg-black mt-1 px-2 py-1 text-xs text-white uppercase block">MNF</span>
                   <% end %>
+                  <% if match.premium %>
+                    <span class="bg-black mt-1 px-2 py-1 text-xs text-white uppercase block">PREMIUM</span>
+                  <% end %>
                   <%= match.visit_team.short_name %> @ <%= match.home_team.short_name %>
                 </div>
               </th>
