@@ -40,6 +40,7 @@ gem 'pagy'
 gem 'ajax-datatables-rails'
 gem 'ransack'
 gem 'premailer-rails'
+gem 'sidekiq'
 
 group :development, :test do
   gem 'pry'

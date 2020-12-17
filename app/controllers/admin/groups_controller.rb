@@ -82,9 +82,8 @@ class Admin::GroupsController < Admin::BaseController
   end
 
   def update_total_points
-    if @group.update_member_positions
-      redirect_to matches_admin_group_path(@group), notice: 'Member position updated'
-    end
+    UpdateWeekWorker.perform_async(@group)
+    redirect_to matches_admin_group_path(@group), notice: 'An email will be sent when update is finished.'
   end
 
   def reset_week_points

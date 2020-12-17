@@ -1,0 +1,25 @@
+<table class="email-table">
+  <tbody>
+    <tr class="header-row">
+      <td>
+        <h1>Fecha de Actualización <%= Time.now %> </h1>
+      </td>
+    </tr>
+
+    <tr class="body-row">
+      <td>
+        <p class='text-light text-indigo'>
+          La semana <%= @week.number %> se actualizó correctamente para el grupo <b><%= @group.name %></b>
+        </p>
+      </td>
+    </tr>
+
+    <hr />
+
+    <tr class="footer-row">
+      <td class='text-indigo'>
+        <p>Este correo es automatizado</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
