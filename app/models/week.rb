@@ -39,8 +39,7 @@ class Week < ApplicationRecord
   end
 
   def fetch_match_results
-    doc = espn_schedule_table
-    matches.each { |m| m.fetch_result(doc) }
+    matches.each { |m| m.fetch_result(espn_schedule_table) }
   end
 
   def reset_points(group)
@@ -53,6 +52,31 @@ class Week < ApplicationRecord
   def espn_schedule_table
     # For this fetch to work team short names must be identical to ESPN's
     Nokogiri::HTML(URI.open("https://www.espn.com/nfl/schedule/_/week/#{number}"))
+  end
+
+  def generate_matches
+    doc = espn_schedule_table
+    espn_matches = doc.css('.responsive-table-wrap tr.even') + doc.css('.responsive-table-wrap tr.odd')
+    espn_matches.each do |espn_match|
+      espn_visit = espn_match.css('td')[0].text.split.last
+      espn_home = espn_match.css('td')[1].text.split.last
+      espn_match_date = espn_match.css('td')[2].values.second
+      visit_team = Team.find_by(short_name: espn_visit)
+      home_team = Team.find_by(short_name: espn_home)
+      if matches.find_by(visit_team: visit_team).present?
+        match = matches.find_by(visit_team: visit_team)
+        unless match.home_team == home_team
+          match.update home_team: home_team
+        end
+      elsif matches.find_by(home_team: home_team).present?
+        match = matches.find_by(home_team: home_team)
+        unless match.visit_team == visit_team
+          match.update visit_team: visit_team
+        end
+      else
+        matches.create home_team: home_team, visit_team: visit_team, start_time: espn_match_date
+      end
+    end
   end
 
   private
