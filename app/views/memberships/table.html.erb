@@ -1,4 +1,4 @@
-<div class='container mx-auto overflow-x-auto' data-controller='searchable'>
+<div class='overflow-x-auto' data-controller='searchable'>
   <div class='hidden md:flex flex-col pb-2 px-4'>
     <h3 class="text-sm uppercase text-gray-600 pb-2">User Time Zone <b><%= current_user.time_zone %></b><span class='ml-2 font-bold underline'><%= link_to 'Edit', edit_user_registration_path %></span></h3>
     <h4 class="text-sm uppercase text-gray-600"><%= Time.current.in_time_zone(current_user.time_zone).to_formatted_s(:long) %></h4>
@@ -24,17 +24,17 @@
       <table>
         <thead>
           <tr>
-            <th class="sticky z-40 left-0 top-0 p-3 font-bold text-sm uppercase bg-gray-300 text-gray-700 table-cell">Matches</th>
+            <th class="sticky z-40 left-0 top-0 p-1 font-bold text-sm uppercase bg-gray-300 text-gray-700 table-cell">Matches</th>
             <% @matches.each do |match| %>
-              <th class="sticky z-30 top-0 p-3 font-bold text-sm uppercase text-gray-600 table-cell bg-gray-200">
-                <div class="w-24">
+              <th class="sticky z-30 top-0 p-1 font-bold text-sm uppercase text-gray-600 table-cell bg-gray-200">
+                <div class="w-32">
                   <%= match.visit_team.short_name %>
                   <% if match.started? %>
-                    <span class='text-black font-extrabold'><%= match.picks.where(membership_week: @group.membership_weeks, picked_team: match.visit_team).count %></span>
+                    <span class='text-black font-extrabold'><%= match.picks.where(membership_week: @membership.group.membership_weeks, picked_team: match.visit_team).count %></span>
                   <% end %>
                   @ <%= match.home_team.short_name %>
                   <% if match.started? %>
-                    <span class='text-black font-extrabold'><%= match.picks.where(membership_week: @group.membership_weeks, picked_team: match.home_team).count %></span>
+                    <span class='text-black font-extrabold'><%= match.picks.where(membership_week: @membership.group.membership_weeks, picked_team: match.home_team).count %></span>
                   <% end %>
                   <% if match.untie %>
                     <span class="bg-black m-1 px-1 py-1 text-xs text-white uppercase">MNF</span>
@@ -47,9 +47,9 @@
             <% end %>
           </tr>
           <tr>
-            <th class="p-3 sticky left-0 font-bold text-sm uppercase bg-gray-300 text-gray-700 table-cell">Show Time</th>
+            <th class="p-1 sticky left-0 bg-gray-300 table-cell"></th>
             <% @matches.each do |match| %>
-              <th class="p-3 font-bold text-sm uppercase text-gray-600 bg-gray-200 table-cell">
+              <th class="p-1 font-bold text-sm uppercase text-gray-600 bg-gray-200 table-cell">
                 <span class="bg-blue-200 mt-1 px-2 py-1 text-xs uppercase block"><%= match.start_time.in_time_zone(current_user.time_zone).strftime("%a %H:%M")%></span>
               </th>
             <% end %>
