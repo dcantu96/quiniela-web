@@ -32,9 +32,9 @@
               <th class="sticky z-30 top-0 p-2 font-bold text-sm uppercase text-gray-600 table-cell bg-gray-200">
                 <div class="w-24">
                   <%= match.visit_team.short_name %>
-                  <span class='text-black font-extrabold'><%= match.picks.where(membership_week: @membership_weeks, picked_team: match.visit_team).count %></span>
+                  <span class='text-black font-extrabold'><%= match.picks.where(membership_week: @group.membership_weeks, picked_team: match.visit_team).count %></span>
                   @ <%= match.home_team.short_name %>
-                  <span class='text-black font-extrabold'><%= match.picks.where(membership_week: @membership_weeks, picked_team: match.home_team).count %></span>
+                  <span class='text-black font-extrabold'><%= match.picks.where(membership_week: @group.membership_weeks, picked_team: match.home_team).count %></span>
                   <% if match.untie %>
                     <span class="bg-black m-1 px-1 py-1 text-xs text-white uppercase">MNF</span>
                   <% end %>
