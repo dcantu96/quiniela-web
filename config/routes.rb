@@ -42,6 +42,9 @@ Rails.application.routes.draw do
     end
     resources :weeks do
       resources :matches, only: [:new, :create]
+      member do
+        post :generate_week_matches
+      end
     end
     resources :sports do
       resources :teams, only: [:new, :create]

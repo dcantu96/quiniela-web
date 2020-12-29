@@ -1,5 +1,7 @@
 class Admin::WeeksController < Admin::BaseController
-  before_action :set_week, only: [:update, :show, :edit]
+  before_action :set_week, only: [:update, :show, :edit, :generate_week_matches]
+  before_action :set_group, only: [:generate_week_matches]
+
   def index
     @weeks = Week.all
   end
@@ -12,9 +14,11 @@ class Admin::WeeksController < Admin::BaseController
     @matches = @week.matches.includes(:home_team, :visit_team, :winning_team).order(order: :asc)
   end
 
-  # def generate
-  #   @week_matches = @week.fetch_week_matches
-  # end
+  def generate_week_matches
+    if @week.generate_matches
+      redirect_to matches_admin_group_path(@group, week_number: @week.number), notice: 'Matches generated successfully'
+    end
+  end
 
   def edit
   end
@@ -40,6 +44,10 @@ class Admin::WeeksController < Admin::BaseController
 
   def set_week
     @week = Week.find(params[:id])
+  end
+
+  def set_group
+    @group = Group.find(params[:group_id])
   end
 
   def week_params
