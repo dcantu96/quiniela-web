@@ -69,6 +69,7 @@ Rails.application.routes.draw do
   resources :accounts
   resources :picks
   resources :weeks
+  resources :requests, only: [:create]
   resources :memberships do
     member do
       get :table

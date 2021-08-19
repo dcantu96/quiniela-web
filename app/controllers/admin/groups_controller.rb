@@ -137,6 +137,6 @@ class Admin::GroupsController < Admin::BaseController
   end
 
   def group_params
-    params.require(:group).permit :name, :private, :tournament_id
+    params.require(:group).permit :name, :private, :tournament_id, :finished
   end
 end

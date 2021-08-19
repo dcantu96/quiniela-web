@@ -13,4 +13,8 @@ class User < ApplicationRecord
   def admin?
     has_role? :admin
   end
+
+  def group_ids
+    memberships.pluck(:group_id)
+  end
 end
