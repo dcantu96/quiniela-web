@@ -24,6 +24,7 @@ Rails.application.routes.draw do
         get :table
         get :members_forgetting
         get :winners
+        get :settings
         get :requests
         get :members
         get :matches
@@ -38,6 +39,8 @@ Rails.application.routes.draw do
       resources :weeks, only: [:new, :create]
       member do
         get :weeks
+        post :update_week_matches
+        post :generate_week_matches
       end
     end
     resources :weeks do

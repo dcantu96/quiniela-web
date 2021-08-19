@@ -69,7 +69,7 @@ end
 
 # Create all week matches
 # Tournament.first.weeks.each do |week|
-#   doc = Nokogiri::HTML(open("https://www.espn.com/nfl/schedule/_/week/#{week.number}/seasontype/2"))
+#   doc = Nokogiri::HTML(open("https://www.espn.com/nfl/schedule/_/week/#{week.number}/year/#{tournament.year}/seasontype/2"))
 #   dates = doc.xpath('//td/@data-date').map { |d| d.text }
 #   co = 0
 #   doc.css('div .responsive-table-wrap').each do |table|

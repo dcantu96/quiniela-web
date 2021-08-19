@@ -51,13 +51,15 @@ class Week < ApplicationRecord
 
   def espn_schedule_table
     # For this fetch to work team short names must be identical to ESPN's
-    Nokogiri::HTML(URI.open("https://www.espn.com/nfl/schedule/_/week/#{number}"))
+    Nokogiri::HTML(URI.open("https://www.espn.com/nfl/schedule/_/week/#{number}/year/#{tournament.year}/seasontype/2"))
   end
 
   def generate_matches
     doc = espn_schedule_table
     espn_matches = doc.css('.responsive-table-wrap tr.even') + doc.css('.responsive-table-wrap tr.odd')
     espn_matches.each do |espn_match|
+      return if espn_match.classes.include?('byeweek')
+
       espn_visit = espn_match.css('td')[0].text.split.last
       espn_home = espn_match.css('td')[1].text.split.last
       espn_match_date = espn_match.css('td')[2].values.second

@@ -31,8 +31,6 @@ gem 'bootsnap', '>= 1.4.2', require: false
 gem 'devise'
 gem 'chartkick'
 gem 'groupdate'
-gem 'http'
-gem 'httparty'
 gem 'json'
 gem 'rolify'
 gem 'mini_magick'
@@ -41,6 +39,7 @@ gem 'ajax-datatables-rails'
 gem 'ransack'
 gem 'premailer-rails'
 gem 'sidekiq'
+gem 'nokogiri', '~> 1.12', '>= 1.12.3'
 
 group :development, :test do
   gem 'pry'

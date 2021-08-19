@@ -1,5 +1,5 @@
 class Admin::TournamentsController < Admin::BaseController
-  before_action :set_tournament, only: [:update, :show, :edit]
+  before_action :set_tournament, only: [:update, :show, :edit, :generate_week_matches, :update_week_matches]
 
   def index
     @tournaments = Tournament.all
@@ -15,6 +15,16 @@ class Admin::TournamentsController < Admin::BaseController
   end
 
   def edit
+  end
+
+  def generate_week_matches
+    @tournament.generate_week_matches
+    redirect_to admin_groups_path
+  end
+
+  def update_week_matches
+    @tournament.generate_week_matches
+    redirect_to admin_groups_path
   end
 
   def create
@@ -41,6 +51,6 @@ class Admin::TournamentsController < Admin::BaseController
   end
 
   def tournament_params
-    params.require(:tournament).permit :name, :sport_id
+    params.require(:tournament).permit :name, :sport_id, :year
   end
 end

@@ -1,8 +1,8 @@
 class Admin::GroupsController < Admin::BaseController
   before_action :set_group, only: [:edit, :update, :matches, :requests, :winners, :members,
-    :table, :members_forgetting, :autocomplete, :reset_week_points, :update_picks, :fetch_match_results, :update_total_points]
+    :table, :members_forgetting, :autocomplete, :reset_week_points, :update_picks, :fetch_match_results, :update_total_points, :settings]
   before_action :set_week, only: [:reset_week_points, :update_picks, :fetch_match_results, :update_total_points]
-  layout 'admin_group', except: [:index]
+  layout 'admin_group', except: [:index, :new]
 
   def index
     @groups = Group.includes(:tournament)
@@ -62,6 +62,9 @@ class Admin::GroupsController < Admin::BaseController
 
   def requests
     @requests = @group.requests
+  end
+
+  def settings
   end
 
   def create

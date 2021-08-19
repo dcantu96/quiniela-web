@@ -1,3 +1,4 @@
+
 class Tournament < ApplicationRecord
   belongs_to :sport
   has_many :weeks
@@ -20,6 +21,25 @@ class Tournament < ApplicationRecord
         week.matches.order(start_time: :asc).each_with_index do |match, index|
           match.update order: index
         end
+      end
+    end
+  end
+
+  def generate_week_matches
+    require 'open-uri'
+    valid_week_url = true
+    iterable_week = 1
+    while valid_week_url do
+      begin
+        doc = Nokogiri::HTML(URI.open("https://www.espn.com/nfl/schedule/_/week/#{iterable_week}/year/#{year}/seasontype/2", redirect: :true))
+
+        new_week = weeks.find_or_create_by number: iterable_week
+        new_week.generate_matches
+        iterable_week = iterable_week + 1
+
+      rescue
+        puts 'we enter the error'
+        valid_week_url = false
       end
     end
   end

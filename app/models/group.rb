@@ -3,6 +3,7 @@ class Group < ApplicationRecord
   has_many :requests
   has_many :memberships
   has_many :membership_weeks
+  has_many :group_weeks
   has_many :winners, through: :membership_weeks
   has_many :accounts, through: :memberships
   validates_uniqueness_of :name
