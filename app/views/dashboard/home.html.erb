@@ -42,7 +42,7 @@
           </thead>
           <tbody class="bg-white divide-y divide-gray-200">
             <% current_user.accounts.each do |account| %>
-              <% Group.where.not(id: account.group_ids).each do |group| %>
+              <% Group.where.not(id: account.group_ids).where(finished: false).each do |group| %>
                 <tr>
                   <td class="px-6 py-4 whitespace-nowrap">
                     <div class="flex items-center">
