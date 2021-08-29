@@ -1,6 +1,5 @@
 class Admin::MatchesController < Admin::BaseController
   before_action :set_match, only: [:update, :show, :edit, :set_winner, :fetch_winner]
-  before_action :set_group, only: [:fetch_winner]
 
   def index
     @matches = Match.all
@@ -46,9 +45,9 @@ class Admin::MatchesController < Admin::BaseController
 
   def fetch_winner
     if @match.fetch_result @match.week.espn_schedule_table
-      redirect_to matches_admin_group_path(@group), notice: "Match winner set to #{@match.winning_team.short_name} updated successfully"
+      redirect_to admin_week_path(@match.week), notice: "Match winner set to #{@match.winning_team.short_name} updated successfully"
     else
-      redirect_to matches_admin_group_path(@group), alert: 'Match not result not found yet'
+      redirect_to admin_week_path(@match.week), alert: 'Match not result not found yet'
     end
   end
 

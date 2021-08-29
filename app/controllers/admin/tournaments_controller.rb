@@ -1,5 +1,5 @@
 class Admin::TournamentsController < Admin::BaseController
-  before_action :set_tournament, only: [:update, :show, :edit, :generate_week_matches, :update_week_matches]
+  before_action :set_tournament, only: [:update, :show, :edit, :generate_week_matches, :update_week_matches, :destroy]
 
   def index
     @tournaments = Tournament.all
@@ -44,6 +44,12 @@ class Admin::TournamentsController < Admin::BaseController
     end
   end
 
+  def destroy
+    if @tournament.destroy
+      redirect_to admin_tournaments_path
+    end
+  end
+
   private
 
   def set_tournament
@@ -51,6 +57,6 @@ class Admin::TournamentsController < Admin::BaseController
   end
 
   def tournament_params
-    params.require(:tournament).permit :name, :sport_id
+    params.require(:tournament).permit :name, :sport_id, :year
   end
 end

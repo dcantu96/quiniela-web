@@ -1,5 +1,5 @@
 class Admin::WeeksController < Admin::BaseController
-  before_action :set_week, only: [:update, :show, :edit, :generate_week_matches]
+  before_action :set_week, only: [:update, :show, :edit, :generate_week_matches, :update_matches]
   before_action :set_group, only: [:generate_week_matches]
 
   def index
@@ -17,6 +17,12 @@ class Admin::WeeksController < Admin::BaseController
   def generate_week_matches
     if @week.generate_matches
       redirect_to matches_admin_group_path(@group, week_number: @week.number), notice: 'Matches generated successfully'
+    end
+  end
+
+  def update_matches
+    if @week.update_matches
+      redirect_to admin_week_path(@week), notice: 'Attempted to update matches, please check manually'
     end
   end
 

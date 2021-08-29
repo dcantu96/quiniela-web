@@ -9,7 +9,75 @@
       <%= link_to 'Next Week', admin_week_path(@week.next_week), class: 'btn btn--primary mr-4' if @week.number < 17 %>
     </div>
   </div>
-  <div class='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-8'>
-    <%= render @matches %>
+</div>
+
+
+<div class='p-6 container mx-auto'>
+  <div class="flex flex-col">
+    <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+      <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+        <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+          <table class="min-w-full divide-y divide-gray-200">
+            <thead>
+              <tr class="bg-gray-200">
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Visit Team
+                </th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Home Team
+                </th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Start Time
+                </th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Show Time
+                </th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Actions
+                </th>
+              </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+              <% @matches.each do |match|  %>
+                <tr>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="text-sm font-medium text-indigo-900">
+                      <%= match.visit_team.name %>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="text-sm font-medium text-indigo-900">
+                      <%= match.home_team.name %>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="text-sm font-medium text-indigo-900">
+                      <%= match.start_time.in_time_zone(current_user.time_zone).to_formatted_s(:long)  %>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="text-sm font-medium text-indigo-900">
+                      <%= match.start_time.in_time_zone(current_user.time_zone).to_formatted_s(:short)  %>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="flex">
+                      <%= link_to "Edit", edit_admin_match_path(match), class: 'btn btn--warning mr-2' %>
+                      <% if match.winning_team.nil? %>
+                        <% if @group %>
+                          <%= button_to "Fetch winner", fetch_winner_admin_group_match_path(@group, match), remote: true, class: 'btn btn--primary', data: { confirm: 'This will fetch the winner from espn and will not do anything if no winner is set.', disable_with: 'loading...' } %>
+                        <% else %>
+                          <%= button_to "Fetch winner", fetch_winner_admin_match_path(match), remote: true, class: 'btn btn--primary', data: { confirm: 'This will fetch the winner from espn and will not do anything if no winner is set.', disable_with: 'loading...' } %>
+                        <% end %>
+                      <% end %>
+                    </div>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

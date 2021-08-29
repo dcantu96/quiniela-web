@@ -1,25 +1,28 @@
-<div class="rounded-xl p-6 shadow-lg bg-white">
-  <div class='flex justify-between items-center mb-4'>
-    <div class='mr-4'>
-      <p class='text-xs font-light text-gray-500'>
-        Tournament
-      </p>
-      <h2 class='text-lg mb-4'>
-        <%= tournament.name %>
-      </h2>
-    </div>
-    <div>
-      <p class='text-xs font-light text-gray-500'>
-        Sport
-      </p>
-      <h2 class='text-lg mb-4'>
+<tr>
+  <td class="px-6 py-4 whitespace-nowrap">
+    <div class="text-sm font-medium text-gray-900">
+        <%= link_to tournament.name, admin_tournament_path(tournament), class: "text-md text-indigo-900 flex items-center" %>
+      </div>
+  </td>
+  <td class="px-6 py-4 whitespace-nowrap">
+    <div class="text-sm font-medium text-gray-900">
         <%= tournament.sport.name %>
-      </h2>
-    </div>
-  </div>
-  <div class='flex justify-between'>
-    <%= link_to "View", admin_tournament_path(tournament), class: 'btn btn--primary' %>
-    <%= link_to "Groups", admin_groups_path, class: 'btn btn--secondary' %>
-    <%= link_to "Edit", edit_admin_tournament_path(tournament), class: 'btn btn--primary' %>
-  </div>
-</div>
+      </div>
+  </td>
+  <td class="px-6 py-4 whitespace-nowrap">
+    <div class="text-sm font-medium text-gray-900">
+        <%= tournament.year %>
+      </div>
+  </td>
+  <td class="px-6 py-4 whitespace-nowrap">
+    <div class="text-sm font-medium text-gray-900">
+        <%= link_to tournament.groups.count, admin_tournament_groups_path(tournament), class: 'text-md text-indigo-900 flex items-center' %>
+      </div>
+  </td>
+  <td class="px-6 py-4 whitespace-nowrap">
+    <div class="flex">
+        <%= link_to "Edit", edit_admin_tournament_path(tournament), class: 'btn btn--primary inline-block mr-2' %>
+        <%= button_to "Borrar", [:admin, tournament], method: :delete, class: 'btn btn--danger inline-block' %>
+      </div>
+  </td>
+</tr>

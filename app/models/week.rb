@@ -81,6 +81,13 @@ class Week < ApplicationRecord
     end
   end
 
+  def update_matches
+    doc = espn_schedule_table
+    matches.each do |match|
+      match.fetch_result(doc)
+    end
+  end
+
   private
 
   def generate_group_weeks

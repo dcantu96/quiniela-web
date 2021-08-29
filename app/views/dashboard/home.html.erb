@@ -58,8 +58,8 @@
                       </div>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
-                      <div class="text-sm text-gray-900"><%= group.name %> - <%= group.year %></div>
-                      <div class="text-sm text-gray-500"><%= group.tournament.sport.name %></div>
+                      <div class="text-sm text-gray-900"><%= group.name %></div>
+                      <div class="text-sm text-gray-500"><%= group.tournament.sport.name %> - <%= group.tournament.year %></div>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
                       <% request = group.requests.where(id: account.request_ids)%>
@@ -130,8 +130,8 @@
                     </div>
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="text-sm text-gray-900"><%= membership.group.name %> - <%= membership.group.year %></div>
-                    <div class="text-sm text-gray-500"><%= membership.group.tournament.sport.name %></div>
+                    <div class="text-sm text-gray-900"><%= membership.group.name %></div>
+                    <div class="text-sm text-gray-500"><%= membership.group.tournament.name %> - <%= membership.group.tournament.year %></div>
                   </td>
                 </tr>
               <% end %>

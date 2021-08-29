@@ -36,7 +36,12 @@ Rails.application.routes.draw do
       end
     end
     resources :tournaments do
-      resources :weeks, only: [:new, :create]
+      resources :groups, only: [:index]
+      resources :weeks, only: [:new, :create] do 
+        member do
+          post :update_matches
+        end
+      end
       member do
         get :weeks
         post :update_week_matches

@@ -6,6 +6,11 @@ class Admin::GroupsController < Admin::BaseController
 
   def index
     @groups = Group.includes(:tournament)
+    if params[:tournament_id]
+      @groups = Group.includes(:tournament).where(tournament_id: params[:tournament_id])
+    else
+      @groups = Group.includes(:tournament)
+    end
   end
 
   def new
@@ -137,6 +142,6 @@ class Admin::GroupsController < Admin::BaseController
   end
 
   def group_params
-    params.require(:group).permit :name, :private, :tournament_id, :finished, :year
+    params.require(:group).permit :name, :private, :tournament_id, :finished
   end
 end
