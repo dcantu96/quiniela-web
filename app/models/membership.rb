@@ -1,8 +1,8 @@
 class Membership < ApplicationRecord
   belongs_to :account
   belongs_to :group
-  has_many :picks
   has_many :membership_weeks, dependent: :destroy
+  has_many :picks, through: :membership_weeks
   after_create :generate_weeks
   validates :account, uniqueness: { scope: :group }
   scope :active, -> { joins(:group).where group: { finished: false } }

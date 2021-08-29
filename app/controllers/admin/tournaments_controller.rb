@@ -51,6 +51,6 @@ class Admin::TournamentsController < Admin::BaseController
   end
 
   def tournament_params
-    params.require(:tournament).permit :name, :sport_id, :year
+    params.require(:tournament).permit :name, :sport_id
   end
 end

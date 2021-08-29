@@ -19,6 +19,10 @@
       <div class='checkbox-toggle__fill'></div>
     <% end %>
   </div>
+  <div class='mb-4'>
+    <%= f.label :year, class: 'label' %>
+    <%= f.text_field :year, class: 'input', required: true %>
+  </div>
   <div class='mb-4' data-controller='select'> 
     <%= f.label :tournament, class: 'label' %>
     <%= f.collection_select :tournament_id, Tournament.all, :id, :name, {}, { class: 'select2' } %>
