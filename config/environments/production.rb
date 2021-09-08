@@ -64,7 +64,7 @@ Rails.application.configure do
 
   #setup mail for go daddy
   config.action_mailer.delivery_method = :smtp
-  config.action_mailer.default_url_options = { host: 'qnflmty.com' }
+  config.action_mailer.default_url_options = { host: 'www.qnflmty.com' }
 
   # SMTP settings for gmail
   config.action_mailer.smtp_settings = {
