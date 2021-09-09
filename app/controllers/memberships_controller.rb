@@ -13,7 +13,7 @@ class MembershipsController < ApplicationController
   def table
     @weeks = @membership.group.tournament.weeks
     if filtering_params.present?
-      week = @membership.group.tournament.weeks.find_by(number: filtering_params[:week_number])
+      week = @membership.group.tournament.weeks.find_by(id: filtering_params[:week_id])
       @membership_weeks = @membership.group.membership_weeks_of week
       @matches = week.matches.includes(:home_team, :visit_team, :winning_team).order(order: :asc)
     else
@@ -56,7 +56,7 @@ class MembershipsController < ApplicationController
 
   def set_week_and_picks
     filtering_params.present? ? (
-      @week = @membership.group.tournament.weeks.find_by(number: filtering_params[:week_number])
+      @week = @membership.group.tournament.weeks.find_by(id: filtering_params[:week_id])
       @picks = @membership.membership_weeks.find_by(week: @week).picks
       ) : (
       @week = @membership.group.tournament.current_week
@@ -66,7 +66,7 @@ class MembershipsController < ApplicationController
   end
 
   def filtering_params
-    params.slice(:week_number)
+    params.slice(:week_id)
   end
 
   def set_filter_status

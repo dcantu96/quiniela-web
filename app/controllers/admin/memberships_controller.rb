@@ -31,7 +31,7 @@ class Admin::MembershipsController < Admin::BaseController
 
   def set_week_and_picks
     filtering_params.present? ? (
-      @week = @membership.group.tournament.weeks.find_by(number: filtering_params[:week_number])
+      @week = @membership.group.tournament.weeks.find_by(id: filtering_params[:week_id])
       @picks = @membership.membership_weeks.find_by(week: @week).picks
       ) : (
       @week = @membership.group.tournament.current_week
@@ -41,7 +41,7 @@ class Admin::MembershipsController < Admin::BaseController
   end
 
   def filtering_params
-    params.slice(:week_number)
+    params.slice(:week_id)
   end
 
   def set_filter_status

@@ -4,7 +4,7 @@
   <div data-controller="toggle" class='mb-4'>
     <div class='flex items-center mb-2'>
       <h1 class='text-xl text-indigo-900 mr-4'><%= @membership.account.username %>'s Picks</h1>
-      <h1 class='text-xl text-indigo-900 mr-4'>Week <%= params[:week_number] || @week.number %></h1>
+      <h1 class='text-xl text-indigo-900 mr-4'>Week <%= params[:week_id] ? Week.find_by(id: params[:week_id]).number : @week.number %></h1>
       <button class="btn btn--primary mr-3"
         data-action="toggle#toggle"
         data-target="checkbox-list.count"

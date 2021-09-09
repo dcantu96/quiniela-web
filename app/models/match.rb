@@ -36,7 +36,7 @@ class Match < ApplicationRecord
   end
 
   def started?
-    Time.current > start_time
+    start_time ? Time.current > start_time : false
   end
 
   def fetch_result(doc)

@@ -23,7 +23,7 @@ class Admin::GroupsController < Admin::BaseController
   def matches
     @weeks = @group.tournament.weeks
     if filtering_params.present?
-      @week = @group.tournament.weeks.find_by(number: filtering_params[:week_number])
+      @week = @group.tournament.weeks.find_by(id: filtering_params[:week_id])
       @matches = @week.matches.includes(:home_team, :visit_team, :winning_team).order(order: :asc)
     else
       @week = @group.tournament.current_week
@@ -39,7 +39,7 @@ class Admin::GroupsController < Admin::BaseController
   def table
     @weeks = @group.tournament.weeks
     if filtering_params.present?
-      week = @group.tournament.weeks.find_by(number: filtering_params[:week_number])
+      week = @group.tournament.weeks.find_by(id: filtering_params[:week_id])
       @membership_weeks = @group.membership_weeks_of week
       @matches = week.matches.includes(:home_team, :visit_team, :winning_team).order(order: :asc)
     else
@@ -56,7 +56,7 @@ class Admin::GroupsController < Admin::BaseController
     @weeks = @group.tournament.weeks
     @untie_match = @group.tournament.current_week.untie_match
     if filtering_params.present?
-      week = @group.tournament.weeks.find_by(number: filtering_params[:week_number])
+      week = @group.tournament.weeks.find_by(id: filtering_params[:week_id])
       @winners = @group.winners.joins(:membership_week).where(membership_weeks: { week: week })
       @possible_winners = @group.membership_weeks.where(week: week).order(points: :desc).limit(10).includes(membership: [:account, :group])
     else
@@ -126,7 +126,7 @@ class Admin::GroupsController < Admin::BaseController
   private
 
   def filtering_params
-    params.slice(:week_number)
+    params.slice(:week_id)
   end
 
   def set_filter_status

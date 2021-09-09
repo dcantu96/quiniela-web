@@ -3,7 +3,6 @@ class Pick < ApplicationRecord
   belongs_to :match
   belongs_to :membership_week
   belongs_to :picked_team, class_name: 'Team', inverse_of: :picks, optional: true
-  scope :filter_by_week_number, -> (group_week) { where group_week: group_week }
   scope :viewable, -> { joins(:match).where('matches.start_time < ?', Time.current) }
   scope :forgotten, -> { joins(:match).where("picks.picked_team_id IS NULL AND matches.winning_team_id IS NULL AND matches.tie = false AND (:time_limit > matches.start_time)", time_limit: Time.current + 6.hours) }
   before_save :check_if_correct, if: :will_save_change_to_picked_team_id?

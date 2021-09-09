@@ -3,9 +3,9 @@
     <div class='mr-3' data-controller='select'>
       <div class="label">Week</div>
       <div class='relative'>
-        <%= select_tag :week_number,
+        <%= select_tag :week_id,
           options_from_collection_for_select(
-            @weeks, 'id', 'number', params[:week_number]
+            @weeks, 'id', 'number', params[:week_id]
           ),
           include_blank: "Current",
           class: "select",

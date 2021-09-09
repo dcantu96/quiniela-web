@@ -52,13 +52,13 @@
         Start Time
       </p>
       <h2 class='text-sm md:text-md mb-4'>
-        <%= pick.match.start_time.in_time_zone(current_user.time_zone).to_formatted_s(:long) %>
+        <%= pick.match.start_time ? pick.match.start_time.in_time_zone(current_user.time_zone).to_formatted_s(:short) : 'TBA' %>
       </h2>
       <p class='text-xs font-light text-gray-500'>
         Lock Time
       </p>
       <h2 class='text-sm md:text-md'>
-        <%= distance_of_time_in_words_to_now(pick.match.start_time) %>
+        <%= pick.match.start_time ? distance_of_time_in_words_to_now(pick.match.start_time) : 'TBA' %>
       </h2>
     </div>
     <%= image_pack_tag "#{pick.match.home_team.short_name}.svg", class: 'w-20 flip' %>

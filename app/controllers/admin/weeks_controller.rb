@@ -16,7 +16,7 @@ class Admin::WeeksController < Admin::BaseController
 
   def generate_week_matches
     if @week.generate_matches
-      redirect_to matches_admin_group_path(@group, week_number: @week.number), notice: 'Matches generated successfully'
+      redirect_to matches_admin_group_path(@group, week_id: @week.id), notice: 'Matches generated successfully'
     end
   end
 
