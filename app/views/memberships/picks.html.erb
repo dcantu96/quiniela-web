@@ -2,17 +2,17 @@
   <div class="flex justify-between mb-2">
     <div>
       <div data-controller="toggle" class='mb-4'>
-    <div class='flex items-center mb-2'>
-      <h1 class='text-xl text-indigo-900 mr-4'>My Picks</h1>
-      <button class="btn btn--primary"
-        data-action="toggle#toggle"
-        data-target="checkbox-list.count"
-      >
-        Filters
-      </button>
-    </div>
-    <%= render 'filters' %>
-  </div>
+        <div class='flex items-center mb-2'>
+          <h1 class='text-xl text-indigo-900 mr-4'>My Picks</h1>
+          <button class="btn btn--primary"
+            data-action="toggle#toggle"
+            data-target="checkbox-list.count"
+          >
+            Filters
+          </button>
+        </div>
+        <%= render 'filters' %>
+      </div>
       <h3 class='text-xl text-indigo-900'>Week <%= @week.number %> points <b><%= @membership.membership_weeks.find_by(week: @week).points %></b></h3>
     </div>
     <div>

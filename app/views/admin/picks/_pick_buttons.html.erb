@@ -1,33 +1,33 @@
 <p class='text-xs font-light text-gray-500 text-center mb-2'>
   Choose Pick
 </p>
-<div class='flex justify-evenly items-center'>
+<div class='flex justify-between items-center'>
   <% if pick.picked_team == pick.match.visit_team %>
-    <div class='btn btn--locked text-xl'>
+    <div class='btn w-32 text-center btn--locked text-xl'>
       <%= pick.match.visit_team.short_name %>
       <i class="fas fa-lock fa-sm ml-2 fill-current"></i>
     </div>
     <%= form_with model: [:admin, pick] do |f| %>
       <%= f.hidden_field :picked_team_id, value: pick.match.home_team.id %>
-      <%= f.submit pick.match.home_team.short_name, class: 'btn btn--primary text-xl' %>
+      <%= f.submit pick.match.home_team.short_name, class: 'btn w-32 text-center btn--primary text-xl' %>
     <% end %>
   <% elsif pick.picked_team == pick.match.home_team  %>
     <%= form_with model: [:admin, pick] do |f| %>
       <%= f.hidden_field :picked_team_id, value: pick.match.visit_team.id %>
-      <%= f.submit pick.match.visit_team.short_name, class: 'btn btn--primary text-xl' %>
+      <%= f.submit pick.match.visit_team.short_name, class: 'btn w-32 text-center btn--primary text-xl' %>
     <% end %>
-    <div class='btn btn--locked text-xl'>
+    <div class='btn w-32 text-center btn--locked text-xl'>
       <%= pick.match.home_team.short_name %>
       <i class="fas fa-lock fa-sm ml-2 fill-current"></i>
     </div>
   <% else %>
     <%= form_with model: [:admin, pick] do |f| %>
       <%= f.hidden_field :picked_team_id, value: pick.match.visit_team.id %>
-      <%= f.submit pick.match.visit_team.short_name, class: 'btn btn--primary text-xl' %>
+      <%= f.submit pick.match.visit_team.short_name, class: 'btn w-32 text-center btn--primary text-xl' %>
     <% end %>
     <%= form_with model: [:admin, pick] do |f| %>
       <%= f.hidden_field :picked_team_id, value: pick.match.home_team.id %>
-      <%= f.submit pick.match.home_team.short_name, class: 'btn btn--primary text-xl' %>
+      <%= f.submit pick.match.home_team.short_name, class: 'btn w-32 text-center btn--primary text-xl' %>
     <% end %>
   <% end %>
 </div>
