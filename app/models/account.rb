@@ -6,6 +6,7 @@ class Account < ApplicationRecord
   has_many :requests
   validates_uniqueness_of :username
   validates_presence_of :username
+  scope :with_group, -> (group_id) { includes(:memberships).where(memberships: {group_id: group_id}) }
   validates :username,
     length: { in: 3..12, message: "should be 3-12 characters long" },
     format: { with: /\A[a-zA-Z]+_?[a-zA-Z0-9]+\z/, message: "contains invalid characters" }

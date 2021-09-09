@@ -1,6 +1,53 @@
-<div class='p-6 container mx-auto'>
+<div class='p-4 container mx-auto'>
   <h2 class='text-lg mb-4'>Requests</h2>
-  <div class='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-8'>
-    <%= render @group.requests %>
+  <div class="lg:shadow lg:overflow-hidden lg:border-b lg:border-gray-200 sm:rounded-lg">
+    <div class="lg:table w-full rounded min-w-full divide-y divide-gray-200">
+      <div class="hidden lg:table-header-group bg-gray-200">
+        <div class="lg:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Username</div>
+        <div class="lg:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Phone</div>
+        <div class="lg:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Group</div>
+        <div class="lg:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</div>
+        <div class="lg:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Accounts</div>
+        <div class="lg:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</div>
+      </div>
+      <div class="grid grid-cols-1 gap-8 lg:table-row-group lg:bg-white divide-y divide-gray-200">
+        <% @group.requests.each do |request| %>
+          <div class="bg-white rounded-xl lg:rounded-none lg:table-row shadow-lg grid grid-cols-2">
+            <div class="lg:table-cell px-6 py-6 pb-1 lg:py-3 lg:px-6 whitespace-nowrap">
+              <div class="lg:hidden text-sm text-gray-500">Username</div>
+              <div class="text-sm font-medium text-gray-900"><%= request.account.username %></div>
+            </div>
+            <div class="lg:table-cell px-6 py-6 pb-1 lg:py-3 lg:px-6 whitespace-nowrap">
+              <div class="lg:hidden text-sm text-gray-500">Phone</div>
+              <div class="text-sm font-medium text-indigo-600">
+                <a href="tel:<%= request.account.user.phone %>"><%= request.account.user.phone %></a>
+              </div>
+            </div>
+            <div class="lg:table-cell px-6 py-6 pb-1 lg:py-3 lg:px-6 whitespace-nowrap">
+              <div class="lg:hidden text-sm text-gray-500">Group</div>
+              <div class="text-sm text-gray-900"><%= request.group.name %></div>
+            </div>
+            <div class="lg:table-cell px-6 py-6 pb-1 lg:py-3 lg:px-6 whitespace-nowrap">
+              <div class="lg:hidden text-sm text-gray-500">Email</div>
+              <div class="text-sm text-gray-900"><%= request.account.user.email %></div>
+            </div>
+            <div class="lg:table-cell px-6 py-6 pb-1 lg:py-3 lg:px-6 whitespace-nowrap">
+              <div class="lg:hidden text-sm text-gray-500">Accounts</div>
+              <div class="text-sm text-gray-900"><%= request.account.user.accounts.with_group(request.group.id).count %></div>
+            </div>
+            <div class="lg:table-cell px-6 py-6 pb-4 lg:py-3 lg:px-6 whitespace-nowrap col-span-2">
+              <div class='flex flex-wrap'>
+                <%= form_with model: [:admin, request] do |f| %>
+                  <%= f.submit 'Accept', class: 'text-md text-white bg-indigo-900 rounded-lg mb-2 py-2 mr-2 flex items-center px-2' %>
+                <% end %>
+                <%= form_with model: [:admin, request] do |f| %>
+                  <%= f.submit 'Reject', class: 'text-md text-white bg-red-600 rounded-lg mb-2 py-2 mr-2 flex items-center px-2' %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
   </div>
 </div>

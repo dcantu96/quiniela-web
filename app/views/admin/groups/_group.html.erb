@@ -1,12 +1,14 @@
 <div class="rounded-xl p-6 shadow-lg bg-white">
-  <h2 class='text-lg mb-2'>
-    <%= group.name %>
-  </h2>
-  <% if group.finished %>
-  <h2 class='text-md mb-4 text-gray-600'>
-    Terminado
-  </h2>
-  <% end %>
+  <div class="flex justify-between items-center mb-4">
+    <h2 class='text-lg'>
+      <%= group.name %>
+    </h2>
+    <% if group.finished %>
+      <h2 class='text-md text-gray-600'>
+        Terminado
+      </h2>
+    <% end %>
+  </div>
   
   <div class='flex justify-between'>
     <%= link_to "Tabla", members_admin_group_path(group), class: 'btn btn--primary' %>

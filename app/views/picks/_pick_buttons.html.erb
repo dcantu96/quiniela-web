@@ -2,33 +2,33 @@
   <p class='text-xs font-light text-gray-500 text-center mb-2'>
     Choose Pick
   </p>
-  <div class='flex justify-evenly items-center'>
+  <div class='flex justify-between items-center'>
     <% if pick.picked_team == pick.match.visit_team %>
-      <div class='btn btn--locked text-xl'>
+      <div class='btn btn--locked text-xl w-32 text-center'>
         <%= pick.match.visit_team.short_name %>
         <i class="fas fa-lock fa-sm ml-2 fill-current"></i>
       </div>
       <%= form_with model: pick do |f| %>
         <%= f.hidden_field :picked_team_id, value: pick.match.home_team.id %>
-        <%= f.submit pick.match.home_team.short_name, class: 'btn btn--primary text-xl' %>
+        <%= f.submit pick.match.home_team.short_name, class: 'btn btn--primary text-xl w-32 text-center' %>
       <% end %>
     <% elsif pick.picked_team == pick.match.home_team  %>
       <%= form_with model: pick do |f| %>
         <%= f.hidden_field :picked_team_id, value: pick.match.visit_team.id %>
-        <%= f.submit pick.match.visit_team.short_name, class: 'btn btn--primary text-xl' %>
+        <%= f.submit pick.match.visit_team.short_name, class: 'btn btn--primary text-xl w-32 text-center' %>
       <% end %>
-      <div class='btn btn--locked text-xl'>
+      <div class='btn btn--locked text-xl w-32 text-center'>
         <%= pick.match.home_team.short_name %>
         <i class="fas fa-lock fa-sm ml-2 fill-current"></i>
       </div>
     <% else %>
       <%= form_with model: pick do |f| %>
         <%= f.hidden_field :picked_team_id, value: pick.match.visit_team.id %>
-        <%= f.submit pick.match.visit_team.short_name, class: 'btn btn--primary text-xl' %>
+        <%= f.submit pick.match.visit_team.short_name, class: 'btn btn--primary text-xl w-32 text-center' %>
       <% end %>
       <%= form_with model: pick do |f| %>
         <%= f.hidden_field :picked_team_id, value: pick.match.home_team.id %>
-        <%= f.submit pick.match.home_team.short_name, class: 'btn btn--primary text-xl' %>
+        <%= f.submit pick.match.home_team.short_name, class: 'btn btn--primary text-xl w-32 text-center' %>
       <% end %>
     <% end %>
   </div>
@@ -37,13 +37,13 @@
     Locked Pick
   </p>
   <div class='flex justify-evenly items-center'>
-    <div class='btn btn--locked text-xl cursor-not-allowed'>
+    <div class='btn btn--locked text-xl w-32 text-center cursor-not-allowed'>
       <%= pick.picked_team.short_name %>
       <i class="fas fa-lock fa-sm ml-2 fill-current"></i>
     </div>
   </div>
 <% else %>
-  <p class='text-xs font-light text-gray-500 text-center mb-2'>
-    No Team Picked :(
+  <p class='font-light text-red-500 text-center mb-2'>
+    No Team Picked
   </p>
 <% end %>

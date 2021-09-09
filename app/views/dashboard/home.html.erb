@@ -13,91 +13,119 @@
   <% if @requests.present? || @memberships.present? %>
     <% if @memberships.active.present? %>
       <h2 class='text-lg mb-4'>Grupos Activo</h2>
-      <div class='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-8'>
-        <%= render @memberships.active %>
+      <div class="lg:shadow lg:overflow-hidden lg:border-b lg:border-gray-200 sm:rounded-lg mb-4">
+        <div class="lg:table w-full rounded min-w-full divide-y divide-gray-200">
+          <div class="hidden lg:table-header-group bg-gray-200">
+            <div class="lg:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Username</div>
+            <div class="lg:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Week</div>
+            <div class="lg:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Points</div>
+            <div class="lg:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Position</div>
+            <div class="lg:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</div>
+          </div>
+          <div class="grid grid-cols-1 gap-8 lg:table-row-group lg:bg-white divide-y divide-gray-200">
+            <% @memberships.active.each do |member| %>
+              <div class="bg-white rounded-xl lg:rounded-none lg:table-row shadow-lg grid grid-cols-2">
+                <div class="lg:table-cell px-6 py-6 pb-2 lg:py-3 lg:px-6 whitespace-nowrap">
+                  <div class="lg:hidden text-sm text-gray-500">Username</div>
+                  <div class="text-sm font-medium text-gray-900"><%= member.account.username %></div>
+                </div>
+                <div class="lg:table-cell px-6 py-6 pb-2 lg:py-3 lg:px-6 whitespace-nowrap">
+                  <div class="lg:hidden text-sm text-gray-500">Week Number</div>
+                  <div class="text-sm text-gray-900"><%= member.group.tournament.current_week.number %></div>
+                </div>
+                <div class="lg:table-cell px-6 py-6 pb-2 lg:py-3 lg:px-6 whitespace-nowrap">
+                  <div class="lg:hidden text-sm text-gray-500">Points</div>
+                  <div class="text-sm text-gray-900"><%= member.current_membership_week.points %></div>
+                </div>
+                <div class="lg:table-cell px-6 py-6 pb-2 lg:py-3 lg:px-6 whitespace-nowrap">
+                  <div class="lg:hidden text-sm text-gray-500">Position</div>
+                  <div class="text-sm text-gray-900"><%= member.position %></div>
+                </div>
+                <div class="lg:table-cell px-6 py-6 pb-4 lg:py-3 lg:px-6 whitespace-nowrap col-span-2">
+                  <div class='flex flex-wrap'>
+                    <%= link_to table_membership_path(member), class: "text-md text-white bg-indigo-900 rounded-lg mb-2 py-2 mr-2 flex items-center px-2 border-transparent hover:border-gray-400" do %>
+                      <i class="fas fa-table mr-3 fill-current"></i>
+                      <span>Conso</span>
+                    <% end %>
+                    <%= link_to picks_membership_path(member), class: "text-md text-white bg-indigo-900 rounded-lg mb-2 py-2 mr-2 flex items-center px-2 border-transparent hover:border-gray-400" do %>
+                      <i class="fas fa-money-bill-wave-alt mr-3 fill-current"></i>
+                      <span>Picks</span>
+                    <% end %>
+                    <%= link_to members_membership_path(member), class: "text-md text-white bg-indigo-900 rounded-lg mb-2 py-2 mr-2 flex items-center px-2 border-transparent hover:border-gray-400" do %>
+                      <i class="fas fa-users mr-3 fill-current"></i>
+                      <span>Tabla</span>
+                    <% end %>
+                    <%= link_to winners_membership_path(member), class: "text-md text-white bg-indigo-900 rounded-lg mb-2 py-2 flex items-center px-2 border-transparent hover:border-gray-400" do %>
+                      <i class="fas fa-star mr-3 fill-current"></i>
+                      <span>Wins</span>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
       </div>
     <% end %>
   <% end %>
   <% if current_user.accounts.present? %>
-    <h2 class='text-lg mb-4'>Grupos a los que puedes entrar</h2>
-
-    <div class="flex flex-col">
-    <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-      <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-        <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-          <table class="min-w-full divide-y divide-gray-200">
-            <thead>
-              <tr class="bg-gray-200">
-                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Username
-                </th>
-                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Group
-                </th>
-                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Status
-                </th>
-                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                </th>
-              </tr>
-            </thead>
-            <tbody class="bg-white divide-y divide-gray-200">
-              <% current_user.accounts.each do |account| %>
-                <% Group.where.not(id: account.group_ids).where(finished: false).each do |group| %>
-                  <tr>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                      <div class="flex items-center">
-                        <div>
-                          <div class="text-sm font-medium text-gray-900">
-                            <%= account.username %>
-                          </div>
-                          <div class="text-sm text-gray-500">
-                            <%= account.user.email %>
-                          </div>
-                        </div>
-                      </div>
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                      <div class="text-sm text-gray-900"><%= group.name %></div>
-                      <div class="text-sm text-gray-500"><%= group.tournament.sport.name %> - <%= group.tournament.year %></div>
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                      <% request = group.requests.where(id: account.request_ids)%>
-                      <% if request.present? %>
-                        <span class="px-2 mb-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-200 text-blue-800">
-                          Admin not yet accepted
-                        </span>
-                        <div class="text-sm text-gray-500">Fecha de Solicitud: <%= request.first.created_at.in_time_zone(current_user.time_zone).to_formatted_s(:short) %></div>
-                      <% else %>
-                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-200 text-red-800">
-                          Not a member
-                        </span>
-                      <% end %>
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                      <% if !group.requests.where(id: account.request_ids).present? %>
-                        <%= form_for Request.new do |f| %>
-                          <%= f.hidden_field :group_id, value: group.id %>
-                          <%= f.hidden_field :account_id, value: account.id %>
-                          <%= f.submit 'Join', class: 'text-indigo-600 hover:text-indigo-900 bg-white cursor-pointer' %>
-                        <% end %>
-                      <% end %>
-                    </td>
-                  </tr>
-                <% end %>
-              <% end %>
-            
-
-              <!-- More people... -->
-            </tbody>
-          </table>
+    <h2 class='text-lg mb-4'>Join a new group</h2>
+    <div class="lg:shadow lg:overflow-hidden lg:border-b lg:border-gray-200 sm:rounded-lg">
+      <div class="lg:table w-full rounded min-w-full divide-y divide-gray-200">
+        <div class="hidden lg:table-header-group bg-gray-200">
+          <div class="lg:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Username</div>
+          <div class="lg:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Group</div>
+          <div class="lg:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</div>
+          <div class="lg:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</div>
+        </div>
+        <div class="grid grid-cols-1 gap-8 lg:table-row-group lg:bg-white divide-y divide-gray-200">
+          <% current_user.accounts.each do |account| %>
+            <% Group.where.not(id: account.group_ids).where(finished: false).each do |group| %>
+              <div class="bg-white rounded-xl lg:rounded-none lg:table-row shadow-lg grid grid-cols-2">
+                <div class="lg:table-cell px-6 py-6 pb-1 lg:py-3 lg:px-6 whitespace-nowrap">
+                  <div class="lg:hidden text-sm text-gray-500">Username</div>
+                  <div class="text-sm font-medium text-gray-900"><%= account.username %></div>
+                </div>
+                <div class="lg:table-cell px-6 py-6 pb-1 lg:py-3 lg:px-6 whitespace-nowrap">
+                  <div class="lg:hidden text-sm text-gray-500">Group</div>
+                  <div class="text-sm font-medium text-indigo-900">
+                    <%= group.name %>
+                  </div>
+                </div>
+                <div class="lg:table-cell px-6 py-6 pb-1 lg:py-3 lg:px-6 whitespace-nowrap">
+                  <div class="lg:hidden text-sm text-gray-500">Status</div>
+                  <% request = group.requests.where(id: account.request_ids)%>
+                  <% if request.present? %>
+                    <span class="px-2 mb-1 whitespace-no-wrap inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-200 text-blue-800">
+                      Admin not yet accepted
+                    </span>
+                    <div class="text-sm text-gray-500">Fecha de Solicitud: <%= request.first.created_at.in_time_zone(current_user.time_zone).to_formatted_s(:short) %></div>
+                  <% else %>
+                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-200 text-red-800 whitespace-no-wrap">
+                      Not a member
+                    </span>
+                  <% end %>
+                </div>
+                <div class="lg:table-cell px-6 py-6 pb-3 lg:py-3 lg:px-6 whitespace-nowrap">
+                  <div class="lg:hidden text-sm text-gray-500">Actions</div>
+                  <% if !group.requests.where(id: account.request_ids).present? %>
+                    <%= form_for Request.new do |f| %>
+                      <%= f.hidden_field :group_id, value: group.id %>
+                      <%= f.hidden_field :account_id, value: account.id %>
+                      <%= f.submit 'Join', class: 'text-indigo-600 hover:text-indigo-900 bg-white cursor-pointer' %>
+                    <% end %>
+                  <% end %>
+                </div>
+              </div>
+            <% end %>
+          <% end %>
         </div>
       </div>
     </div>
   <% end %>
 
   <% if current_user.memberships.finished.present? %>
-    <h2 class='text-lg mb-4'>Quinielas anteriores</h2>
+    <h2 class='text-lg mb-4 mt-4'>Previous Groups</h2>
 
     <div class="flex flex-col">
     <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
