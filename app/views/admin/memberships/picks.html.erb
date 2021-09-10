@@ -27,6 +27,12 @@
     <p class='text-gray-900 text-left'>Premium <i class="fas fa-flag-checkered fa-lg text-indigo-600"></i></p>
     <p class='text-gray-900 text-left'>Monday Night <i class="fab fa-medium fa-lg text-gray-900"></i></p>
   </div>
+
+  <h4 class='text-xl text-indigo-900'>If you need to change the picks, you need to update the "tabla general" so these changes can be reflected and table positions updates correctly.</h4>
+  <h4 class='text-xl text-indigo-900 mr-4'>To do so, please press these buttons below in order.</h4>
+  <%= link_to '1 - Update Picks and Week Points', update_picks_admin_group_path(group: @membership.group, week_id: params[:week_id] ? params[:week_id] : @week.id), method: :post, class: 'btn btn--primary py-1 m-1 inline-block mb-4', data: { confirm: 'This will update all picks of current week', disable_with: 'loading...' } %>
+  <%= link_to '2 - Update Total Points', update_total_points_admin_group_path(group: @membership.group, week_id: params[:week_id] ? params[:week_id] : @week.id), method: :post, class: 'btn btn--primary py-1 m-1 inline-block mb-4', data: { confirm: 'This will update all picks of current week', disable_with: 'loading...' } %>
+
   <div class='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-8'>
     <%= render 'picks' %>
   </div>
