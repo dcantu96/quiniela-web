@@ -90,25 +90,34 @@ class Admin::GroupsController < Admin::BaseController
   end
 
   def update_total_points
-    @group.update_member_positions
-    redirect_to matches_admin_group_path(@group), notice: 'Update member positions successfully'
+    if @group.update_member_positions
+      redirect_back fallback_location: matches_admin_group_path(@group), notice: 'Update member positions successfully'
+    else
+      redirect_back fallback_location: matches_admin_group_path(@group), alert: 'Error updating member positions'
+    end
   end
 
   def reset_week_points
     if @week.reset_points(@group)
-      redirect_to matches_admin_group_path(@group), notice: 'Week points and picks reset successfull'
+      redirect_back fallback_location: matches_admin_group_path(@group), notice: 'Week points and picks reset successfull'
+    else
+      redirect_back fallback_location: matches_admin_group_path(@group), alert: 'Error resetting points'
     end
   end
 
   def fetch_match_results
     if @week.fetch_match_results
-      redirect_to matches_admin_group_path(@group), notice: 'Match results fetched successfully'
+      redirect_back fallback_location: matches_admin_group_path(@group), notice: 'Match results fetched successfully'
+    else
+      redirect_back fallback_location: matches_admin_group_path(@group), alert: 'Error fetching match results'
     end
   end
 
   def update_picks
     if @week.update_picks
-      redirect_to matches_admin_group_path(@group), notice: 'Match results fetched successfully'
+      redirect_back fallback_location: matches_admin_group_path(@group), notice: 'Picks updated succesfully'
+    else
+      redirect_back fallback_location: matches_admin_group_path(@group), alert: 'Error updating picks'
     end
   end
 
