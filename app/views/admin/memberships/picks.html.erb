@@ -30,8 +30,8 @@
 
   <h4 class='text-xl text-indigo-900'>After modifying any of the picks, these changes need to be reflected in the public table positions.</h4>
   <h4 class='text-xl text-indigo-900 mr-4'>To do so, please press these buttons below in order.</h4>
-  <%= link_to '1 - Update Picks and Week Points', update_picks_admin_group_path(group: @membership.group, week_id: params[:week_id] ? params[:week_id] : @week.id), method: :post, class: 'btn btn--primary py-1 m-1 inline-block mb-4', data: { confirm: 'This will update all picks of current week', disable_with: 'loading...' } %>
-  <%= link_to '2 - Update Total Points', update_total_points_admin_group_path(group: @membership.group, week_id: params[:week_id] ? params[:week_id] : @week.id), method: :post, class: 'btn btn--primary py-1 m-1 inline-block mb-4', data: { confirm: 'This will update all picks of current week', disable_with: 'loading...' } %>
+  <%= button_to '1 - Update Picks and Week Points', update_picks_admin_group_path(id: @membership.group.id, week_id: params[:week_id] ? params[:week_id] : @week.id), class: 'btn btn--primary py-1 m-1 inline-block mb-4', data: { confirm: 'This will update all picks of current week', disable_with: 'loading...' } %>
+  <%= button_to '2 - Update Total Points', update_total_points_admin_group_path(id: @membership.group.id, week_id: params[:week_id] ? params[:week_id] : @week.id), class: 'btn btn--primary py-1 m-1 inline-block mb-4', data: { confirm: 'This will update all picks of current week', disable_with: 'loading...' } %>
 
   <div class='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-8'>
     <%= render 'picks' %>
