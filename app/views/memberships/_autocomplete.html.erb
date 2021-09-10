@@ -1,41 +1,41 @@
 <% if @memberships.present? %>
-  <div class='grid grid-cols-5 px-2 py-1 bg-gray-300'>
-    <div class=''>
-      <h3 class='font-bold text-xs text-gray-500'>Username</h3>
-    </div>
-    <div class=''>
-      <h3 class='font-bold text-xs text-gray-500'>Name</h3>
-    </div>
-    <div class=' w-16'>
-      <h3 class='font-bold text-xs text-gray-500'>T. Points</h3>
-    </div>
-    <div class=' w-16'>
-      <h3 class='font-bold text-xs text-gray-500'>W. Points</h3>
-    </div>
-    <div class=''>
-      <h3 class='font-bold text-xs text-gray-500'>Email</h3>
+  <div class="lg:shadow lg:overflow-hidden lg:border-b lg:border-gray-200 sm:rounded-lg">
+    <div class="lg:table w-full rounded min-w-full divide-y divide-gray-200">
+      <div class="hidden lg:table-header-group bg-gray-200">
+        <div class="lg:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Username</div>
+        <div class="lg:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</div>
+        <div class="lg:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">T. Points</div>
+        <div class="lg:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">W. Points</div>
+        <div class="lg:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</div>
+      </div>
+      <div class="grid grid-cols-1 lg:table-row-group lg:bg-white divide-y divide-gray-200">
+        <% @memberships.each do |membership| %>
+          <div class="bg-white lg:table-row border-b border-gray-400 grid grid-cols-3">
+            <div class="lg:table-cell px-6 py-2 pb-1 lg:py-3 lg:px-6 whitespace-nowrap">
+              <div class="lg:hidden text-sm text-gray-500">Username</div>
+              <%= link_to membership.account.username, public_picks_membership_path(membership), class: 'text-sm font-medium text-indigo-600' %>
+            </div>
+            <div class="lg:table-cell px-6 py-2 pb-1 lg:py-3 lg:px-6 whitespace-nowrap col-span-2">
+              <div class="lg:hidden text-sm text-gray-500">Name</div>
+              <div class="text-sm font-medium text-gray-900"><%= membership.account.user.full_name %></div>
+            </div>
+            <div class="lg:table-cell px-6 py-2 pb-1 lg:py-3 lg:px-6 whitespace-nowrap">
+              <div class="lg:hidden text-sm text-gray-500">T Points</div>
+              <div class="text-sm text-gray-900"><%= membership.total %></div>
+            </div>
+            <div class="lg:table-cell px-6 py-2 pb-1 lg:py-3 lg:px-6 whitespace-nowrap">
+              <div class="lg:hidden text-sm text-gray-500">W Points</div>
+              <div class="text-sm text-gray-900"><%= membership.current_membership_week.points %></div>
+            </div>
+            <div class="lg:table-cell px-6 py-2 pb-1 lg:py-3 lg:px-6 whitespace-nowrap">
+              <div class="lg:hidden text-sm text-gray-500">Email</div>
+              <div class="text-sm text-gray-900"><%= membership.account.user.email %></div>
+            </div>
+          </div>
+        <% end %>
+      </div>
     </div>
   </div>
-  <% @memberships.each do |membership| %>
-    <%= link_to public_picks_membership_path(membership), class: 'grid grid-cols-5 p-2 hover:bg-gray-300' do %>
-      <div class='flex flex-no-wrap items-center '>
-        <span class="rounded bg-black py-1 px-1 text-white text-xs font-bold mr-1 "><%= membership.position %></span>
-        <p class='font-bold text-xs text-indigo-600'><%= membership.account.username %></p>
-      </div>
-      <div class=''>
-        <p class='font-bold text-xs'><%= membership.account.user.full_name %></p>
-      </div>
-      <div class=''>
-        <p class='font-bold text-xs w-16'><%= membership.total %></p>
-      </div>
-      <div class=''>
-        <p class='font-bold text-xs w-16'><%= membership.current_membership_week.points %></p>
-      </div>
-      <div class=''>
-        <p class='font-bold text-xs'><%= membership.account.user.email %></p>
-      </div>
-    <% end %>
-  <% end %>
 <% else %>
   <div class='px-4 py-4'>
     <h3 class='font-bold text-gray-500'>No results found :(</h3>
