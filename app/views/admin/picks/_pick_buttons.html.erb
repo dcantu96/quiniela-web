@@ -8,11 +8,13 @@
       <i class="fas fa-lock fa-sm ml-2 fill-current"></i>
     </div>
     <%= form_with model: [:admin, pick] do |f| %>
+      <%= f.hidden_field :modified_by_admin, value: true %>
       <%= f.hidden_field :picked_team_id, value: pick.match.home_team.id %>
       <%= f.submit pick.match.home_team.short_name, class: 'btn w-32 text-center btn--primary text-xl' %>
     <% end %>
   <% elsif pick.picked_team == pick.match.home_team  %>
     <%= form_with model: [:admin, pick] do |f| %>
+      <%= f.hidden_field :modified_by_admin, value: true %>
       <%= f.hidden_field :picked_team_id, value: pick.match.visit_team.id %>
       <%= f.submit pick.match.visit_team.short_name, class: 'btn w-32 text-center btn--primary text-xl' %>
     <% end %>
@@ -22,10 +24,12 @@
     </div>
   <% else %>
     <%= form_with model: [:admin, pick] do |f| %>
+      <%= f.hidden_field :modified_by_admin, value: true %>
       <%= f.hidden_field :picked_team_id, value: pick.match.visit_team.id %>
       <%= f.submit pick.match.visit_team.short_name, class: 'btn w-32 text-center btn--primary text-xl' %>
     <% end %>
     <%= form_with model: [:admin, pick] do |f| %>
+      <%= f.hidden_field :modified_by_admin, value: true %>
       <%= f.hidden_field :picked_team_id, value: pick.match.home_team.id %>
       <%= f.submit pick.match.home_team.short_name, class: 'btn w-32 text-center btn--primary text-xl' %>
     <% end %>

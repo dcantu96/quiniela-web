@@ -19,6 +19,6 @@ class PicksController < ApplicationController
   end
 
   def pick_params
-    params.require(:pick).permit :picked_team_id, :points
+    params.require(:pick).permit :picked_team_id, :points, :modified_by_admin
   end
 end
