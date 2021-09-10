@@ -39,7 +39,9 @@ class Week < ApplicationRecord
   end
 
   def fetch_match_results
-    matches.each { |m| m.fetch_result(espn_schedule_table) }
+    # Fetch once
+    schedule = espn_schedule_table
+    matches.each { |m| m.fetch_result(schedule) }
   end
 
   def reset_points(group)
@@ -51,7 +53,7 @@ class Week < ApplicationRecord
 
   def espn_schedule_table
     # For this fetch to work team short names must be identical to ESPN's
-    Nokogiri::HTML(URI.open("https://www.espn.com/nfl/schedule/_/week/#{number}/year/#{tournament.year}/seasontype/2"))
+    @espn_schedule_table ||= Nokogiri::HTML(URI.open("https://www.espn.com/nfl/schedule/_/week/#{number}/year/#{tournament.year}/seasontype/2"))
   end
 
   def generate_matches
