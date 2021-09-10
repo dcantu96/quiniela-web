@@ -13,7 +13,7 @@
           <div class="bg-white lg:table-row border-b border-gray-400 grid grid-cols-3">
             <div class="lg:table-cell px-6 py-2 pb-1 lg:py-3 lg:px-6 whitespace-nowrap">
               <div class="lg:hidden text-sm text-gray-500">Username</div>
-              <%= link_to membership.account.username, picks_admin_group_membership_path(membership), class: 'text-sm font-medium text-indigo-600' %>
+              <%= link_to membership.account.username, picks_admin_group_membership_path(membership.group, membership), class: 'text-sm font-medium text-indigo-600' %>
             </div>
             <div class="lg:table-cell px-6 py-2 pb-1 lg:py-3 lg:px-6 whitespace-nowrap col-span-2">
               <div class="lg:hidden text-sm text-gray-500">Name</div>
