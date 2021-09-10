@@ -3,7 +3,7 @@ class Admin::RequestsController < Admin::BaseController
   
   def update
     if params[:commit] == 'Accept'
-      @membership = Membership.new(group: @request.group, account: @request.account)
+      @membership = Membership.new group: @request.group, account: @request.account
       if @membership.valid?
         @request.destroy && @membership.save
         redirect_to requests_admin_group_path(@membership.group)

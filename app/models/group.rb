@@ -9,6 +9,17 @@ class Group < ApplicationRecord
   validates_uniqueness_of :name
   validates_presence_of :name
   after_create :generate_group_weeks
+  scope :active, -> { where finished: false }
+
+
+  def daily_update
+    week = tournament.current_week
+    week.fetch_match_results
+    week.update_picks
+    update_member_positions
+    AdminMailer.update_success(week, self).deliver_now
+  end
+
 
   def membership_weeks_of(week)
     membership_weeks

@@ -1,25 +1,43 @@
-<div class='grid grid-cols-3 px-2 py-1'>
-  <div class='text-center'>
-    <h3 class='font-bold text-xs text-gray-500'>Username</h3>
-  </div>
-  <div class='text-center'>
-    <h3 class='font-bold text-xs text-gray-500'>Total Points</h3>
-  </div>
-  <div class='text-center'>
-    <h3 class='font-bold text-xs text-gray-500'>Week Points</h3>
-  </div>
-</div>
-<% @accounts.each do |account| %>
-  <%= link_to public_picks_membership_path(account.memberships.first), class: 'grid grid-cols-3 p-2 hover:bg-gray-300' do %>
-    <div class='flex flex-no-wrap items-center text-center'>
-      <span class="rounded bg-black py-1 px-1 text-white text-xs font-bold mr-1 "><%= account.memberships.first.position %></span>
-      <p class='font-bold text-xs'><%= account.username %></p>
+<% if @memberships.present? %>
+  <div class='grid grid-cols-5 px-2 py-1 bg-gray-300'>
+    <div class=''>
+      <h3 class='font-bold text-xs text-gray-500'>Username</h3>
     </div>
-    <div class='text-center'>
-      <p class='font-bold text-xs'><%= account.memberships.first.total %></p>
+    <div class=''>
+      <h3 class='font-bold text-xs text-gray-500'>Name</h3>
     </div>
-    <div class='text-center'>
-      <p class='font-bold text-xs'><%= account.memberships.first.current_membership_week.points %></p>
+    <div class=' w-16'>
+      <h3 class='font-bold text-xs text-gray-500'>T. Points</h3>
     </div>
+    <div class=' w-16'>
+      <h3 class='font-bold text-xs text-gray-500'>W. Points</h3>
+    </div>
+    <div class=''>
+      <h3 class='font-bold text-xs text-gray-500'>Email</h3>
+    </div>
+  </div>
+  <% @memberships.each do |membership| %>
+    <%= link_to public_picks_membership_path(membership), class: 'grid grid-cols-5 p-2 hover:bg-gray-300' do %>
+      <div class='flex flex-no-wrap items-center '>
+        <span class="rounded bg-black py-1 px-1 text-white text-xs font-bold mr-1 "><%= membership.position %></span>
+        <p class='font-bold text-xs text-indigo-600'><%= membership.account.username %></p>
+      </div>
+      <div class=''>
+        <p class='font-bold text-xs'><%= membership.account.user.full_name %></p>
+      </div>
+      <div class=''>
+        <p class='font-bold text-xs w-16'><%= membership.total %></p>
+      </div>
+      <div class=''>
+        <p class='font-bold text-xs w-16'><%= membership.current_membership_week.points %></p>
+      </div>
+      <div class=''>
+        <p class='font-bold text-xs'><%= membership.account.user.email %></p>
+      </div>
+    <% end %>
   <% end %>
+<% else %>
+  <div class='px-4 py-4'>
+    <h3 class='font-bold text-gray-500'>No results found :(</h3>
+  </div>
 <% end %>

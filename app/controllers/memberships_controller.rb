@@ -42,8 +42,8 @@ class MembershipsController < ApplicationController
   end
 
   def autocomplete
-    @accounts = Account.where(memberships: @membership.group.memberships)
-      .ransack(username_cont: params[:q]).result(distinct: true).limit(5)
+    @q = @membership.group.memberships.ransack(account_username_or_account_user_full_name_or_account_user_email_cont: params[:q])
+    @memberships = @q.result(distinct: true).limit(5)
     
     respond_to do |format|
       format.json {
