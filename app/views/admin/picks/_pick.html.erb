@@ -1,38 +1,42 @@
 <div class="rounded-xl p-6 shadow-lg bg-white <%= 'border-2 border-indigo-600' if pick.match.untie %>">
-  <p class='text-gray-500 mb-2'>
-    <% if pick.picked_team.present? %>
-      Updated at <b><%= time_ago_in_words pick.updated_at %></b>
-    <% end %>
-    <% if pick.match.settled? %>
-      <% if pick.correct %>
-        <i class="fas fa-check-square fa-lg text-green-600"></i>
-      <% else %>
-        <% if pick.match.tie %>
-          <i class="fas fa-minus-square fa-lg text-gray-500"></i>
+  <div class='text-gray-500 mb-2 flex justify-between'>
+    <span>
+      <% if pick.match.settled? %>
+        <% if pick.correct %>
+          <i class="fas fa-check-square fa-lg text-green-600"></i>
         <% else %>
-          <i class="fas fa-times-circle fa-lg text-red-600"></i>
+          <% if pick.match.tie %>
+            <i class="fas fa-minus-square fa-lg text-gray-500"></i>
+          <% else %>
+            <i class="fas fa-times-circle fa-lg text-red-600"></i>
+          <% end %>
+        <% end %>
+      <% elsif pick.match.started? %>
+        <% if pick.picked_team.present? %>
+          <i class="fas fa-lock fa-lg text-gray-500"></i>
+        <% else %>
+          <i class="fas fa-exclamation-circle fa-lg text-yellow-600"></i>
+        <% end %>
+      <% else %>
+        <% if pick.picked_team.present? %>
+          <i class="fas fa-lock fa-lg text-gray-500"></i>
+        <% else %>
+          <i class="fas fa-exclamation-circle fa-lg text-yellow-600"></i>
         <% end %>
       <% end %>
-    <% elsif pick.match.started? %>
-      <% if pick.picked_team.present? %>
-        <i class="fas fa-lock fa-lg text-gray-500"></i>
-      <% else %>
-        <i class="fas fa-exclamation-circle fa-lg text-yellow-600"></i>
+      <% if pick.match.premium %>
+        <i class="fas fa-flag-checkered fa-lg text-indigo-600"></i>
       <% end %>
-    <% else %>
-      <% if pick.picked_team.present? %>
-        <i class="fas fa-lock fa-lg text-gray-500"></i>
-      <% else %>
-        <i class="fas fa-exclamation-circle fa-lg text-yellow-600"></i>
+      <% if pick.match.untie %>
+        <i class="fab fa-medium fa-lg text-gray-900"></i>
       <% end %>
+    </span>
+    <% if pick.picked_team.present? %>
+      <span class='text-xs'>
+        Updated at <b><%= time_ago_in_words pick.updated_at %></b>
+      </span>
     <% end %>
-    <% if pick.match.premium %>
-      <i class="fas fa-flag-checkered fa-lg text-indigo-600"></i>
-    <% end %>
-    <% if pick.match.untie %>
-      <i class="fab fa-medium fa-lg text-gray-900"></i>
-    <% end %>
-  </p>
+  </div>
   <div class='grid grid-cols-2 gap-6 mb-4'>
     <div class='flex flex-col'>
       <p class='text-xs font-light text-gray-500'>
@@ -57,9 +61,23 @@
       <p class='text-xs font-light text-gray-500'>
         Lock Time
       </p>
-      <h2 class='text-sm md:text-md'>
-        <%= pick.match.start_time ? distance_of_time_in_words_to_now(pick.match.start_time) : 'TBA' %>
-      </h2>
+      <% if pick.match.start_time %>
+        <% if pick.match.start_time > Time.now %>
+          <% if pick.match.start_time - 10.minutes > Time.now %>
+            <h2 class="text-red-600 font-bold text-md">
+              <%= "in #{distance_of_time_in_words_to_now(pick.match.start_time)}" %>
+            </h2>
+          <% else %>
+            <h2 class='text-sm md:text-md'>
+              <%= "in #{distance_of_time_in_words_to_now(pick.match.start_time)}" %>
+            </h2>
+          <% end %>
+        <% else %>
+          <b>LOCKED</b>
+        <% end %>
+      <% else %>
+        <b>TBA</b>
+      <% end %>
     </div>
     <%= image_pack_tag "#{pick.match.home_team.short_name}.svg", class: 'w-20 flip' %>
   </div>
