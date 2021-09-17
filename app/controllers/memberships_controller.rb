@@ -11,15 +11,12 @@ class MembershipsController < ApplicationController
   end
 
   def table
-    @weeks = @membership.group.tournament.weeks
-    if filtering_params.present?
-      week = @membership.group.tournament.weeks.find_by(id: filtering_params[:week_id])
-      @membership_weeks = @membership.group.membership_weeks_of week
-      @matches = week.matches.includes(:home_team, :visit_team, :winning_team).order(order: :asc)
-    else
-      @membership_weeks = @membership.group.membership_weeks_of @membership.group.tournament.current_week
-      @matches = @membership.group.tournament.current_week_matches.includes(:home_team, :visit_team, :winning_team).order(order: :asc)
-    end
+    tournament = @membership.group.tournament
+    @weeks = tournament.weeks
+    week = filtering_params[:week_id] ? tournament.weeks.find_by(id: filtering_params[:week_id]) : tournament.current_week
+    # @membership_weeks becomes records
+    @pagy, @records = pagy(@membership.group.membership_weeks_of(week), items: 20)
+    @matches = week.matches.includes(:home_team, :visit_team, :winning_team).order(order: :asc)
   end
 
   def picks
