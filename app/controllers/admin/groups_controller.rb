@@ -32,7 +32,7 @@ class Admin::GroupsController < Admin::BaseController
   end
 
   def members_forgetting
-    @membership_weeks = @group.membership_weeks_forgetting @group.tournament.current_week
+    @pagy, @records = pagy(@group.membership_weeks_forgetting(@group.tournament.current_week), items: 20)
     @matches = @group.tournament.current_week_matches
   end
 

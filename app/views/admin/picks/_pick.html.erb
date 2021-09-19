@@ -69,8 +69,8 @@
         Lock Time
       </p>
       <% if pick.match.start_time %>
-        <% if pick.match.start_time > Time.now %>
-          <% if pick.match.start_time - 10.minutes < Time.now %>
+        <% if pick.match.start_time > Time.current %>
+          <% if pick.match.start_time - 10.minutes < Time.current %>
             <h2 class="text-red-600 font-bold text-md">
               <%= "in #{distance_of_time_in_words_to_now(pick.match.start_time)}" %>
             </h2>
