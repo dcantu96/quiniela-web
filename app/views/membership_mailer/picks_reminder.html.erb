@@ -1,5 +1,13 @@
 <table class="email-table">
   <tbody>
+    <tr class="body-row">
+      <td>
+        <p class='text-bold'>
+          <%= @membership.group.name %>
+        </p>
+      </td>
+    </tr>
+
     <tr class="header-row">
       <td>
         <h1>Heads up, <%= @membership.account.username %>. You have forgetting picks!</h1>
@@ -8,7 +16,7 @@
 
     <tr class="body-row">
       <td>
-        <p class='text-light text-indigo'>
+        <p class='text-light'>
           Don't forget to fill them out in our website before kick-off.
         </p>
         <p><%= link_to 'Go to my picks', picks_membership_url(@membership) %></p>
@@ -18,8 +26,9 @@
     <hr />
 
     <tr class="footer-row">
-      <td class='text-indigo'>
-        <p>Este correo es automatizado</p>
+      <td>
+        <p>This is an automated email. Our support email is</p>
+        <a href="mailto:quinflmty@yahoo.com">quinflmty@yahoo.com</a>
       </td>
     </tr>
   </tbody>
