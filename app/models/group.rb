@@ -38,7 +38,7 @@ class Group < ApplicationRecord
 
   def notify_missing_picks(week)
     forgotten_members(week).each do |membership_week|
-      MembershipMailer.with(membership: membership_week.membership).picks_reminder.deliver_later
+      MembershipMailer.with(membership_week: membership_week).picks_reminder.deliver_later
     end
   end
 
