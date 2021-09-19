@@ -33,6 +33,7 @@ Rails.application.routes.draw do
         post :fetch_match_results
         post :update_picks
         post :update_total_points
+        post :notify_missing_picks
       end
     end
     resources :tournaments do

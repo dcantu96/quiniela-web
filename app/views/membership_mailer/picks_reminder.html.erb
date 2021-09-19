@@ -1,0 +1,26 @@
+<table class="email-table">
+  <tbody>
+    <tr class="header-row">
+      <td>
+        <h1>Heads up, <%= @membership.account.username %>. You have forgetting picks!</h1>
+      </td>
+    </tr>
+
+    <tr class="body-row">
+      <td>
+        <p class='text-light text-indigo'>
+          Don't forget to fill them out in our website before kick-off.
+        </p>
+        <p><%= link_to 'Go to my picks', picks_membership_url(@membership) %></p>
+      </td>
+    </tr>
+
+    <hr />
+
+    <tr class="footer-row">
+      <td class='text-indigo'>
+        <p>Este correo es automatizado</p>
+      </td>
+    </tr>
+  </tbody>
+</table>

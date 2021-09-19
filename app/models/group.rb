@@ -29,14 +29,17 @@ class Group < ApplicationRecord
       .includes(picks: [:picked_team, match: [:winning_team, :home_team, :visit_team]], membership: [:account, :group])
   end
 
-  def membership_weeks_forgetting(week)
-    forgotten_members = membership_weeks.where(week: week).select do |membership_week|
-      membership_week.picks.forgotten.count > 0
-    end
-      
-      MembershipWeek.where(id: forgotten_members.pluck(:id)).joins(:membership)
+  def membership_weeks_forgetting(week)      
+    MembershipWeek.where(id: forgotten_members(week).pluck(:id))
+      .joins(:membership)
       .order('membership_weeks.points DESC, memberships.position ASC')
       .includes(picks: [:picked_team, match: [:winning_team]], membership: [:account, :group])
+  end
+
+  def notify_missing_picks(week)
+    forgotten_members(week).each do |membership_week|
+      MembershipMailer.with(membership: membership_week.membership).picks_reminder.deliver_later
+    end
   end
 
   def update_member_positions
@@ -53,6 +56,12 @@ class Group < ApplicationRecord
   def generate_group_weeks
     tournament.weeks.each do |week|
       group_weeks.create week: week
+    end
+  end
+
+  def forgotten_members(week)
+    @forgotten_members ||= membership_weeks.where(week: week).select do |membership_week|
+      membership_week.picks.forgotten.count > 0
     end
   end
 end

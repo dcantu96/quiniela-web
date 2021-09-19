@@ -1,6 +1,6 @@
 class Admin::GroupsController < Admin::BaseController
   before_action :set_group, only: [:edit, :update, :matches, :requests, :winners, :members,
-    :table, :members_forgetting, :autocomplete, :reset_week_points, :update_picks, :fetch_match_results, :update_total_points, :settings]
+    :table, :members_forgetting, :autocomplete, :reset_week_points, :update_picks, :fetch_match_results, :update_total_points, :settings, :notify_missing_picks]
   before_action :set_week, only: [:reset_week_points, :update_picks, :fetch_match_results, :update_total_points]
   layout 'admin_group', except: [:index, :new]
 
@@ -46,6 +46,14 @@ class Admin::GroupsController < Admin::BaseController
 
   def members
     @memberships = @group.memberships.order(position: :asc)
+  end
+
+  def notify_missing_picks
+    tournament = @group.tournament
+    week = filtering_params[:week_id] ? tournament.weeks.find_by(id: filtering_params[:week_id]) : tournament.current_week
+    if @group.notify_missing_picks(week)
+      redirect_back fallback_location: matches_admin_group_path(@group), notice: 'Email reminders sent successfully'
+    end
   end
 
   def winners

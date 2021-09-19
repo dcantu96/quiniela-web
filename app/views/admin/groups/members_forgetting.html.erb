@@ -3,6 +3,7 @@
   <div class='hidden md:flex flex-col pb-2 md:px-4 md:pb-4'>
     <h3 class="text-sm uppercase text-gray-600 pb-2">User Time Zone <b><%= current_user.time_zone %></b><span class='ml-2 font-bold underline'><%= link_to 'Edit', edit_user_registration_path %></span></h3>
     <h4 class="text-sm uppercase text-gray-600"><%= Time.current.in_time_zone(current_user.time_zone).to_formatted_s(:long) %></h4>
+    <%= button_to 'Send reminder to all', notify_missing_picks_admin_group_path(id: @group.id), class: 'btn btn--primary py-1 m-1 inline-block mb-4', data: { confirm: 'This will send an email to each membership.', disable_with: 'loading...' } %>
   </div>
   <div class='overflow-hidden'>
     <div class='overflow-scroll h-screen w-full'>
