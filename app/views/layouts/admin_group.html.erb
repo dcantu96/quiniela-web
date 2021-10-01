@@ -61,7 +61,7 @@
           <div class="flex items-center">
             <div class='text-md flex items-center hover:text-indigo-900 py-3 px-3'>
               <i class="fas fa-user mr-2 fill-current"></i>
-              <span><%= @group.memberships.count %></span>
+              <span><%= @group.memberships.where(suspended: false).count %></span>
             </div>
             <% if @group.tournament.weeks.present? %>
               <%= link_to admin_week_path(@group.tournament.current_week), class: "text-md text-gray-600 flex items-center hover:text-indigo-900 py-3 px-3" do %>
