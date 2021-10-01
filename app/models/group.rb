@@ -43,8 +43,8 @@ class Group < ApplicationRecord
   end
 
   def update_member_positions
-    memberships
-      .select('*, (select sum(points) from membership_weeks where membership_id = memberships.id AND memberships.suspended = false) as new_total')
+    memberships.where(suspended: false)
+      .select('*, (select sum(points) from membership_weeks where membership_id = memberships.id) as new_total')
       .order('new_total desc')
       .each_with_index do |membership, index|
         membership.update position: index + 1, total: membership.new_total

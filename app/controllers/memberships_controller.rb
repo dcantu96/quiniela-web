@@ -30,7 +30,7 @@ class MembershipsController < ApplicationController
   end
 
   def members
-    @memberships = @membership.group.memberships.order(position: :asc)
+    @memberships = @membership.group.memberships.where(suspended: false).order(position: :asc)
   end
 
   def winners
