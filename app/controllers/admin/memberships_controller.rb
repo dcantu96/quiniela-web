@@ -9,6 +9,11 @@ class Admin::MembershipsController < Admin::BaseController
   end
   
   def settings
+    @other_memerships = @membership.account.user.memberships
+      .where(
+        'group_id = :gid AND memberships.id != :mid',
+        gid: @membership.group.id,
+        mid: @membership.id)
 
   end
 

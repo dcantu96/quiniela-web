@@ -45,7 +45,7 @@ class Admin::GroupsController < Admin::BaseController
   end
 
   def members
-    @memberships = @group.memberships.order(position: :asc)
+    @memberships = @group.memberships.where(suspended: false).order(position: :asc)
   end
 
   def notify_missing_picks
