@@ -45,7 +45,8 @@ class Admin::GroupsController < Admin::BaseController
   end
 
   def members
-    @memberships = @group.memberships.where(suspended: false).order(position: :asc)
+    # Here we will be able to see suspended people
+    @memberships = @group.memberships.order(suspended: :asc, position: :asc)
   end
 
   def notify_missing_picks
