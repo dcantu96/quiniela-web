@@ -60,7 +60,7 @@ class Group < ApplicationRecord
   end
 
   def forgotten_members(week)
-    @forgotten_members ||= membership_weeks.where(week: week, membership: { suspended: false }).select do |membership_week|
+    @forgotten_members ||= membership_weeks.includes(:membership).where().select do |membership_week|
       membership_week.picks.forgotten.count > 0
     end
   end
