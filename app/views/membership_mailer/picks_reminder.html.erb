@@ -19,9 +19,9 @@
         <p>
           These are the picks you have not yet picked
         </p>
-        <% @membership.picks.includes(:match).where(membership_week_id: @membership_week.id, picked_team: nil).each do |pick| %>
+        <% @membership.picks.includes(:match).where(membership_week_id: @membership_week.id, picked_team: nil).order('matches.order').each do |pick| %>
           <p>
-            <%= pick.match.visit_team.short_name %> @ <%= pick.match.home_team.short_name %>. <%= pick.match.start_time ? pick.match.start_time.in_time_zone(@user.time_zone).to_formatted_s(:short) : 'TBA'  %>
+            <%= pick.match.visit_team.short_name %> @ <%= pick.match.home_team.short_name %>. <%= pick.match.start_time ? pick.match.start_time.in_time_zone(@user.time_zone).to_formatted_s(:long) : 'TBA'  %>
           </p>
         <% end %>
     
