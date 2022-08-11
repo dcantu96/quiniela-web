@@ -1,12 +1,17 @@
 <div class="rounded-xl p-6 shadow-lg bg-white">
-  <div class="flex justify-between items-center mb-4">
-    <h2 class='text-lg'>
-      <%= group.name %>
-    </h2>
+  <div class="flex justify-between mb-4">
+    <div>
+      <div class="text-md text-indigo-900 flex items-center">
+        <%= group.name %>
+      </div>
+      <div class="text-sm text-gray-500">
+        <%= group.tournament.name %> - <%= group.tournament.year %>
+      </div>
+    </div>
     <% if group.finished %>
-      <h2 class='text-md text-gray-600'>
+      <div class='text-md text-gray-600'>
         Terminado
-      </h2>
+      </div>
     <% end %>
   </div>
   
