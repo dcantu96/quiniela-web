@@ -34,11 +34,10 @@ class Tournament < ApplicationRecord
         doc = Nokogiri::HTML(URI.open("https://www.espn.com/nfl/schedule/_/week/#{iterable_week}/year/#{year}/seasontype/2", redirect: :true))
 
         new_week = weeks.find_or_create_by number: iterable_week
-        new_week.generate_matches
+        new_week.generate_matches(doc)
         iterable_week = iterable_week + 1
 
       rescue
-        puts 'we enter the error'
         valid_week_url = false
       end
     end

@@ -56,8 +56,7 @@ class Week < ApplicationRecord
     @espn_schedule_table ||= Nokogiri::HTML(URI.open("https://www.espn.com/nfl/schedule/_/week/#{number}/year/#{tournament.year}/seasontype/2"))
   end
 
-  def generate_matches
-    doc = espn_schedule_table
+  def generate_matches(doc=espn_schedule_table)
     espn_matches = doc.css('.responsive-table-wrap tr.even') + doc.css('.responsive-table-wrap tr.odd')
     espn_matches.each do |espn_match|
       return if espn_match.classes.include?('byeweek')
