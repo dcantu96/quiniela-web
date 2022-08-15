@@ -1,4 +1,4 @@
-import { Controller } from "stimulus"
+import { Controller } from "@hotwired/stimulus"
 import { DirectUpload } from "@rails/activestorage"
 import Dropzone from "dropzone"
 import { getMetaValue, toArray, findElement, removeElement, insertAfter } from "helpers"
