@@ -9,3 +9,5 @@ pin "stimulus-autocomplete", to: "https://ga.jspm.io/npm:stimulus-autocomplete@3
 
 pin "@fortawesome/fontawesome-free", to: "https://ga.jspm.io/npm:@fortawesome/fontawesome-free@6.1.2/js/all.js"
 pin "sweetalert2", to: "https://ga.jspm.io/npm:sweetalert2@11.4.26/dist/sweetalert2.all.js"
+pin "select2", to: "https://ga.jspm.io/npm:select2@4.1.0-rc.0/dist/js/select2.js"
+pin "jquery", to: "https://ga.jspm.io/npm:jquery@3.6.0/dist/jquery.js"
