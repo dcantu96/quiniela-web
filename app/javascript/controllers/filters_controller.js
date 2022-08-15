@@ -1,4 +1,5 @@
 import { Controller } from "@hotwired/stimulus";
+import { Turbo } from "@hotwired/turbo-rails";
 
 export default class extends Controller {
   static targets = ["filter"];
@@ -6,8 +7,8 @@ export default class extends Controller {
   filter() {
     const url = `${window.location.pathname}?${this.params}`;
 
-    Turbolinks.clearCache();
-    Turbolinks.visit(url);
+    Turbo.clearCache();
+    Turbo.visit(url);
   }
 
   get params() {
