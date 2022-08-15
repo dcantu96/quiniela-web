@@ -6,7 +6,7 @@
     <% if pick.picked_team == pick.match.visit_team %>
       <div class='btn btn--locked text-xl w-32 text-center'>
         <%= pick.match.visit_team.short_name %>
-        <i class="fas fa-lock fa-sm ml-2 fill-current"></i>
+        <i class="fa-solid fa-lock fa-sm ml-2 fill-current"></i>
       </div>
       <%= form_with model: pick do |f| %>
         <%= f.hidden_field :modified_by_admin, value: false %>
@@ -21,7 +21,7 @@
       <% end %>
       <div class='btn btn--locked text-xl w-32 text-center'>
         <%= pick.match.home_team.short_name %>
-        <i class="fas fa-lock fa-sm ml-2 fill-current"></i>
+        <i class="fa-solid fa-lock fa-sm ml-2 fill-current"></i>
       </div>
     <% else %>
       <%= form_with model: pick do |f| %>
@@ -43,7 +43,7 @@
   <div class='flex justify-evenly items-center'>
     <div class='btn btn--locked text-xl w-32 text-center cursor-not-allowed'>
       <%= pick.picked_team.short_name %>
-      <i class="fas fa-lock fa-sm ml-2 fill-current"></i>
+      <i class="fa-solid fa-lock fa-sm ml-2 fill-current"></i>
     </div>
   </div>
 <% else %>

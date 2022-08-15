@@ -3,32 +3,32 @@
     <span>
       <% if pick.match.settled? %>
         <% if pick.correct %>
-          <i class="fas fa-check-square fa-lg text-green-600"></i>
+          <i class="fa-solid fa-check-square fa-lg text-green-600"></i>
         <% else %>
           <% if pick.match.tie %>
-            <i class="fas fa-minus-square fa-lg text-gray-500"></i>
+            <i class="fa-solid fa-minus-square fa-lg text-gray-500"></i>
           <% else %>
-            <i class="fas fa-times-circle fa-lg text-red-600"></i>
+            <i class="fa-solid fa-times-circle fa-lg text-red-600"></i>
           <% end %>
         <% end %>
       <% elsif pick.match.started? %>
         <% if pick.picked_team.present? %>
-          <i class="fas fa-lock fa-lg text-gray-500"></i>
+          <i class="fa-solid fa-lock fa-lg text-gray-500"></i>
         <% else %>
-          <i class="fas fa-exclamation-circle fa-lg text-yellow-600"></i>
+          <i class="fa-solid fa-exclamation-circle fa-lg text-yellow-600"></i>
         <% end %>
       <% else %>
         <% if pick.picked_team.present? %>
-          <i class="fas fa-lock fa-lg text-gray-500"></i>
+          <i class="fa-solid fa-lock fa-lg text-gray-500"></i>
         <% else %>
-          <i class="fas fa-exclamation-circle fa-lg text-yellow-600"></i>
+          <i class="fa-solid fa-exclamation-circle fa-lg text-yellow-600"></i>
         <% end %>
       <% end %>
       <% if pick.match.premium %>
-        <i class="fas fa-flag-checkered fa-lg text-indigo-600"></i>
+        <i class="fa-solid fa-flag-checkered fa-lg text-indigo-600"></i>
       <% end %>
       <% if pick.match.untie %>
-        <i class="fab fa-medium fa-lg text-gray-900"></i>
+        <i class="fa-solid fa-m fa-lg text-gray-900"></i>
       <% end %>
     </span>
     <% if pick.modified_by_admin %>

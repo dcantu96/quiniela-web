@@ -6,7 +6,7 @@
           Username
         </h2>
         <%= link_to edit_account_path(membership.account) do %>
-          <i class="fas fa-edit fill-current"></i>
+          <i class="fa-solid fa-edit fill-current"></i>
         <% end %>
       </div>
       <h2 class='text-lg'>
@@ -40,19 +40,19 @@
   </div>
   <div class='grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-0'>
     <%= link_to table_admin_group_path(membership.group), class: "text-md text-indigo-900 flex items-center border-b-2 pb-3 px-2 border-transparent hover:border-gray-400" do %>
-      <i class="fas fa-table mr-3 fill-current"></i>
+      <i class="fa-solid fa-table mr-3 fill-current"></i>
       <span>Conso</span>
     <% end %>
     <%= link_to picks_admin_group_membership_path(membership.group, membership), class: "text-md text-indigo-900 flex items-center border-b-2 pb-3 px-2 border-transparent hover:border-gray-400" do %>
-      <i class="fas fa-money-bill-wave-alt mr-3 fill-current"></i>
+      <i class="fa-solid fa-money-bill-wave-alt mr-3 fill-current"></i>
       <span>Picks</span>
     <% end %>
     <%= link_to members_admin_group_path(membership.group), class: "text-md text-indigo-900 flex items-center border-b-2 pb-3 px-2 border-transparent hover:border-gray-400" do %>
-      <i class="fas fa-users mr-3 fill-current"></i>
+      <i class="fa-solid fa-users mr-3 fill-current"></i>
       <span>Tabla</span>
     <% end %>
     <%= link_to winners_admin_group_path(membership.group), class: "text-md text-indigo-900 flex items-center border-b-2 pb-3 px-2 border-transparent hover:border-gray-400" do %>
-      <i class="fas fa-star mr-3 fill-current"></i>
+      <i class="fa-solid fa-star mr-3 fill-current"></i>
       <span>Wins</span>
     <% end %>
   </div>

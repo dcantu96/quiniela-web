@@ -16,7 +16,7 @@
                 <%= link_to picks_admin_group_membership_path(membership.group, membership), class: 'grid grid-cols-4' do %>
                   <% if membership.suspended %>
                     <div class="relative inline-block group">
-                      <i class="fas fa-exclamation-triangle fa-lg ml-2 fill-current text-red-600"></i>
+                      <i class="fa-solid fa-exclamation-triangle fa-lg ml-2 fill-current text-red-600"></i>
                       <div class="bg-black text-center text-white text-xs rounded py-1 px-2 left-0 top-0 transform -translate-y-8 translate-x-2 bottom-full invisible absolute group-hover:visible w-18 z-20">
                         Suspended
                         <svg class="absolute text-black h-2 left-0 ml-3 top-full z-10" x="0px" y="0px" viewBox="0 0 255 255" xml:space="preserve"><polygon class="fill-current" points="0,0 127.5,127.5 255,0"/></svg>
@@ -28,7 +28,7 @@
                   <span><%= membership.account.username %></span>
                   <% if membership.paid %>
                     <div class="relative inline-block group">
-                      <i class="fas fa-money-bill-wave-alt fa-lg ml-2 fill-current text-green-700"></i>
+                      <i class="fa-solid fa-money-bill-wave-alt fa-lg ml-2 fill-current text-green-700"></i>
                       <div class="bg-black text-center text-white text-xs rounded py-1 px-2 left-0 top-0 transform -translate-y-8 translate-x-2 bottom-full invisible absolute group-hover:visible w-18 z-20">
                         Paid
                         <svg class="absolute text-black h-2 left-0 ml-3 top-full z-10" x="0px" y="0px" viewBox="0 0 255 255" xml:space="preserve"><polygon class="fill-current" points="0,0 127.5,127.5 255,0"/></svg>

@@ -41,6 +41,8 @@ gem "bootsnap", require: false
 
 gem "sassc-rails"
 
+gem "font-awesome-sass", "~> 6.1.2"
+
 gem 'devise'
 gem 'chartkick'
 gem 'groupdate'

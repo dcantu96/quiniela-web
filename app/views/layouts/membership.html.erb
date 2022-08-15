@@ -22,11 +22,11 @@
         <% end %>
         <div class="flex flex-col mr-auto">
           <div class='flex items-center text-lg text-indigo-900'>
-            <i class="fas fa-users mr-1"></i>
+            <i class="fa-solid fa-users mr-1"></i>
             <h1 class=''><%= @membership.group.name %></h1>
           </div>
           <div class='flex items-center text-lg text-indigo-900'>
-            <i class="fas fa-user ml-1 mr-2"></i>
+            <i class="fa-solid fa-user ml-1 mr-2"></i>
             <h1 class='text-xl font-bold'><%= @membership.account.username %></h1>
           </div>
         </div>
@@ -35,24 +35,24 @@
       <div class="hidden md:flex mb-20 md:mb-0">
         <% if @membership.account.user == current_user %>
           <%= link_to table_membership_path(@membership), class: "text-md text-indigo-900 flex items-center border-b-2 pb-3 px-2 #{current_page?(table_membership_path(@membership)) ? 'border-orange-400' : 'border-transparent hover:border-gray-400'}" do %>
-            <i class="fas fa-table mr-3 fill-current"></i>
+            <i class="fa-solid fa-table mr-3 fill-current"></i>
             <span>Conso Week <%= @membership.group.tournament.current_week.number %></span>
           <% end %>
           <%= link_to picks_membership_path(@membership), class: "text-md text-indigo-900 flex items-center border-b-2 pb-3 px-2 #{current_page?(picks_membership_path(@membership)) ? 'border-orange-400' : 'border-transparent hover:border-gray-400'}" do %>
-            <i class="fas fa-money-bill-wave-alt mr-3 fill-current"></i>
+            <i class="fa-solid fa-money-bill-wave-alt mr-3 fill-current"></i>
             <span>Picks</span>
           <% end %>
           <%= link_to members_membership_path(@membership), class: "text-md text-indigo-900 flex items-center border-b-2 pb-3 px-2 #{current_page?(members_membership_path(@membership)) ? 'border-orange-400' : 'border-transparent hover:border-gray-400'}" do %>
-            <i class="fas fa-users mr-3 fill-current"></i>
+            <i class="fa-solid fa-users mr-3 fill-current"></i>
             <span>Tabla de Posiciones</span>
           <% end %>
           <%= link_to winners_membership_path(@membership), class: "text-md text-indigo-900 flex items-center border-b-2 pb-3 px-2 #{current_page?(winners_membership_path(@membership)) ? 'border-orange-400' : 'border-transparent hover:border-gray-400'}" do %>
-            <i class="fas fa-star mr-3 fill-current"></i>
+            <i class="fa-solid fa-star mr-3 fill-current"></i>
             <span>Ganadores</span>
           <% end %>
         <% else %>
           <%= link_to public_picks_membership_path(@membership), class: "text-md text-indigo-900 flex items-center border-b-2 pb-3 px-2 #{current_page?(public_picks_membership_path(@membership)) ? 'border-orange-400' : 'border-transparent hover:border-gray-400'}" do %>
-            <i class="fas fa-money-bill-wave-alt mr-3 fill-current"></i>
+            <i class="fa-solid fa-money-bill-wave-alt mr-3 fill-current"></i>
             <span>Public Picks</span>
           <% end %>
         <% end %>
@@ -65,25 +65,25 @@
       <ul class='md:hidden list-none p-0 m-0 flex items-center h-16'>
         <li class='w-full'>
           <%= link_to table_membership_path(@membership), class: "flex flex-col text-xs items-center justify-center h-16 border-t-2 #{ current_page?(table_membership_path(@membership)) ? 'text-indigo-900 bg-indigo-200 border-orange-400' : 'text-gray-400'}" do %>
-            <i class="fas fa-table fa-2x mx-6 mb-1"></i>
+            <i class="fa-solid fa-table fa-2x mx-6 mb-1"></i>
             <span class="font-light uppercase">Conso Week <%= @membership.group.tournament.current_week.number %></span>
           <% end %>
         </li>
         <li class='w-full'>
           <%= link_to picks_membership_path(@membership), class: "flex flex-col text-xs items-center justify-center h-16 border-t-2 #{ current_page?(picks_membership_path(@membership)) ? 'text-indigo-900 bg-indigo-200 border-orange-400' : 'text-gray-400'}" do %>
-            <i class="fas fa-users fa-2x mx-6 mb-1"></i>
+            <i class="fa-solid fa-users fa-2x mx-6 mb-1"></i>
             <span class="font-light uppercase">Picks</span>
           <% end %>
         </li>
         <li class='w-full'>
           <%= link_to members_membership_path(@membership), class: "flex flex-col text-xs items-center justify-center h-16 border-t-2 #{ current_page?(members_membership_path(@membership)) ? 'text-indigo-900 bg-indigo-200 border-orange-400' : 'text-gray-400'}" do %>
-            <i class="fas fa-user fa-2x mx-6 mb-1"></i>
+            <i class="fa-solid fa-user fa-2x mx-6 mb-1"></i>
             <span class="font-light uppercase">Posiciones</span>
           <% end %>
         </li>
         <li class='w-full'>
           <%= link_to winners_membership_path(@membership), class: "flex flex-col text-xs items-center justify-center h-16 border-t-2 #{ current_page?(winners_membership_path(@membership)) ? 'text-indigo-900 bg-indigo-200 border-orange-400' : 'text-gray-400'}" do %>
-            <i class="fas fa-star fa-2x mx-6 mb-1"></i>
+            <i class="fa-solid fa-star fa-2x mx-6 mb-1"></i>
             <span class="font-light uppercase">Ganadores</span>
           <% end %>
         </li>

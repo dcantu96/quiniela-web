@@ -5,7 +5,7 @@
   <% if pick.picked_team == pick.match.visit_team %>
     <div class='btn w-32 text-center btn--locked text-xl'>
       <%= pick.match.visit_team.short_name %>
-      <i class="fas fa-lock fa-sm ml-2 fill-current"></i>
+      <i class="fa-solid fa-lock fa-sm ml-2 fill-current"></i>
     </div>
     <%= form_with model: [:admin, pick] do |f| %>
       <%= f.hidden_field :modified_by_admin, value: true %>
@@ -20,7 +20,7 @@
     <% end %>
     <div class='btn w-32 text-center btn--locked text-xl'>
       <%= pick.match.home_team.short_name %>
-      <i class="fas fa-lock fa-sm ml-2 fill-current"></i>
+      <i class="fa-solid fa-lock fa-sm ml-2 fill-current"></i>
     </div>
   <% else %>
     <%= form_with model: [:admin, pick] do |f| %>
