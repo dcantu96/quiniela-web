@@ -1,6 +1,6 @@
 <div class='p-6 container mx-auto'>
   <div class='flex flex-wrap mb-4'>
-    <h2 class='text-2xl text-indigo-900 mr-4'>Hello, <%= current_user.full_name %></h2>
+    <h2 class='text-2xl text-indigo-900 mr-4'>Hola, <%= current_user.full_name %></h2>
   </div>
   <% if !@memberships.present? %>
     <div class='flex flex-wrap mb-4 w-1/2'>
@@ -8,11 +8,11 @@
     </div>
   <% end %>
   <div class='flex flex-wrap mb-4'>
-    <%= link_to "Crear Usuario", new_account_path, class: 'btn btn--primary' %>
+    ¿Eres nuevo?  <%= link_to "crea un usuario", new_account_path, class: 'underline text-link' %>
   </div>
   <% if @requests.present? || @memberships.present? %>
     <% if @memberships.active.present? %>
-      <h2 class='text-lg mb-4'>Grupos Activo</h2>
+      <h2 class='text-lg mb-4 text-left'>Grupos Activo</h2>
       <div class="lg:shadow lg:overflow-hidden lg:border-b lg:border-gray-200 sm:rounded-lg mb-4">
         <div class="lg:table w-full rounded min-w-full divide-y divide-gray-200">
           <div class="hidden lg:table-header-group bg-gray-200">
@@ -39,7 +39,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="lg:table-cell px-6 py-6 pb-2 lg:py-3 lg:px-6 whitespace-nowrap">
+                <div class="lg:table-cell px-6 py-6 pb-2 lg:py-3 lg:px-6 whitespace-nowrap text-left">
                   <div class="lg:hidden text-sm text-gray-500">Group</div>
                   <div class="text-sm font-medium text-gray-900">
                     <%= link_to member.group.name, table_membership_path(member), class: "text-md text-indigo-900 flex items-center" %>
@@ -86,7 +86,7 @@
     <% end %>
   <% end %>
   <% if current_user.accounts.present? %>
-    <h2 class='text-lg mb-4'>Join a new group</h2>
+    <h2 class='text-lg mb-4 text-left'>Unirte a otro grupo</h2>
     <div class="lg:shadow lg:overflow-hidden lg:border-b lg:border-gray-200 sm:rounded-lg">
       <div class="lg:table w-full rounded min-w-full divide-y divide-gray-200">
         <div class="hidden lg:table-header-group bg-gray-200">
@@ -99,17 +99,17 @@
           <% current_user.accounts.each do |account| %>
             <% Group.where.not(id: account.group_ids).where(finished: false).each do |group| %>
               <div class="bg-white rounded-xl lg:rounded-none lg:table-row shadow-lg grid grid-cols-2">
-                <div class="lg:table-cell px-6 py-6 pb-1 lg:py-3 lg:px-6 whitespace-nowrap">
+                <div class="lg:table-cell px-6 py-6 pb-1 lg:py-3 lg:px-6 whitespace-nowrap text-left">
                   <div class="lg:hidden text-sm text-gray-500">Username</div>
                   <div class="text-sm font-medium text-gray-900"><%= account.username %></div>
                 </div>
-                <div class="lg:table-cell px-6 py-6 pb-1 lg:py-3 lg:px-6 whitespace-nowrap">
+                <div class="lg:table-cell px-6 py-6 pb-1 lg:py-3 lg:px-6 whitespace-nowrap text-left">
                   <div class="lg:hidden text-sm text-gray-500">Group</div>
                   <div class="text-sm font-medium text-indigo-900">
                     <%= group.name %>
                   </div>
                 </div>
-                <div class="lg:table-cell px-6 py-6 pb-1 lg:py-3 lg:px-6 whitespace-nowrap">
+                <div class="lg:table-cell px-6 py-6 pb-1 lg:py-3 lg:px-6 whitespace-nowrap text-left">
                   <div class="lg:hidden text-sm text-gray-500">Status</div>
                   <% request = group.requests.where(id: account.request_ids)%>
                   <% if request.present? %>
@@ -162,7 +162,7 @@
             <tbody class="bg-white divide-y divide-gray-200">
               <% current_user.memberships.finished.each do |membership| %>
                 <tr>
-                  <td class="px-6 py-4 whitespace-nowrap">
+                  <td class="px-6 py-4 whitespace-nowrap text-left">
                     <div class="flex items-center">
                       <div>
                         <div class="text-sm font-medium text-gray-900">
@@ -174,7 +174,7 @@
                       </div>
                     </div>
                   </td>
-                  <td class="px-6 py-4 whitespace-nowrap">
+                  <td class="px-6 py-4 whitespace-nowrap text-left">
                     <div class="text-sm text-gray-900"><%= membership.group.name %></div>
                     <div class="text-sm text-gray-500"><%= membership.group.tournament.name %> - <%= membership.group.tournament.year %></div>
                   </td>

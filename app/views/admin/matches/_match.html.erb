@@ -1,7 +1,7 @@
 <div class="rounded-xl p-6 shadow-lg bg-white <%= 'border-2 border-indigo-600' if match.untie %>">
   <div class='grid grid-cols-2 gap-6 mb-4'>
     <div class='flex flex-col'>
-      <p class='text-xs font-light text-gray-500'>
+      <p class='text-xs font-light text-gray-500 text-left'>
         Visit Team
       </p>
       <span class="font-bold <%= 'text-green-600' if match.winning_team == match.visit_team %>"><%= match.visit_team.short_name %></span>
@@ -19,7 +19,7 @@
       <p class='text-xs font-light text-gray-500'>
         Start Time
       </p>
-      <h2 class='text-sm md:text-md mb-4'>
+      <h2 class='text-sm md:text-md mb-4 text-gray-800'>
         <%= match.start_time ? match.start_time.in_time_zone(current_user.time_zone).to_formatted_s(:short) : 'TBA' %>
       </h2>
       <p class='text-xs font-light text-gray-500'>
@@ -32,15 +32,15 @@
               <%= "in #{distance_of_time_in_words_to_now(match.start_time)}" %>
             </h2>
           <% else %>
-            <h2 class='text-sm md:text-md'>
+            <h2 class='text-sm md:text-md text-gray-800'>
               <%= "in #{distance_of_time_in_words_to_now(match.start_time)}" %>
             </h2>
           <% end %>
         <% else %>
-          <b>LOCKED</b>
+          <span class='font-bold text-gray-800'>LOCKED</span>
         <% end %>
       <% else %>
-        <b>TBA</b>
+        <span class='font-bold text-gray-800'>TBA</span>
       <% end %>
     </div>
     <%= image_tag "#{match.home_team.short_name}.svg", class: 'w-20 flip' %>

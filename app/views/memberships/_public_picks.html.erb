@@ -12,11 +12,11 @@
         <% end %>
       </div>
       <div class='grid grid-cols-2 gap-6 mb-4'>
-        <div class='flex flex-col'>
+        <div class='flex flex-col text-left'>
           <p class='text-xs font-light text-gray-500'>
             Visit Team
           </p>
-          <h2 class='text-md md:text-lg'>
+          <h2 class='text-md text-gray-800'>
             <%= pick.match.visit_team.name %>
           </h2>
         </div>
@@ -24,7 +24,7 @@
           <p class='text-xs font-light text-gray-500'>
             Home Team
           </p>
-          <h2 class='text-md md:text-lg'>
+          <h2 class='text-md text-gray-800'>
             <%= pick.match.home_team.name %>
           </h2>
         </div>
@@ -35,13 +35,13 @@
           <p class='text-xs font-light text-gray-500'>
             Start Time
           </p>
-          <h2 class='text-sm md:text-md mb-4'>
+          <h2 class='text-sm md:text-md mb-4 text-gray-800'>
             <%= pick.match.start_time ? pick.match.start_time.in_time_zone(current_user.time_zone).to_formatted_s(:short) : 'TBA'  %>
           </h2>
           <p class='text-xs font-light text-gray-500'>
             Lock Time
           </p>
-          <h2 class='text-sm md:text-md'>
+          <h2 class='text-sm md:text-md text-gray-800'>
             <%= (pick.match.start_time - 1.minute).in_time_zone(current_user.time_zone).to_formatted_s(:short)  %>
           </h2>
         </div>

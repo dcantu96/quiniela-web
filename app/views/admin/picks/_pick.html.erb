@@ -45,15 +45,21 @@
     
   </div>
   <div class='grid grid-cols-2 gap-6 mb-4'>
-    <div class='flex flex-col'>
+    <div class='flex flex-col text-left'>
       <p class='text-xs font-light text-gray-500'>
         Visit Team
       </p>
+      <h2 class='text-md text-gray-800'>
+        <%= pick.match.visit_team.name %>
+      </h2>
     </div>
     <div class='flex flex-col items-end text-right'>
       <p class='text-xs font-light text-gray-500'>
         Home Team
       </p>
+      <h2 class='text-md text-gray-800'>
+        <%= pick.match.home_team.name %>
+      </h2>
     </div>
   </div>
   <div class='flex justify-between text-center mb-4 items-center'>
@@ -62,7 +68,7 @@
       <p class='text-xs font-light text-gray-500'>
         Start Time
       </p>
-      <h2 class='text-sm md:text-md mb-4'>
+      <h2 class='text-sm md:text-md mb-4 text-gray-800'>
         <%= pick.match.start_time ? pick.match.start_time.in_time_zone(current_user.time_zone).to_formatted_s(:short) : 'TBA' %>
       </h2>
       <p class='text-xs font-light text-gray-500'>
@@ -75,15 +81,15 @@
               <%= "in #{distance_of_time_in_words_to_now(pick.match.start_time)}" %>
             </h2>
           <% else %>
-            <h2 class='text-sm md:text-md'>
+            <h2 class='text-sm md:text-md text-gray-800'>
               <%= "in #{distance_of_time_in_words_to_now(pick.match.start_time)}" %>
             </h2>
           <% end %>
         <% else %>
-          <b>LOCKED</b>
+          <span class='font-bold text-gray-800'>LOCKED</span>
         <% end %>
       <% else %>
-        <b>TBA</b>
+        <span class='font-bold text-gray-800'>TBA</span>
       <% end %>
     </div>
     <%= image_tag "#{pick.match.home_team.short_name}.svg", class: 'w-20 flip' %>
