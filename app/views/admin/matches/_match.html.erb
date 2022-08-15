@@ -14,7 +14,7 @@
     </div>
   </div>
   <div class='flex justify-between text-center mb-4 items-center'>
-    <%= image_pack_tag "#{match.visit_team.short_name}.svg", class: 'w-20' %>
+    <%= image_tag "#{match.visit_team.short_name}.svg", class: 'w-20' %>
     <div>
       <p class='text-xs font-light text-gray-500'>
         Start Time
@@ -43,7 +43,7 @@
         <b>TBA</b>
       <% end %>
     </div>
-    <%= image_pack_tag "#{match.home_team.short_name}.svg", class: 'w-20 flip' %>
+    <%= image_tag "#{match.home_team.short_name}.svg", class: 'w-20 flip' %>
   </div>
   <div class='flex justify-between'>
     <%= link_to "Edit", edit_admin_match_path(match), class: 'btn btn--warning' %>

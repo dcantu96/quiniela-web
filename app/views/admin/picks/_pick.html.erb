@@ -57,7 +57,7 @@
     </div>
   </div>
   <div class='flex justify-between text-center mb-4 items-center'>
-    <%= image_pack_tag "#{pick.match.visit_team.short_name}.svg", class: 'w-20' %>
+    <%= image_tag "#{pick.match.visit_team.short_name}.svg", class: 'w-20' %>
     <div>
       <p class='text-xs font-light text-gray-500'>
         Start Time
@@ -86,7 +86,7 @@
         <b>TBA</b>
       <% end %>
     </div>
-    <%= image_pack_tag "#{pick.match.home_team.short_name}.svg", class: 'w-20 flip' %>
+    <%= image_tag "#{pick.match.home_team.short_name}.svg", class: 'w-20 flip' %>
   </div>
   <%= render 'admin/picks/pick_buttons', pick: pick %>
 </div>

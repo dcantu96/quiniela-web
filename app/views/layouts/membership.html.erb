@@ -2,12 +2,13 @@
 <html>
   <head>
     <title>Quiniela 2022 - Admin</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
 
-    <%= stylesheet_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
     <link href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" rel="stylesheet">
 	  <link href="https://cdn.datatables.net/responsive/2.2.5/css/responsive.dataTables.min.css" rel="stylesheet">
   </head>
@@ -17,7 +18,7 @@
     <header class='bg-white px-6 py-3 md:pb-0 shadow-sm'>
       <div class='flex justify-between md:pb-2'>
         <%= link_to root_path do %>
-          <%= image_pack_tag 'logo.svg', alt: 'Logo', class: 'h-12 mr-3' %>
+          <%= image_tag 'logo.svg', alt: 'Logo', class: 'h-12 mr-3' %>
         <% end %>
         <div class="flex flex-col mr-auto">
           <div class='flex items-center text-lg text-indigo-900'>
