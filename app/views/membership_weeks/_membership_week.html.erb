@@ -1,4 +1,4 @@
-<tr class="bg-white lg:hover:bg-gray-100 table-row flex-row flex-no-wrap mb-2 lg:mb-0" data-target='searchable.member' data-username="<%= membership_week.membership.account.username %>">
+<tr class="bg-white lg:hover:bg-gray-100 table-row flex-row flex-no-wrap mb-2 lg:mb-0" data-searchable-target='member' data-username="<%= membership_week.membership.account.username %>">
   <th class="sticky text-xs left-0 z-20 p-3 text-center text-indigo-900 table-cell bg-gray-200 <%= 'font-extrabold' if membership_week.membership.account.user == current_user %>">
     <%= link_to public_picks_membership_path(membership_week.membership), class: 'flex items-center' do %>
       <span class="rounded bg-black py-1 px-2 text-white text-xs font-bold mr-2"><%= membership_week.membership.position %></span>

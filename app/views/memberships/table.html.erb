@@ -7,7 +7,7 @@
     <div class='flex items-center mb-2'>
       <button class="btn btn--primary"
         data-action="toggle#toggle"
-        data-target="checkbox-list.count"
+        data-checkbox-list-target="count"
       >
         Filters
       </button>
@@ -17,7 +17,7 @@
   <div class='w-full lg:w-2/3 xl:w-1/2 px-4 pb-4' data-controller='search' data-search-url="autocomplete">
     <div class='relative'>
       <input type="text" class='input' placeholder="Search anything" data-action="keyup->search#search">
-      <div class='absolute z-70 mt-1 mr-4 bg-white w-full overflow-hidden rounded-lg shadow-lg' data-target='search.results'>
+      <div class='absolute z-70 mt-1 mr-4 bg-white w-full overflow-hidden rounded-lg shadow-lg' data-search-target='results'>
       </div>
     </div>
   </div>
