@@ -129,7 +129,7 @@
                     <%= form_for Request.new do |f| %>
                       <%= f.hidden_field :group_id, value: group.id %>
                       <%= f.hidden_field :account_id, value: account.id %>
-                      <%= f.submit 'Join', class: 'text-indigo-600 hover:text-indigo-900 bg-white cursor-pointer' %>
+                      <%= f.submit 'Join', class: 'btn btn--primary' %>
                     <% end %>
                   <% end %>
                 </div>
