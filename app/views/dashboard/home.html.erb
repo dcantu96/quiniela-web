@@ -27,10 +27,10 @@
             <% @memberships.active.each do |member| %>
               <div class="bg-white rounded-xl lg:rounded-none lg:table-row shadow-lg grid grid-cols-2">
                 <div class="lg:table-cell px-6 py-6 pb-2 lg:py-3 lg:px-6 whitespace-nowrap">
-                  <div class="lg:hidden text-sm text-gray-500">Username</div>
+                  <div class="lg:hidden text-sm text-gray-500 text-left">Username</div>
                   <div class="flex items-center">
                     <div>
-                      <div class="text-sm font-medium text-gray-900">
+                      <div class="text-sm font-medium text-gray-900 text-left">
                         <%= link_to member.account.username, picks_membership_path(member), class: "text-md text-indigo-900 flex items-center" %>
                       </div>
                       <div class="text-sm text-gray-500">
@@ -40,23 +40,23 @@
                   </div>
                 </div>
                 <div class="lg:table-cell px-6 py-6 pb-2 lg:py-3 lg:px-6 whitespace-nowrap text-left">
-                  <div class="lg:hidden text-sm text-gray-500">Group</div>
-                  <div class="text-sm font-medium text-gray-900">
+                  <div class="lg:hidden text-sm text-gray-500 text-left">Group</div>
+                  <div class="text-sm font-medium text-gray-900 text-left">
                     <%= link_to member.group.name, table_membership_path(member), class: "text-md text-indigo-900 flex items-center" %>
                   </div>
                   <div class="text-sm text-gray-500"><%= member.group.tournament.name %> - <%= member.group.tournament.year %></div>
                 </div>
                 <div class="lg:table-cell px-6 py-6 pb-2 lg:py-3 lg:px-6 whitespace-nowrap">
-                  <div class="lg:hidden text-sm text-gray-500">Week Number</div>
-                  <div class="text-sm text-gray-900"><%= member.group.tournament.current_week.number %></div>
+                  <div class="lg:hidden text-sm text-gray-500 text-left">Week Number</div>
+                  <div class="text-sm text-gray-900 text-left"><%= member.group.tournament.current_week.number %></div>
                 </div>
                 <div class="lg:table-cell px-6 py-6 pb-2 lg:py-3 lg:px-6 whitespace-nowrap">
-                  <div class="lg:hidden text-sm text-gray-500">Points</div>
-                  <div class="text-sm text-gray-900"><%= member.current_membership_week.points %></div>
+                  <div class="lg:hidden text-sm text-gray-500 text-left">Points</div>
+                  <div class="text-sm text-gray-900 text-left"><%= member.current_membership_week.points %></div>
                 </div>
                 <div class="lg:table-cell px-6 py-6 pb-2 lg:py-3 lg:px-6 whitespace-nowrap">
-                  <div class="lg:hidden text-sm text-gray-500">Position</div>
-                  <div class="text-sm text-gray-900"><%= member.position %></div>
+                  <div class="lg:hidden text-sm text-gray-500 text-left">Position</div>
+                  <div class="text-sm text-gray-900 text-left"><%= member.position %></div>
                 </div>
                 <div class="lg:table-cell px-6 py-6 pb-4 lg:py-3 lg:px-6 whitespace-nowrap col-span-2">
                   <div class='flex flex-wrap'>
@@ -100,23 +100,23 @@
             <% Group.where.not(id: account.group_ids).where(finished: false).each do |group| %>
               <div class="bg-white rounded-xl lg:rounded-none lg:table-row shadow-lg grid grid-cols-2">
                 <div class="lg:table-cell px-6 py-6 pb-1 lg:py-3 lg:px-6 whitespace-nowrap text-left">
-                  <div class="lg:hidden text-sm text-gray-500">Username</div>
-                  <div class="text-sm font-medium text-gray-900"><%= account.username %></div>
+                  <div class="lg:hidden text-sm text-gray-500 text-left">Username</div>
+                  <div class="text-sm font-medium text-gray-900 text-left"><%= account.username %></div>
                 </div>
                 <div class="lg:table-cell px-6 py-6 pb-1 lg:py-3 lg:px-6 whitespace-nowrap text-left">
-                  <div class="lg:hidden text-sm text-gray-500">Group</div>
-                  <div class="text-sm font-medium text-indigo-900">
+                  <div class="lg:hidden text-sm text-gray-500 text-left">Group</div>
+                  <div class="text-sm font-medium text-indigo-900 text-left">
                     <%= group.name %>
                   </div>
                 </div>
                 <div class="lg:table-cell px-6 py-6 pb-1 lg:py-3 lg:px-6 whitespace-nowrap text-left">
-                  <div class="lg:hidden text-sm text-gray-500">Status</div>
+                  <div class="lg:hidden text-sm text-gray-500 text-left">Status</div>
                   <% request = group.requests.where(id: account.request_ids)%>
                   <% if request.present? %>
                     <span class="px-2 mb-1 whitespace-no-wrap inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-200 text-blue-800">
                       Admin not yet accepted
                     </span>
-                    <div class="text-sm text-gray-500">Fecha de Solicitud: <%= request.first.created_at.in_time_zone(current_user.time_zone).to_formatted_s(:short) %></div>
+                    <div class="text-sm text-gray-500 mb-4 lg:mb-0">Fecha de Solicitud: <%= request.first.created_at.in_time_zone(current_user.time_zone).to_formatted_s(:short) %></div>
                   <% else %>
                     <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-200 text-red-800 whitespace-no-wrap">
                       Not a member
@@ -124,7 +124,7 @@
                   <% end %>
                 </div>
                 <div class="lg:table-cell px-6 py-6 pb-3 lg:py-3 lg:px-6 whitespace-nowrap">
-                  <div class="lg:hidden text-sm text-gray-500">Actions</div>
+                  <div class="lg:hidden text-sm text-gray-500 text-left">Actions</div>
                   <% if !group.requests.where(id: account.request_ids).present? %>
                     <%= form_for Request.new do |f| %>
                       <%= f.hidden_field :group_id, value: group.id %>
