@@ -21,8 +21,8 @@
       </div>
 
       <div class='mb-4'>
-        <%= f.label :time_zone, class: 'label' %><br />
-        <%= f.time_zone_select(:time_zone) %>
+        <%= f.label :time_zone, class: 'label' %>
+        <%= f.time_zone_select(:time_zone, nil, include_blank: true, class: 'w-full') %>
       </div>
 
       <div class='mb-4'>
