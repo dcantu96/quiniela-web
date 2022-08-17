@@ -69,11 +69,13 @@ Rails.application.configure do
 
   # SMTP settings for gmail
   config.action_mailer.smtp_settings = {
-    :address              => "smtp.gmail.com",
-    :port                 => 587,
-    :user_name            => ENV['EMAIL'],
+    :address              => 'smtp.sendgrid.net',
+    :port                 => 465,
+    :user_name            => 'apikey',
     :password             => ENV['PASSWORD'],
-    :authentication       => "plain"
+    :domain               => 'qnflmty.com',
+    :authentication       => :plain,
+    :enable_starttls_auto => true
   }
 
   # Ignore bad email addresses and do not raise email delivery errors.
