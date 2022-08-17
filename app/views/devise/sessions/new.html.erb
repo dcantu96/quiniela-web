@@ -5,12 +5,12 @@
     <h2 class='text-md text-indigo-900 mb-2 text-left'>Ingresar</h2>
     <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
       <div class='mb-4'>
-        <%= f.label :email, class: 'label' %>
+        <%= f.label :email, class: 'label text-left' %>
         <%= f.email_field :email, placeholder: "Email", autofocus: true, autocomplete: 'email', class: 'input', required: true %>
       </div>
 
       <div class='mb-4'>
-        <%= f.label :password, class: 'label' %>
+        <%= f.label :password, class: 'label text-left' %>
         <%= f.password_field :password, placeholder: "Contraseña", autocomplete: 'current-password', class: 'input', required: true %>
       </div>
 
