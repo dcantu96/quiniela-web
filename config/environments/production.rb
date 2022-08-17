@@ -63,17 +63,16 @@ Rails.application.configure do
   # config.active_job.queue_adapter     = :resque
   # config.active_job.queue_name_prefix = "quiniela_web_production"
 
-  #setup mail for go daddy
+  # setup mail for sendgrid
+
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.default_url_options = { host: 'www.qnflmty.com' }
-
-  # SMTP settings for gmail
   config.action_mailer.smtp_settings = {
     :address              => 'smtp.sendgrid.net',
     :port                 => 587,
     :user_name            => 'apikey',
     :password             => ENV['PASSWORD'],
-    :domain               => 'qnflmty.com',
+    :domain               => 'heroku.com',
     :authentication       => :plain,
     :enable_starttls_auto => true
   }
