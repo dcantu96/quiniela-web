@@ -73,9 +73,15 @@ class Match < ApplicationRecord
     end
   end
 
+  # This functions will generate picks once a match is created
+  # The picks this function creates are any picks that are duplicate
   def generate_picks
-    week.membership_weeks.each do |membership_week|
-      picks.create membership_week: membership_week
+    week.tournament.groups.each do |group|
+      group.memberships.each do |membership|
+        membership_weeks = membership.membership_weeks
+        membership_week = membership_weeks.find_or_create_by membership: membership, week: week
+        picks.create membership_week: membership_week, week: week
+      end
     end
   end
 end

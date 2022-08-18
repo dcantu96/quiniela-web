@@ -2,14 +2,14 @@
 <div class='p-6 container mx-auto'>
   <div class='mb-4'>
     <div class='flex items-center mb-2'>
-      <% if params[:tournament_id] %>
-        <h1 class='text-xl text-indigo-900 mr-4'>Grupos de <%= Tournament.find_by(id: params[:tournament_id]).name %> </h1>
+      <% if @tournament %>
+        <h1 class='text-xl text-indigo-900 mr-4'>Grupos de <b><%= @tournament.name %></b></h1>
       <% else %>
-        <h1 class='text-xl text-indigo-900 mr-4'>Grupos</h1>
+        <h1 class='text-xl text-indigo-900'>Grupos</h1>
       <% end %>
     </div>
   </div>
-  <div class='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-8'>
+  <div class='grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mb-8'>
     <%= render @groups %>
   </div>
 </div>

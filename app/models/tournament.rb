@@ -4,6 +4,11 @@ class Tournament < ApplicationRecord
   has_many :weeks
   has_many :matches, through: :weeks
   has_many :groups
+  validates :name, uniqueness: { scope: :year }
+
+  def with_year
+    name + " - " + year
+  end
 
   def current_week
     @current_week ||= weeks.where(finished: false).order(number: :asc).limit(1).first

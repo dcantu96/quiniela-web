@@ -8,6 +8,7 @@ class Admin::GroupsController < Admin::BaseController
     @groups = Group.includes(:tournament)
     if params[:tournament_id]
       @groups = Group.includes(:tournament).where(tournament_id: params[:tournament_id])
+      @tournament = Tournament.find_by(id: params[:tournament_id])
     else
       @groups = Group.includes(:tournament)
     end
@@ -80,7 +81,7 @@ class Admin::GroupsController < Admin::BaseController
   def create
     @group = Group.new group_params
     if @group.save
-      redirect_to admin_groups_path
+      redirect_to admin_groups_path, notice: 'Gropo creado exitosamente' 
     else
       render :new
     end       

@@ -6,6 +6,7 @@ class MembershipWeek < ApplicationRecord
   has_many :winners, dependent: :destroy
   after_create :generate_picks
   validates :membership, uniqueness: { scope: :week }
+  scope :current, -> (current_week) { where(week: current_week).limit(1) }
 
   def untie_pick(untie_match)
     picks.find_by match: untie_match

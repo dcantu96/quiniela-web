@@ -1,16 +1,8 @@
-<% if notice %>
-  <script>
-    toaster.fire({
-      icon: 'success',
-      title: "<%= notice %>",
-    });
-  </script>
-<% end %>
-<% if alert %>
-  <script>
-    toaster.fire({
-      icon: 'error',
-      title: "<%= alert %>",
-    });
-  </script>
-<% end %>
+<div id="flash" class="absolute top-0 right-0 mt-4 mr-4">
+  <% flash.each do |flash_type, message| %>
+    <div class="p-4 rounded z-50 flash--<%= flash_type %>" role="alert">
+      <p class="font-bold text-left"><%= flash_type.capitalize %></p>
+      <p class="text-left"><%= message %></p>
+    </div>
+  <% end %>
+</div>

@@ -9,17 +9,17 @@ class Membership < ApplicationRecord
   scope :finished, -> { joins(:group).where group: { finished: true } }
 
   def current_week_picks
-    membership_weeks.find_by(week: group.tournament.current_week).picks
+    current_membership_week.picks
   end
 
   def current_membership_week
-    membership_weeks.find_by(week: group.tournament.current_week)
+    membership_weeks.current(group.tournament.current_week).first
   end
 
   private
 
   def generate_weeks
-    group.tournament.weeks.includes(:matches).each do |week|
+    group.tournament.weeks.each do |week|
       membership_weeks.create group: group, week: week
     end
   end

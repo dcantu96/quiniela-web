@@ -305,5 +305,13 @@
   .select:focus {
     @apply outline-none bg-white border-gray-400;
   }
+
+  .flash--alert {
+    @apply bg-red-200 border-l-4 border-l-red-600 text-red-700;
+  }
+
+  .flash--notice {
+    @apply bg-green-200 border-l-4 border-l-green-600 text-green-700;
+  }
 }
 
