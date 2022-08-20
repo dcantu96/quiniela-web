@@ -19,6 +19,10 @@ class Membership < ApplicationRecord
   private
 
   def generate_weeks
+    maybe_delete_request = account.requests.find_by(group: group)
+    if maybe_delete_request.present?
+      maybe_delete_request.destroy
+    end
     group.tournament.weeks.each do |week|
       membership_weeks.create group: group, week: week
     end

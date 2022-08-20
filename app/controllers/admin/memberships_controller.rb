@@ -35,9 +35,9 @@ class Admin::MembershipsController < Admin::BaseController
   def create
     @membership = Membership.new new_membership_params
     if @membership.save
-      redirect_to members_admin_group_path(@membership.group), notice: 'Membership created successfully'
+      redirect_to admin_request_path(@membership.group), notice: 'Membership created successfully'
     else
-      redirect_to members_admin_group_path(@membership.group), alert: @membership.errors.full_messages.first
+      redirect_to admin_request_path(@membership.group), alert: @membership.errors.full_messages.first
     end       
   end
 
