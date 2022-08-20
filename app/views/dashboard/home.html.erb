@@ -33,7 +33,7 @@
                       <div class="text-sm font-medium text-gray-900 text-left">
                         <%= link_to member.account.username, picks_membership_path(member), class: "text-md text-indigo-900 flex items-center" %>
                       </div>
-                      <div class="text-sm text-gray-500">
+                      <div class="text-sm text-gray-500 whitespace-nowrap">
                         <%= member.account.user.email %>
                       </div>
                     </div>
@@ -44,7 +44,7 @@
                   <div class="text-sm font-medium text-gray-900 text-left">
                     <%= link_to member.group.name, table_membership_path(member), class: "text-md text-indigo-900 flex items-center" %>
                   </div>
-                  <div class="text-sm text-gray-500"><%= member.group.tournament.name %> - <%= member.group.tournament.year %></div>
+                  <div class="text-sm text-gray-500 whitespace-nowrap"><%= member.group.tournament.name %> - <%= member.group.tournament.year %></div>
                 </div>
                 <div class="lg:table-cell px-6 py-6 pb-2 lg:py-3 lg:px-6 whitespace-nowrap">
                   <div class="lg:hidden text-sm text-gray-500 text-left">Week Number</div>
