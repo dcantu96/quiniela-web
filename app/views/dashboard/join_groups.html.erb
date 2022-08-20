@@ -11,7 +11,8 @@
         </div>
         <div class="grid grid-cols-1 gap-8 lg:table-row-group lg:bg-white divide-y divide-gray-200">
           <% current_user.accounts.each do |account| %>
-            <% Group.where.not(id: account.group_ids).where(finished: false).each do |group| %>
+            <% grupos = Group.where.not(id: account.group_ids).where(finished: false) %>
+            <% grupos.each do |group| %>
               <div class="bg-white rounded-xl lg:rounded-none lg:table-row shadow-lg grid grid-cols-2">
                 <div class="lg:table-cell px-6 py-6 pb-1 lg:py-3 lg:px-6 whitespace-nowrap text-left">
                   <div class="lg:hidden text-sm text-gray-500 text-left">Username</div>
@@ -47,6 +48,11 @@
                     <% end %>
                   <% end %>
                 </div>
+              </div>
+            <% end %>
+            <% if grupos.length == 0 %>
+              <div class="bg-white rounded-xl lg:rounded-none lg:table-row shadow-lg grid-cols-full">
+                No hay grupos para unirte
               </div>
             <% end %>
           <% end %>
