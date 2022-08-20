@@ -32,6 +32,15 @@ class Admin::MembershipsController < Admin::BaseController
     end
   end
 
+  def create
+    @membership = Membership.new new_membership_params
+    if @membership.save
+      redirect_to members_admin_group_path(@membership.group), notice: 'Membership created successfully'
+    else
+      redirect_to members_admin_group_path(@membership.group), alert: @membership.errors.full_messages.first
+    end       
+  end
+
   private
 
   def set_week_and_picks
@@ -63,5 +72,9 @@ class Admin::MembershipsController < Admin::BaseController
 
   def membership_params
     params.require(:membership).permit :suspended, :paid, :notes
+  end
+
+  def new_membership_params
+    params.require(:membership).permit :account_id, :group_id
   end
 end

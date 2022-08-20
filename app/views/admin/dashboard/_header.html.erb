@@ -1,7 +1,11 @@
 <div class='bg-white px-6 py-3 shadow-sm'>
   <div class="flex items-center">
-    <i class="fa-solid fa-user fa-2x p-1 mr-3 fill-current transition-all duration-300 text-indigo-900"></i>
-    <h1 class='text-xl text-indigo-900 mr-3'>Admin</h1>
+    <div class='flex justify-between items-center'>
+      <%= link_to root_path do %>
+        <%= image_tag 'logo.svg', alt: 'Logo', class: 'h-12' %>
+      <% end %>
+    </div>
+    <h1 class='text-xl text-indigo-900 mx-3'>Admin</h1>
     <div class="ml-auto" id="menu">
       <%= render 'layouts/account_button' %>
     </div>

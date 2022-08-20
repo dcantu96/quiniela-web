@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   }
   namespace :admin do
     root to: 'dashboard#home'
-    resources :memberships, only: [:update]
+    resources :memberships, only: [:update, :create]
     resources :groups do
       resources :memberships, only: [:destroy, :update] do 
         member do

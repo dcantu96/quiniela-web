@@ -1,6 +1,20 @@
 <div class='p-4 container mx-auto'>
-  <h2 class='text-lg mb-4'>Requests</h2>
-  <div class="lg:shadow lg:overflow-hidden lg:border-b lg:border-gray-200 sm:rounded-lg">
+  <h2 class='text-lg text-left mb-2'>Add a user for <b><%= @group.name %> - <%= @group.tournament.year %> </b></h2>
+  <p class='text-lg text-left mb-4'>Select a user and add them. If the user is already in the group it wont work.</p>
+
+  <%= form_with model: [:admin, Membership.new] do |f| %>
+    <div class='w-full md:w-1/3 md:mr-auto flex flex-col align-start mb-4'>
+      <%= f.hidden_field :group_id, value: @group.id %>
+      <div data-controller='select'> 
+        <%= f.label :account_id, class: 'label' %>
+        <%= f.collection_select :account_id, Account.where.not(id: @group.account_ids), :id, :account_detail, { required: true }, { class: 'select2 w-full mb-2' } %>
+      </div>
+      <%= f.submit class: 'btn btn--primary' %>
+    </div>
+  <% end %> 
+
+  <h2 class='text-lg text-left mb-4'>Requests</h2>
+  <div class="lg:shadow lg:overflow-hidden lg:border-b lg:border-gray-200 sm:rounded-lg mb-4">
     <div class="lg:table w-full rounded min-w-full divide-y divide-gray-200">
       <div class="hidden lg:table-header-group bg-gray-200">
         <div class="lg:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Username</div>
@@ -11,7 +25,7 @@
         <div class="lg:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</div>
       </div>
       <div class="grid grid-cols-1 gap-8 lg:table-row-group lg:bg-white divide-y divide-gray-200">
-        <% @group.requests.each do |request| %>
+        <% @requests.each do |request| %>
           <div class="bg-white rounded-xl lg:rounded-none lg:table-row shadow-lg grid grid-cols-2">
             <div class="lg:table-cell px-6 py-6 pb-1 lg:py-3 lg:px-6 whitespace-nowrap">
               <div class="lg:hidden text-sm text-gray-500">Username</div>
@@ -44,6 +58,13 @@
                   <%= f.submit 'Reject', class: 'text-md text-white bg-red-600 rounded-lg mb-2 py-2 mr-2 flex items-center px-2' %>
                 <% end %>
               </div>
+            </div>
+          </div>
+        <% end %>
+        <% if @requests.length == 0 %>
+          <div class="col-span-full rounded-xl p-6 shadow-lg bg-white">
+            <div class="flex text-md text-indigo-900 items-center">
+              No requests found
             </div>
           </div>
         <% end %>
