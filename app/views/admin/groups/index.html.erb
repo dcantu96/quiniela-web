@@ -1,15 +1,27 @@
-<%= render 'header' %>
 <div class='p-6 container mx-auto'>
   <div class='mb-4'>
     <div class='flex items-center mb-2'>
       <% if @tournament %>
-        <h1 class='text-xl text-indigo-900 mr-4'>Grupos de <b><%= @tournament.name %></b></h1>
+        <h1 class='text-xl text-indigo-900 mr-4'>Grupos activos de <b><%= @tournament.name %></b></h1>
       <% else %>
-        <h1 class='text-xl text-indigo-900'>Grupos</h1>
+        <h1 class='text-xl text-indigo-900'>Grupos activos</h1>
       <% end %>
     </div>
   </div>
   <div class='grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mb-8'>
-    <%= render @groups %>
+    <%= render @groups.active || render('no_active_groups') %>
+  </div>
+
+  <div class='mb-4'>
+    <div class='flex items-center mb-2'>
+      <% if @tournament %>
+        <h1 class='text-xl text-indigo-900 mr-4'>Grupos terminados de <b><%= @tournament.name %></b></h1>
+      <% else %>
+        <h1 class='text-xl text-indigo-900'>Grupos terminados</h1>
+      <% end %>
+    </div>
+  </div>
+  <div class='grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mb-8'>
+    <%= render(@groups.finished) || render('no_finished_groups') %>
   </div>
 </div>

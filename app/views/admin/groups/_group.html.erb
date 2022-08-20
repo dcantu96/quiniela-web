@@ -22,6 +22,8 @@
     <%= link_to "Tabla", members_admin_group_path(group), class: 'btn btn--primary' %>
     <%= link_to "Editar", edit_admin_group_path(group), class: 'btn btn--primary' %>
     <%= link_to "Configuración", settings_admin_group_path(group), class: 'btn btn--primary' %>
-    <%= link_to "Solicitudes", requests_admin_group_path(group), class: 'btn btn--warning' %>
+    <% if !group.finished %>
+      <%= link_to "Solicitudes", requests_admin_group_path(group), class: 'btn btn--warning' %>
+    <% end %>
   </div>
 </div>

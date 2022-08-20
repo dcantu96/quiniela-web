@@ -5,6 +5,9 @@ class DashboardController < ApplicationController
     @empty_groups = Group.includes(:membership).where.not(memberships: @memberships)
   end
 
-  private
-
+  def join_groups
+    @requests = current_user.requests
+    @memberships = current_user.memberships
+    @empty_groups = Group.includes(:membership).where.not(memberships: @memberships)
+  end
 end

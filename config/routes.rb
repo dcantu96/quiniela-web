@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   root to: 'dashboard#home'
+  get '/dashboard/join-groups', to: 'dashboard#join_groups'
   devise_for :users, controllers: {
     sessions: 'sessions',
     confirmations: 'confirmations',

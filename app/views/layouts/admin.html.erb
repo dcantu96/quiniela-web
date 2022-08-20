@@ -15,7 +15,7 @@
 
   <body class='antialiased bg-indigo-100 font-sans font-normal leading-relaxed text-gray-800 font-base'>
     <%= render 'layouts/notifications' %>
-    <nav class='group fixed bg-white transition-all duration-500 overflow-scroll bottom-0 w-screen h-20 md:h-screen md:w-20 md:hover:w-64 m-0 z-50 md:shadow-xl'>
+    <nav class='left-0 group fixed bg-white transition-all duration-500 overflow-scroll bottom-0 w-screen h-20 md:h-screen md:w-20 md:hover:w-64 m-0 z-50 md:shadow-xl'>
       <ul class='list-none p-0 m-0 flex md:flex-col items-center h-full'>
         <li class="hidden md:inline font-bold uppercase mb-4 text-center text-indigo-900 bg-indigo-200 text-2xl w-full">
           <%= link_to admin_root_path, class: "flex items-center h-20 group-hover:text-indigo-900 group-hover:bg-indigo-200" do %>
@@ -25,27 +25,9 @@
           </a>
         </li>
         <li class='w-full'>
-          <%= link_to admin_tournaments_path, class: "flex items-center md:justify-start justify-center h-20 transition-all duration-300 #{ current_page?(admin_tournaments_path) ? 'text-indigo-900 bg-indigo-200' : 'hover:text-indigo-900 hover:bg-indigo-200 text-teal-500'}" do %>
-            <%= image_tag "tournament.svg", class: 'w-10 md:w-8 mx-6' %>
-            <span class="hidden md:group-hover:inline ml-4">Tournaments</span>
-          <% end %>
-        </li>
-        <li class='w-full'>
-          <%= link_to admin_sports_path, class: "flex items-center md:justify-start justify-center h-20 transition-all duration-300 #{ current_page?(admin_sports_path) ? 'text-indigo-900 bg-indigo-200' : 'hover:text-indigo-900 hover:bg-indigo-200 text-teal-500'}" do %>
-            <%= image_tag "DAL.svg", class: 'w-10 md:w-8 mx-6' %>
-            <span class="hidden md:group-hover:inline ml-4">Sports</span>
-          <% end %>
-        </li>
-        <li class='w-full'>
-          <%= link_to admin_groups_path, class: "flex items-center md:justify-start justify-center h-20 transition-all duration-300 #{ current_page?(admin_groups_path) ? 'text-indigo-900 bg-indigo-200' : 'hover:text-indigo-900 hover:bg-indigo-200 text-teal-500'}" do %>
+          <%= link_to admin_groups_path, class: "flex items-center md:justify-start justify-center h-16 transition-all duration-300 #{ current_page?(admin_groups_path) ? 'text-indigo-900 bg-indigo-200' : 'hover:text-indigo-900 hover:bg-indigo-200 text-teal-500'}" do %>
             <%= image_tag "groups.svg", class: 'w-10 md:w-8 mx-6' %>
-            <span class="hidden md:group-hover:inline ml-4">Groups</span>
-          <% end %>
-        </li>
-        <li class='w-full md:mt-auto'>
-          <%= link_to edit_user_registration_path, class: "flex items-center md:justify-start justify-center h-20 transition-all duration-300 #{ current_page?(edit_user_registration_path) ? 'text-indigo-900 bg-indigo-200' : 'hover:text-indigo-900 hover:bg-indigo-200 text-teal-500'}" do %>
-            <i class="fa-solid fa-user fa-2x mx-6"></i>
-            <span class="hidden md:group-hover:inline ml-4">Profile</span>
+            <span class="md:group-hover:inline ml-4">Groups</span>
           <% end %>
         </li>
       </ul>
