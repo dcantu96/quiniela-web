@@ -1,24 +1,17 @@
 <%= form_with model: @account do |f| %>
-  <div class='w-full md:w-1/3 md:mx-auto'>
+  <div class='w-full'>
     <%= f.hidden_field :user_id, value: current_user.id %>
     <div class='grid grid-cols-1 gap-6 mb-8'>
-      <ul>
-        <li>Please make sure your username is between <b>3 to 12 characters long</b></li>
-        <li>Only letters and numbers are allowed</li>
-        <li>Any character other than numbers and letters are <b>NOT allowed</b></li>
-      </ul>
       <div>
         <%= f.label :username, class: 'label' %>
         <%= f.text_field :username, class: 'input', required: true %>
       </div>
-      <%= f.fields_for :requests do |request_form| %>
-        <div data-controller='select'> 
-          <%= request_form.label :group, class: 'label' %>
-          <%= request_form.collection_select :group_id, Group.all, :id, :name, {}, { class: 'select2 w-full' } %>
-        </div>
-      <% end %>
+      <ul>
+        <li class="text-left">Asegurate de que tu "username" sea de <b>3 a 12 caracteres</b> de largo</li>
+        <li class="text-left">Solo letras y/o numeros son permitidos</li>
+      </ul>
     </div>
-    <%= f.submit class: 'btn btn--primary' %>
+    <%= f.submit 'Crear',  class: 'btn btn--primary' %>
   </div>
 <% end %>
 
