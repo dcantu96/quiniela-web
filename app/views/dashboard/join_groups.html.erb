@@ -11,19 +11,19 @@
         </div>
         <div class="grid grid-cols-1 gap-8 lg:table-row-group lg:bg-white divide-y divide-gray-200">
           <% current_user.accounts.each do |account| %>
-            <% grupos = Group.where.not(id: account.group_ids).where(finished: false) %>
+            <% grupos = Group.where.not(id: account.group_ids).where(finished: false, private: false) %>
             <% grupos.each do |group| %>
               <div class="bg-white rounded-xl lg:rounded-none lg:table-row shadow-lg grid grid-cols-2">
                 <div class="lg:table-cell px-6 py-6 pb-1 lg:py-3 lg:px-6 whitespace-nowrap text-left">
                   <div class="lg:hidden text-sm text-gray-500 text-left">Username</div>
                   <div class="text-sm font-medium text-gray-900 text-left"><%= account.username %></div>
                 </div>
-                <div class="lg:table-cell px-6 py-6 pb-2 lg:py-3 lg:px-6 whitespace-nowrap text-left">
+                <div class="lg:table-cell px-6 py-6 pb-2 lg:py-3 lg:px-6 text-left">
                   <div class="lg:hidden text-sm text-gray-500 text-left">Group</div>
                   <div class="text-sm font-medium text-gray-900 text-left">
                     <%= group.name %>
                   </div>
-                  <div class="text-sm text-gray-500 whitespace-nowrap"><%= group.tournament.name %> - <%= group.tournament.year %></div>
+                  <div class="text-sm text-gray-500"><%= group.tournament.name %> - <%= group.tournament.year %></div>
                 </div>
                 <div class="lg:table-cell px-6 py-6 pb-1 lg:py-3 lg:px-6 whitespace-nowrap text-left">
                   <div class="lg:hidden text-sm text-gray-500 text-left">Status</div>

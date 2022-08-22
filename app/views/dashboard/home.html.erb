@@ -30,12 +30,12 @@
                 </div>
               </div>
             </div>
-            <div class="lg:table-cell px-6 py-6 pb-2 lg:py-3 lg:px-6 whitespace-nowrap text-left">
+            <div class="lg:table-cell px-6 py-6 pb-2 lg:py-3 lg:px-6 text-left">
               <div class="lg:hidden text-sm text-gray-500 text-left">Group</div>
               <div class="text-sm font-medium text-gray-900 text-left">
                 <%= link_to member.group.name, table_membership_path(member), class: "text-md text-indigo-900 flex items-center" %>
               </div>
-              <div class="text-sm text-gray-500 whitespace-nowrap"><%= member.group.tournament.name %> - <%= member.group.tournament.year %></div>
+              <div class="text-sm text-gray-500"><%= member.group.tournament.name %> - <%= member.group.tournament.year %></div>
             </div>
             <div class="lg:table-cell px-6 py-6 pb-2 lg:py-3 lg:px-6 whitespace-nowrap">
               <div class="lg:hidden text-sm text-gray-500 text-left">Week Number</div>
@@ -79,12 +79,12 @@
                 <%= request.account.username %>
               </div>
             </div>
-            <div class="lg:table-cell px-6 py-6 pb-2 lg:py-3 lg:px-6 whitespace-nowrap text-left">
+            <div class="lg:table-cell px-6 py-6 pb-2 lg:py-3 lg:px-6 text-left">
               <div class="lg:hidden text-sm text-gray-500 text-left">Group</div>
               <div class="text-sm font-medium text-gray-900 text-left">
                 <%= request.group.name %>
               </div>
-              <div class="text-sm text-gray-500 whitespace-nowrap"><%= request.group.tournament.name %> - <%= request.group.tournament.year %></div>
+              <div class="text-sm text-gray-500"><%= request.group.tournament.name %> - <%= request.group.tournament.year %></div>
             </div>
             <div class="lg:table-cell px-6 py-6 lg:py-3 lg:px-6 text-left">
               <div class="lg:hidden text-sm text-gray-500 text-left">Status</div>

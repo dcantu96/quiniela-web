@@ -16,6 +16,11 @@
         Terminado
       </div>
     <% end %>
+    <% if group.private %>
+      <div class='text-md text-red-600'>
+        Privado
+      </div>
+    <% end %>
   </div>
   
   <div class='flex justify-between flex-wrap gap-2'>
