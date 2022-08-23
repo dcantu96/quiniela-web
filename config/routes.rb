@@ -9,9 +9,9 @@ Rails.application.routes.draw do
   }
   namespace :admin do
     root to: 'dashboard#home'
-    resources :memberships, only: [:update, :create]
+    resources :memberships, only: [:update, :create, :destroy]
     resources :groups do
-      resources :memberships, only: [:destroy, :update] do 
+      resources :memberships, only: [:update] do 
         member do
           get :picks
           get :settings
@@ -78,7 +78,7 @@ Rails.application.routes.draw do
   resources :picks
   resources :weeks
   resources :requests, only: [:create]
-  resources :memberships do
+  resources :memberships, expect: [:delete] do
     member do
       get :table
       get :picks

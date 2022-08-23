@@ -7,12 +7,6 @@
       <h1 class='text-xl text-indigo-900 mr-3'><b><%= @group.name %></b></h1>
     </div>
     <div class="flex items-center">
-      <% if @group.tournament.weeks.present? %>
-        <%= link_to admin_week_path(@group.tournament.current_week), class: "text-md text-gray-600 flex items-center hover:text-indigo-900 py-3 px-3" do %>
-          <i class="fa-solid fa-user mr-2 fill-current"></i>
-          <span><%= @group.tournament.current_week.number %></span>
-        <% end %>
-      <% end %>
       <div class='text-md flex items-center hover:text-indigo-900 py-3 px-3'>
         <i class="fa-solid fa-shoe-prints mr-2 fill-current"></i>
       <span><%= @group.tournament.name %></span>

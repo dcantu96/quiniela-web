@@ -1,6 +1,6 @@
 <%= render 'show_header' %>
 
-<div class='p-6 container mx-auto'>
+<div class='p-6 container mx-auto text-left'>
   <h1 class='text-xl text-indigo-900 mb-4'>Membership <b><%= @membership.account.username %></b></h1>
   <p class='text-md text-indigo-900 mb-4'>Modify the membership attributes</p>
   <div class='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-8'>
@@ -8,19 +8,19 @@
       <p class='text-xs font-light text-gray-500'>
         Full name
       </p>
-      <h2 class='text-lg mb-4'>
+      <h2 class='text-lg mb-4 text-indigo-900'>
         <%= @membership.account.user.full_name %>
       </h2>
       <p class='text-xs font-light text-gray-500'>
         Email
       </p>
-      <h2 class='text-lg mb-4'>
+      <h2 class='text-lg mb-4 text-indigo-900'>
         <%= @membership.account.user.email %>
       </h2>
       <p class='text-xs font-light text-gray-500'>
         Phone
       </p>
-      <h2 class='text-lg mb-4'>
+      <h2 class='text-lg mb-4 text-indigo-900'>
         <%= @membership.account.user.phone %>
       </h2>
       <% if @other_memerships.count > 0 %>
@@ -48,7 +48,7 @@
         <div class='flex flex-wrap justify-between mb-4'>
           <%= f.label :paid, class: 'checkbox-toggle flex flex-col' do %>
             <div class='flex mb-2'>
-              <span class='checkbox-toggle__text mr-2'>Paid</span>
+              <span class='checkbox-toggle__text mr-2 text-indigo-900'>Paid</span>
               <i class="fa-solid fa-money-bill-wave-alt fa-lg fill-current text-green-700"></i>
             </div>
             <%= f.check_box :paid, class: 'checkbox-toggle__input' %>
@@ -56,7 +56,7 @@
           <% end %>
           <%= f.label :suspended, class: 'checkbox-toggle flex flex-col' do %>
             <div class='flex mb-2'>
-              <span class='checkbox-toggle__text mr-2'>Suspended</span>
+              <span class='checkbox-toggle__text mr-2 text-indigo-900'>Suspended</span>
               <i class="fa-solid fa-exclamation-triangle fa-lg fill-current text-red-600"></i>
             </div>
             <%= f.check_box :suspended, class: 'checkbox-toggle__input' %>
@@ -71,4 +71,8 @@
       <% end %>
     </div>
   </div>
+  <p class='text-md text-indigo-900 mb-4'>
+    Warning dont modify anything below this point if you don't know what you are doing
+  </p>
+  <%= button_to 'Delete membership', [:admin, @membership], method: :delete, form: { data: { turbo_confirm: 'This will destroy the membership. Are you sure?' } }, class: 'btn btn--danger' %>
 </div>

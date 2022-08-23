@@ -1,5 +1,5 @@
-<div class="rounded-xl p-6 shadow-lg bg-white">
-  <div class="flex justify-between mb-4">
+<div class="rounded-xl shadow-lg bg-white">
+  <div class="flex justify-between mb-4 px-6 pt-6">
     <div>
       <div class="text-md text-indigo-900 flex items-center">
         <%= group.name %>
@@ -23,12 +23,20 @@
     <% end %>
   </div>
   
-  <div class='flex justify-between flex-wrap gap-2'>
-    <%= link_to "Tabla", members_admin_group_path(group), class: 'btn btn--primary' %>
-    <%= link_to "Editar", edit_admin_group_path(group), class: 'btn btn--primary' %>
-    <%= link_to "Configuración", settings_admin_group_path(group), class: 'btn btn--primary' %>
+  <div class='flex justify-around gap-0'>
+    <%= link_to members_admin_group_path(group), class: "text-indigo-700 py-2 px-2" do %>
+      <span>Tabla</span>
+      <i class="fa-solid fa-table ml-2"></i>
+    <% end %>
+    <%= link_to matches_admin_group_path(group), class: "text-indigo-700 py-2 px-2" do %>
+      <span>Juegos</span>
+      <i class="fa-solid fa-football-ball ml-2"></i>
+    <% end %>
     <% if !group.finished %>
-      <%= link_to "Solicitudes", requests_admin_group_path(group), class: 'btn btn--warning' %>
+      <%= link_to requests_admin_group_path(group), class: "text-indigo-700 py-2 px-2" do %>
+        <span>Solicitudes</span>
+        <i class="fa-solid fa-list-check ml-2"></i>
+      <% end %>
     <% end %>
   </div>
 </div>

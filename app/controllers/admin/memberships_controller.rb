@@ -1,6 +1,6 @@
 class Admin::MembershipsController < Admin::BaseController
   before_action :set_membership, only: [:picks, :settings, :update, :destroy]
-  before_action :set_group, only: [:picks, :settings, :update, :destroy]
+  before_action :set_group, only: [:picks, :settings, :update]
   before_action :set_week_and_picks, only: [:show, :picks]
 
   def picks
@@ -24,11 +24,13 @@ class Admin::MembershipsController < Admin::BaseController
       redirect_to settings_admin_group_membership_path(@group, @membership), alert: @membership.errors.full_messages
     end
   end
+
   def destroy
+    group = @membership.group
     if @membership.destroy
-      redirect_to members_admin_group_path(@group), notice: 'Membership deleted successfully'
+      redirect_to members_admin_group_path(group), notice: 'Membership deleted successfully'
     else
-      redirect_to settings_admin_group_membership_path(@group, @membership), alert: @membership.errors.full_messages
+      redirect_to settings_admin_group_membership_path(group, @membership), alert: @membership.errors.full_messages
     end
   end
 

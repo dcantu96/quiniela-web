@@ -6,11 +6,5 @@
       <div class="text-md text-indigo-900 mr-3">&#x2f;</div>
       <h1 class='text-xl text-indigo-900 mr-3'><b><%= @week.number %></b></h1>
     </div>
-    <div class="flex items-center">
-      <div class='text-md flex items-center hover:text-indigo-900 py-3 px-3'>
-        <i class="fa-solid fa-shoe-prints mr-2 fill-current"></i>
-      <span><%= @week.first_match.start_time if @week.matches.present? %></span>
-      </div>
-    </div>
   </div>
 </div>

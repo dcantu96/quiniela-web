@@ -4,9 +4,11 @@
 
   <% if @group.tournament.weeks.count != 0 %>
     <p>Cantidad de semanas: <%= @group.tournament.weeks.count %></p>
-    <%= button_to 'Actualizar Semanas', update_week_matches_admin_tournament_path(@group.tournament), class: 'btn btn--primary mb-2 inline-block' %>
+    <%= button_to 'Actualizar Semanas', update_week_matches_admin_tournament_path(@group.tournament), class: 'btn btn--primary mb-4 inline-block' %>
   <% else %>
     <p>No hay semanas. Crear semanas</p>
-    <%= button_to 'Crear Semanas', generate_week_matches_admin_tournament_path(@group.tournament), class: 'btn btn--primary' %>
+    <%= button_to 'Crear Semanas', generate_week_matches_admin_tournament_path(@group.tournament), class: 'btn btn--primary mb-4' %>
   <% end %>
+
+  <%= render 'form' %>
 </div>
