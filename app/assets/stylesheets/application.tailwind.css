@@ -21,10 +21,10 @@
   }
   .btn:active {
     @apply bg-gray-500;
+    transform: scale(0.99);
   }
   .btn:hover {
     @apply bg-gray-400;
-    transform: scale(1.06);
   }
   .btn--primary {
     @apply text-white bg-indigo-700;
@@ -289,7 +289,7 @@
   }
 
   .input {
-    @apply appearance-none block w-full bg-gray-100 text-gray-700 border border-gray-300 rounded py-3 px-4 leading-tight;
+    @apply block w-full bg-gray-100 text-gray-700 border border-gray-300 rounded py-3 px-4 leading-tight;
   }
   .input:focus {
     @apply outline-none bg-white border-gray-400;
