@@ -1,0 +1,34 @@
+<table class="email-table">
+  <tbody>
+    <tr class="header-row">
+      <td>
+        <h1>Hola, <%= @user.full_name %></h1>
+      </td>
+    </tr>
+
+    <tr class="body-row">
+      <td>
+        <p class='text-light text-indigo'>
+          Tu solicitud del username <b><%= @account.username %></b> para entrar a <b><%= @group.name %> - <%= @group.tournament.year %></b> fue APROBADA. Puedes ingresar a poner tus picks.
+        </p>
+      </td>
+    </tr>
+
+    <tr class="body-row">
+      <td>
+        <p class='text-light'>
+          No olvides llenar tus picks antes de que inicie cada juego.
+        </p>
+        <p><%= link_to 'Ir a mis picks', picks_membership_url(@membership) %></p>
+      </td>
+    </tr>
+
+    <hr />
+
+    <tr class="footer-row">
+      <td class='text-indigo'>
+        <p>Este correo es automatizado</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
