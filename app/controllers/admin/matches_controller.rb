@@ -39,7 +39,7 @@ class Admin::MatchesController < Admin::BaseController
     end
     if @match.save
       @match.update_picks
-      redirect_to admin_root_path, notice: "Match winner set to #{@match.winning_team.short_name} updated successfully"
+      redirect_to root_path, notice: "Match winner set to #{@match.winning_team.short_name} updated successfully"
     end
   end
 

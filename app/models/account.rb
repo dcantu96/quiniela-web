@@ -8,9 +8,11 @@ class Account < ApplicationRecord
   validates_presence_of :username
   scope :with_group, -> (group_id) { includes(:memberships).where(memberships: { group_id: group_id }) }
   scope :not_in_group, -> (group_id) { includes(:memberships).where.not(memberships: { group_id: group_id }) }
+  scope :active, -> { where memberships: { group: { finished: false }, suspended: false } }
+  scope :inactive, -> { left_outer_joins(:memberships, :requests).where(memberships: { id: nil }).where(requests: { id: nil }) }
   validates :username,
     length: { in: 3..12, message: "should be 3-12 characters long" },
-    format: { with: /\A[a-zA-Z]+_?[a-zA-Z0-9]+\z/, message: "contains invalid characters" }
+    format: { with: /\A[a-zA-Z]+_?[a-zA-Z0-9]+\z/, message: "contains invalid characters. Should always start with letters" }
   accepts_nested_attributes_for :requests
 
 

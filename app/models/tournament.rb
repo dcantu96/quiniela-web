@@ -5,6 +5,8 @@ class Tournament < ApplicationRecord
   has_many :matches, through: :weeks
   has_many :groups
   validates :name, uniqueness: { scope: :year }
+  validates :year, presence: true
+  scope :valid, -> { where.not(year: nil) }
 
   def with_year
     name + " - " + year

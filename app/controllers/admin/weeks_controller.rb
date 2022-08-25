@@ -40,7 +40,7 @@ class Admin::WeeksController < Admin::BaseController
 
   def update
     if @week.update week_params
-      redirect_to admin_root_path, notice: 'Week updated successfully'
+      redirect_to root_path, notice: 'Week updated successfully'
     else
       render :edit
     end

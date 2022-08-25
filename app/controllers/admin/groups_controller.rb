@@ -1,5 +1,5 @@
 class Admin::GroupsController < Admin::BaseController
-  before_action :set_group, only: [:edit, :update, :matches, :requests, :winners, :members,
+  before_action :set_group, only: [:edit, :update, :matches, :requests, :winners, :members, :danger_settings, :destroy,
     :table, :members_forgetting, :autocomplete, :reset_week_points, :update_picks, :fetch_match_results, :update_total_points, :settings, :notify_missing_picks]
   before_action :set_week, only: [:reset_week_points, :update_picks, :fetch_match_results, :update_total_points]
   layout 'admin_group', except: [:index, :new]
@@ -19,6 +19,9 @@ class Admin::GroupsController < Admin::BaseController
   end
 
   def edit
+  end
+
+  def danger_settings
   end
 
   def matches
@@ -72,7 +75,7 @@ class Admin::GroupsController < Admin::BaseController
   end
 
   def requests
-    @requests = @group.requests
+    @requests = @group.requests.pending
   end
 
   def settings
@@ -92,6 +95,14 @@ class Admin::GroupsController < Admin::BaseController
       redirect_to admin_groups_path
     else
       render :edit
+    end
+  end
+
+  def destroy
+    if @group.destroy
+      redirect_to admin_groups_path, notice: 'Group deleted successfully'
+    else
+      redirect_to danger_settings_admin_group_path(@group), alert: @group.errors.full_messages
     end
   end
 

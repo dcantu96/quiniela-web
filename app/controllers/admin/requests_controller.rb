@@ -2,19 +2,22 @@ class Admin::RequestsController < Admin::BaseController
   before_action :set_request, only: [:update]
   
   def update
-    if params[:commit] == 'Accept'
+    puts params
+    if params[:status] == 'accept'
       @membership = Membership.new group: @request.group, account: @request.account
       if @membership.valid?
         @request.destroy && @membership.save
-        redirect_to requests_admin_group_path(@membership.group)
+        redirect_to requests_admin_group_path(@membership.group), notice: 'Request accepted'
       else
         puts 'error'
       end
     end
-    if params[:commit] == 'Reject'
-      group = @request.group
-      @request.destroy
-      redirect_to requests_admin_group_path(group)
+    if params[:status] == 'reject'
+      if @request.update denied: true
+        redirect_to requests_admin_group_path(@request.group), notice: 'Request rejected'
+      else
+        redirect_to requests_admin_group_path(@request.group), alert: @request.errors.full_messages
+      end
     end
   end
 

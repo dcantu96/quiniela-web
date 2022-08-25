@@ -12,7 +12,7 @@ class Admin::AccountsController < Admin::BaseController
   def create
     @account = Account.new account_params
     if @account.save
-      redirect_to admin_root_path, notice: 'Account created successfully'
+      redirect_to root_path, notice: 'Account created successfully'
     else
       redirect_to new_account_path, alert: @account.errors.full_messages.first
     end      
@@ -20,7 +20,7 @@ class Admin::AccountsController < Admin::BaseController
 
   def update
     if @account.update account_params
-      redirect_to admin_root_path, notice: 'Account updated successfully'
+      redirect_to root_path, notice: 'Account updated successfully'
     else
       redirect_to edit_account_path(@account), alert: @account.errors.full_messages.first
     end

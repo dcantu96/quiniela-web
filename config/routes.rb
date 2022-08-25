@@ -8,7 +8,6 @@ Rails.application.routes.draw do
     passwords: 'passwords'
   }
   namespace :admin do
-    root to: 'dashboard#home'
     resources :memberships, only: [:update, :create, :destroy]
     resources :groups do
       resources :memberships, only: [:update] do 
@@ -25,6 +24,7 @@ Rails.application.routes.draw do
       member do
         get :table
         get :members_forgetting
+        get :danger_settings
         get :winners
         get :settings
         get :requests

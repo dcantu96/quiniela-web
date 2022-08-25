@@ -7,6 +7,7 @@ class User < ApplicationRecord
   has_many :accounts
   has_many :requests, through: :accounts
   has_many :memberships, through: :accounts
+  has_many :groups, through: :memberships
 
   validates_presence_of :full_name, :phone
 

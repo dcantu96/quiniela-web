@@ -22,7 +22,7 @@
   </div>
   <div class='mb-4' data-controller='select'> 
     <%= f.label :tournament, class: 'label' %>
-    <%= f.collection_select :tournament_id, Tournament.all, :id, :with_year, {}, { class: 'select2' } %>
+    <%= f.collection_select :tournament_id, Tournament.valid, :id, :with_year, {}, { class: 'select2' } %>
   </div>
   <div class='mb-4'>
     <%= f.label :private, class: 'checkbox-toggle mb-4' do %>

@@ -1,0 +1,6 @@
+<div class='p-6 container mx-auto text-left'>
+  <h1>Esta zona es para eliminar un grupo. ¡Cuidado!</h1>
+  <p class='mb-2'>Torneo: <%= @group.tournament.name %></p>
+  <p class='mb-2'>Año: <%= @group.tournament.year %></p>
+  <%= button_to 'Delete group', [:admin, @group], method: :delete, form: { data: { turbo_confirm: 'This will destroy the group. Are you sure?' } }, class: 'btn btn--danger' %>
+</div>
