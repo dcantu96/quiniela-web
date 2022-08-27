@@ -7,6 +7,7 @@
         <div class="lg:table-cell px-6 py-3">Telefono</div>
         <div class="lg:table-cell px-6 py-3">Correo</div>
         <div class="lg:table-cell px-6 py-3">Membresias Activas</div>
+        <div class="lg:table-cell px-6 py-3">Membresias Suspendidas</div>
         <div class="lg:table-cell px-6 py-3">Solic. Pendientes</div>
         <div class="lg:table-cell px-6 py-3">Solic. Rechazadas</div>
       </div>
@@ -30,6 +31,10 @@
             <div class="lg:table-cell px-6 lg:py-3 whitespace-nowrap">
               <div class="lg:hidden text-sm text-gray-500">Membresias Activas</div>
               <div class="text-sm text-gray-900"><%= user.memberships.active.length %></div>
+            </div>
+            <div class="lg:table-cell px-6 lg:py-3 whitespace-nowrap">
+              <div class="lg:hidden text-sm text-gray-500">Membresias Suspendidas</div>
+              <div class="text-sm text-gray-900"><%= user.memberships.suspended.length %></div>
             </div>
             <div class="lg:table-cell px-6 lg:py-3 whitespace-nowrap">
               <div class="lg:hidden text-sm text-gray-500">Solic. Pendientes</div>

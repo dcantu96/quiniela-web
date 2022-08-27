@@ -6,6 +6,7 @@ class Membership < ApplicationRecord
   after_create :generate_weeks
   validates :account, uniqueness: { scope: :group }
   scope :active, -> { includes(:group).where(group: { finished: false }, suspended: false) }
+  scope :suspended, -> { where(suspended: true) }
   scope :finished, -> { includes(:group).where group: { finished: true } }
 
   def current_week_picks
