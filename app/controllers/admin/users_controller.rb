@@ -3,6 +3,7 @@ class Admin::UsersController < Admin::BaseController
   layout 'admin'
 
   def index
-    @users = User.all
+    @q = User.ransack(params[:q])
+    @users = @q.result(distinct: true)
   end
 end
