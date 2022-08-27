@@ -12,6 +12,7 @@ class Admin::GroupsController < Admin::BaseController
     else
       @groups = Group.includes(:tournament)
     end
+    render layout: 'admin'
   end
 
   def new

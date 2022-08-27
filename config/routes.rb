@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     passwords: 'passwords'
   }
   namespace :admin do
+    resources :users, only: [:index, :show]
     resources :memberships, only: [:update, :create, :destroy]
     resources :groups do
       resources :memberships, only: [:update] do 

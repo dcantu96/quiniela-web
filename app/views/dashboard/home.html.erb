@@ -6,17 +6,17 @@
   <h2 class='text-lg mb-4 text-left'>Mis cuentas</h2>
   <div class="lg:shadow lg:overflow-hidden lg:border-b lg:border-gray-200 sm:rounded-lg mb-4">
     <div class="lg:table w-full rounded min-w-full divide-y divide-gray-200">
-      <div class="hidden lg:table-header-group bg-gray-200">
-        <div class="lg:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Usuario</div>
-        <div class="lg:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider lg:w-48">Grupo</div>
-        <div class="lg:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider lg:w-48">Semana</div>
-        <div class="lg:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Puntos</div>
-        <div class="lg:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Posición</div>
-        <div class="lg:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</div>
+      <div class="hidden lg:table-header-group bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+        <div class="lg:table-cell px-6 py-3">Usuario</div>
+        <div class="lg:table-cell px-6 py-3 lg:w-48">Grupo</div>
+        <div class="lg:table-cell px-6 py-3 lg:w-48">Semana</div>
+        <div class="lg:table-cell px-6 py-3">Puntos</div>
+        <div class="lg:table-cell px-6 py-3">Posición</div>
+        <div class="lg:table-cell px-6 py-3">Acciones</div>
       </div>
       <div class="grid grid-cols-1 gap-8 lg:table-row-group lg:bg-white divide-y divide-gray-200">
         <% @active_memberships.each do |member| %>
-          <div class="bg-white rounded-xl lg:rounded-none lg:table-row shadow-lg grid grid-cols-2">
+          <div class="bg-white rounded-xl lg:rounded-none lg:table-row shadow-lg grid grid-cols-2 text-left">
             <div class="lg:table-cell px-6 py-6 pb-2 lg:py-3 lg:px-6 whitespace-nowrap">
               <div class="lg:hidden text-sm text-gray-500 text-left">Username</div>
               <div class="flex items-center">

@@ -16,17 +16,17 @@
   <h2 class='text-lg text-left mb-4'>Requests</h2>
   <div class="lg:shadow lg:overflow-hidden lg:border-b lg:border-gray-200 sm:rounded-lg mb-4">
     <div class="lg:table w-full rounded min-w-full divide-y divide-gray-200">
-      <div class="hidden lg:table-header-group bg-gray-200">
-        <div class="lg:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Username</div>
-        <div class="lg:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Phone</div>
-        <div class="lg:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Group</div>
-        <div class="lg:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</div>
-        <div class="lg:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Accounts</div>
-        <div class="lg:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</div>
+      <div class="hidden lg:table-header-group bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+        <div class="lg:table-cell px-6 py-3">Username</div>
+        <div class="lg:table-cell px-6 py-3">Phone</div>
+        <div class="lg:table-cell px-6 py-3">Group</div>
+        <div class="lg:table-cell px-6 py-3">Email</div>
+        <div class="lg:table-cell px-6 py-3">Accounts</div>
+        <div class="lg:table-cell px-6 py-3">Actions</div>
       </div>
       <div class="grid grid-cols-1 gap-8 lg:table-row-group lg:bg-white divide-y divide-gray-200">
         <% @requests.each do |request| %>
-          <div class="bg-white rounded-xl lg:rounded-none lg:table-row shadow-lg grid grid-cols-2">
+          <div class="bg-white rounded-xl lg:rounded-none lg:table-row shadow-lg grid grid-cols-2 text-left">
             <div class="lg:table-cell px-6 py-6 pb-1 lg:py-3 lg:px-6 whitespace-nowrap">
               <div class="lg:hidden text-sm text-gray-500">Username</div>
               <div class="text-sm font-medium text-gray-900"><%= request.account.username %></div>
