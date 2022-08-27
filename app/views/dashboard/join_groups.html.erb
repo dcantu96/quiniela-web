@@ -4,10 +4,10 @@
     <p class='text-lg mb-4 text-left'>Debajo aparecen todos los <b>usernames</b> en esta cuenta <b><%= current_user.email %></b>. Para entrar a la quiniela simplemente ingresa presionando el botón de <b>solicitar acceso</b></p>
     <div class="lg:shadow lg:overflow-hidden lg:border-b lg:border-gray-200 sm:rounded-lg">
       <div class="lg:table w-full rounded min-w-full divide-y divide-gray-200">
-        <div class="hidden lg:table-header-group bg-gray-200">
-          <div class="lg:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Username</div>
-          <div class="lg:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Grupo</div>
-          <div class="lg:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</div>
+        <div class="hidden lg:table-header-group bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+          <div class="lg:table-cell px-6 py-3">Username</div>
+          <div class="lg:table-cell px-6 py-3">Grupo</div>
+          <div class="lg:table-cell px-6 py-3">Acciones</div>
         </div>
         <div class="grid grid-cols-1 gap-8 lg:table-row-group lg:bg-white divide-y divide-gray-200">
           <% current_user.accounts.each do |account| %>
