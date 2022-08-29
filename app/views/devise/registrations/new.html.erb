@@ -21,8 +21,8 @@
       </div>
 
       <div class='mb-4'>
-        <%= f.label 'Time zone', class: 'label' %>
-        <%= f.time_zone_select :time_zone, nil, {}, { class: 'input' } %>
+        <%= f.label 'Time zone (defaults to monterrey)', class: 'label' %>
+        <%= f.select :time_zone, ActiveSupport::TimeZone.all, { selected: ActiveSupport::TimeZone['Monterrey'] }, { class: 'input' } %>
       </div>
 
       <div class='mb-4'>

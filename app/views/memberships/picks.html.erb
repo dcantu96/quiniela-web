@@ -1,4 +1,6 @@
 <div class='p-6 container mx-auto'>
+  <p class='text-left mb-4'>Zona Horaria: <b><%= current_user.time_zone %></b></p>
+  <p class='text-left mb-4'>Zona Horaria: <b><%= Time.now.in_time_zone(current_user.time_zone) %></b></p>
   <div class="flex justify-between mb-2">
     <div>
       <div data-controller="toggle" class='mb-4'>
