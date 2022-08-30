@@ -57,27 +57,88 @@ class Week < ApplicationRecord
   end
 
   def generate_matches(doc=espn_schedule_table)
-    espn_matches = doc.css('.responsive-table-wrap tr.even') + doc.css('.responsive-table-wrap tr.odd')
-    espn_matches.each do |espn_match|
-      return if espn_match.classes.include?('byeweek')
+    tables = doc.css('div.ResponsiveTable')
+    tables.each do |table|
+      # 1. If the row is showing bye week matches continue to next row
+      bye_text = table.css('div.ResponsiveTable Table__THEAD Table__TH').text
+      return if bye_text.downcase === 'bye'
 
-      espn_visit = espn_match.css('td')[0].text.split.last
-      espn_home = espn_match.css('td')[1].text.split.last
-      espn_match_date = espn_match.css('td')[2].values.second
-      visit_team = Team.find_by(short_name: espn_visit)
-      home_team = Team.find_by(short_name: espn_home)
-      if matches.find_by(visit_team: visit_team).present?
-        match = matches.find_by(visit_team: visit_team)
-        unless match.home_team == home_team
-          match.update home_team: home_team
-        end
-      elsif matches.find_by(home_team: home_team).present?
-        match = matches.find_by(home_team: home_team)
-        unless match.visit_team == visit_team
-          match.update visit_team: visit_team
-        end
+      # 2. Set match values
+      day = table.css('div.Table__Title').first.children.text
+      away_team_text = table.css('tbody.Table__TBODY tr td')[0].text
+      home_team_text = table.css('tbody.Table__TBODY tr td')[1].text
+      espn_time_text = table.css('tbody.Table__TBODY tr td')[2].text
+      match_time = Time.zone.parse(day + espn_time_text)
+
+      home_team_text.delete! '@'
+      home_team_text.squish!
+
+      puts 'away_team_text'
+      puts away_team_text
+
+      puts 'home_team_text'
+      puts home_team_text
+
+      puts 'espn_time_text'
+      puts espn_time_text
+
+      puts 'match_time'
+      puts match_time
+
+      # 3. Find teams
+      visit_team = Team.where("name like ?", "%#{away_team_text}%").first
+      home_team = Team.where("name like ?", "%#{home_team_text}%").first
+
+      # 4. Guard clause if teams not found
+      return if visit_team.nil? || home_team.nil?
+
+      # 5. Find any invalid matches
+      invalid_visit_team_matches = matches.where(visit_team: visit_team).where.not(home_team: home_team)
+      invalid_home_team_matches = matches.where(home_team: home_team).where.not(visit_team: visit_team)
+      if invalid_visit_team_matches.present?
+        invalid_visit_team_matches.destroy
+      end
+      if invalid_home_team_matches.present?
+        invalid_home_team_matches.destroy
+      end
+      
+      puts 'invalid_visit_team_matches'
+      puts invalid_visit_team_matches.length
+
+      puts 'invalid_home_team_matches'
+      puts invalid_home_team_matches.length
+
+      puts 'match_time'
+      puts match_time
+
+      # 6. Try to find a valid matchup
+      valid_match = matches.find_by(visit_team: visit_team, home_team: home_team)
+
+      # 7. If there is one, update the time if it is different
+      if valid_match.present?
+        puts 'valid match present'
+        puts valid_match.start_time != match_time
+        puts valid_match.home_team.name
+        puts valid_match.visit_team.name
+        puts valid_match.week.number
+        puts valid_match.start_time
+        # if valid_match.start_time != match_time
+        #   puts 'update time to: '
+        #   puts match_time
+        #   valid_match.update start_time: match_time
+        # end
       else
-        matches.create home_team: home_team, visit_team: visit_team, start_time: espn_match_date
+        # 8. lastly, we create the valid matchup
+        puts 'create_match'
+        puts home_team.name
+        puts visit_team.name
+        puts match_time
+        new_match = matches.build home_team: home_team, visit_team: visit_team, start_time: match_time
+        if new_match.save?
+          puts 'save match'
+        else
+          puts new_match.errors.full_messages
+        end
       end
     end
   end
