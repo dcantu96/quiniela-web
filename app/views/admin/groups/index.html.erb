@@ -4,7 +4,7 @@
       <% if @tournament %>
         <h1 class='text-xl text-indigo-900 mr-4'>Grupos activos de <b><%= @tournament.name %></b></h1>
       <% else %>
-        <h1 class='text-xl text-indigo-900'>Grupos activos</h1>
+        <h1 class='text-xl text-indigo-900'>Grupos activos <%= link_to 'Nuevo Grupo', new_admin_group_path, class: 'btn btn--primary' %></h1>
       <% end %>
     </div>
   </div>

@@ -1,9 +1,9 @@
 
 class Tournament < ApplicationRecord
   belongs_to :sport
-  has_many :weeks
+  has_many :weeks, dependent: :destroy
   has_many :matches, through: :weeks
-  has_many :groups
+  has_many :groups, dependent: :destroy
   validates :name, uniqueness: { scope: :year }
   validates :year, presence: true
   scope :valid, -> { where.not(year: nil) }

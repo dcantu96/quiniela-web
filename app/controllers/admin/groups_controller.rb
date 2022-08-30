@@ -17,6 +17,7 @@ class Admin::GroupsController < Admin::BaseController
 
   def new
     @group = Group.new
+    render layout: 'admin'
   end
 
   def edit
@@ -80,6 +81,8 @@ class Admin::GroupsController < Admin::BaseController
   end
 
   def settings
+    @current_week = @group.tournament.current_week
+    @next_match = @group.tournament.matches.order(start_time: :asc).first
   end
 
   def create

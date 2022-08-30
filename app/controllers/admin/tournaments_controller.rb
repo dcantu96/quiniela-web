@@ -18,13 +18,19 @@ class Admin::TournamentsController < Admin::BaseController
   end
 
   def generate_week_matches
-    @tournament.generate_week_matches
-    redirect_to admin_groups_path
+    if @tournament.generate_week_matches
+      redirect_to admin_groups_path, notice: 'Matches Generated Successfully'
+    else
+      redirect_to admin_groups_path, alert: 'Error generating matches'
+    end
   end
 
   def update_week_matches
-    @tournament.generate_week_matches
-    redirect_to admin_groups_path
+    if @tournament.generate_week_matches
+      redirect_to admin_groups_path, notice: 'Matches Generated Successfully'
+    else
+      redirect_to admin_groups_path, alert: 'Error generating matches'
+    end
   end
 
   def create

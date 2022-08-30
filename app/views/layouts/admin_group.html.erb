@@ -22,7 +22,7 @@
             <%= link_to root_path do %>
               <%= image_tag 'logo.svg', alt: 'Logo', class: 'h-8' %>
             <% end %>
-            <h1 class='text-xl text-indigo-900 mx-3'><b><%= @group.name %></b></h1>
+            <h1 class='text-xl text-indigo-900 mx-3'><b><%= @group.name %></b> <span><i class="fa-solid fa-users ml-2 fill-current fa-sm"></i> <%= @group.memberships.active.count %> <i class="fa-solid fa-w ml-2 fill-current fa-sm"></i> <%= @group.tournament.current_week.present? ? @group.tournament.current_week.number : '-' %></span></h1>
           </div>
           <%= render 'layouts/account_button' %>
         </header>
@@ -47,9 +47,13 @@
             <i class="fa-solid fa-list-check mr-3 fill-current"></i>
             <span>Solicitudes</span>
           <% end %>
-          <%= link_to settings_admin_group_path(@group), class: "text-md text-indigo-900 flex items-center border-b-2 pb-3 px-2 #{current_page?(settings_admin_group_path(@group)) ? 'border-orange-400' : 'border-transparent hover:border-gray-400'}" do %>
+          <%= link_to edit_admin_group_path(@group), class: "text-md text-indigo-900 flex items-center border-b-2 pb-3 px-2 #{current_page?(edit_admin_group_path(@group)) ? 'border-orange-400' : 'border-transparent hover:border-gray-400'}" do %>
             <i class="fa-solid fa-cog mr-3 fill-current"></i>
             <span>Configuración</span>
+          <% end %>
+          <%= link_to settings_admin_group_path(@group), class: "text-md text-indigo-900 flex items-center border-b-2 pb-3 px-2 #{current_page?(settings_admin_group_path(@group)) ? 'border-orange-400' : 'border-transparent hover:border-gray-400'}" do %>
+            <i class="fa-solid fa-cog mr-3 fill-current"></i>
+            <span>Configuración Avanzada</span>
           <% end %>
         </div>
       </div>
