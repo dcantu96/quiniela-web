@@ -6,7 +6,7 @@ class DashboardController < ApplicationController
     @finished_memberships = current_user.memberships.finished.includes(:account, group: [:tournament])
     @groups = Group.active
     @accounts = current_user.accounts
-    @can_join_more_groups = @active_groups.length + @requests.pending.length < @groups.length || @accounts.inactive.present?
+    @can_join_more_groups = (@active_groups.length + @requests.pending.length < @groups.length || @accounts.inactive.present?) && @accounts.present?
   end
 
   def join_groups

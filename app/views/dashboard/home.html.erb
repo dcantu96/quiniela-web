@@ -140,7 +140,26 @@
             <div class="lg:table-cell">
             </div>
           </div>
+        <% else %>
+          <div class="bg-white rounded-xl lg:rounded-none lg:table-row shadow-lg grid grid-cols-1">
+            <div class="lg:table-cell px-6 py-6 lg:py-3 lg:px-6 whitespace-nowrap">
+              <div class="text-sm font-medium text-gray-500 text-left">
+                <%= link_to 'Crear username', new_account_path, class: "underline text-indigo-900" %>
+              </div>
+            </div>
+            <div class="lg:table-cell">
+            </div>
+            <div class="lg:table-cell">
+            </div>
+            <div class="lg:table-cell">
+            </div>
+            <div class="lg:table-cell">
+            </div>
+            <div class="lg:table-cell">
+            </div>
+          </div>
         <% end %>
+        
       </div>
     </div>
   </div>
