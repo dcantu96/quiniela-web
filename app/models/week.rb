@@ -1,9 +1,9 @@
 class Week < ApplicationRecord
   belongs_to :tournament
-  has_many :group_weeks
-  has_many :membership_weeks
+  has_many :group_weeks, dependent: :destroy
+  has_many :membership_weeks, dependent: :destroy
+  has_many :matches, dependent: :destroy
   has_many :groups, through: :group_weeks
-  has_many :matches
   after_create :generate_group_weeks
   after_save :update_picks, if: :will_save_change_to_finished?
 
