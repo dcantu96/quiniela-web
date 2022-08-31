@@ -1,6 +1,5 @@
 <div class='p-4 container mx-auto'>
   <h2 class='text-lg text-left mb-2'>Add a user for <b><%= @group.name %> - <%= @group.tournament.year %> </b></h2>
-  <p class='text-lg text-left mb-4'>Select a user and add them. If the user is already in the group it wont work.</p>
 
   <%= form_with model: [:admin, Membership.new] do |f| %>
     <div class='w-full md:w-1/3 md:mr-auto flex flex-col align-start mb-4'>
@@ -13,7 +12,8 @@
     </div>
   <% end %> 
 
-  <h2 class='text-lg text-left mb-4'>Requests for <b><%= @group.name %> - <%= @group.tournament.year %> </b></h2>
+  <h2 class='text-lg text-left mb-4'>Requests for <b><%= @group.name %> - <%= @group.tournament.year %></b></h2>
+
   <div class="shadow overflow-x-scroll border-b border-gray-200 mb-4">
     <div class="table w-full rounded min-w-full">
       <div class="table-header-group bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
