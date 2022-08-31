@@ -20,6 +20,9 @@
     <div class="text-sm text-gray-900"><%= request.account.memberships.count %></div>
   </div>
   <div class="table-cell py-1 md:py-3 px-6 whitespace-nowrap">
+    <div class="text-sm text-gray-900"><%= request.account.memberships.suspended.count %></div>
+  </div>
+  <div class="table-cell py-1 md:py-3 px-6 whitespace-nowrap">
     <div class='flex'>
       <%= button_to 'Accept', [:admin, request], params: { status: 'accept' }, class: 'btn btn--primary py-1' %>
       <%= button_to 'Reject', [:admin, request], params: { status: 'reject' }, form: { data: { turbo_confirm: 'This will reject the request. Are you sure?' } }, class: 'btn btn--danger py-1 ml-4' %>
