@@ -1,3 +1,4 @@
+<% suspended_memberships = request.account.user.memberships.suspended %>
 <div class="table-row text-left even:bg-white odd:bg-gray-100">
   <div class="table-cell py-1 md:py-3 px-6 whitespace-nowrap">
     <div class="text-sm font-medium text-gray-900"><%= request.account.username %></div>
@@ -20,11 +21,15 @@
     <div class="text-sm text-gray-900"><%= request.account.memberships.count %></div>
   </div>
   <div class="table-cell py-1 md:py-3 px-6 whitespace-nowrap">
-    <div class="text-sm text-gray-900"><%= request.account.memberships.suspended.count %></div>
+    <div class="text-sm text-gray-900"><%= suspended_memberships.count %></div>
   </div>
   <div class="table-cell py-1 md:py-3 px-6 whitespace-nowrap">
     <div class='flex'>
-      <%= button_to 'Accept', [:admin, request], params: { status: 'accept' }, class: 'btn btn--primary py-1' %>
+      <% if suspended_memberships.count > 0 %>
+        <%= button_to 'Accept', [:admin, request], params: { status: 'accept' }, form: { data: { turbo_confirm: 'This user has had a previous suspended membership. Are you sure?' } }, class: 'btn btn--primary py-1' %>
+      <% else %>
+        <%= button_to 'Accept', [:admin, request], params: { status: 'accept' }, class: 'btn btn--primary py-1' %>
+      <% end %>
       <%= button_to 'Reject', [:admin, request], params: { status: 'reject' }, form: { data: { turbo_confirm: 'This will reject the request. Are you sure?' } }, class: 'btn btn--danger py-1 ml-4' %>
     </div>
   </div>
