@@ -19,15 +19,15 @@
     <% end %>
     <div data-controller='select'> 
       <%= f.label :visit_team, class: 'label' %>
-      <%= f.collection_select :visit_team_id, Team.all, :id, :name, {}, { class: 'select2 w-full' } %>
+      <%= f.collection_select :visit_team_id, Team.all, :id, :name, {}, { class: 'select' } %>
     </div>
     <div data-controller='select'> 
       <%= f.label :home_team, class: 'label' %>
-      <%= f.collection_select :home_team_id, Team.all, :id, :name, {}, { class: 'select2 w-full' } %>
+      <%= f.collection_select :home_team_id, Team.all, :id, :name, {}, { class: 'select' } %>
     </div>
     <div data-controller='select'> 
       <%= f.label :winning_team, class: 'label' %>
-      <%= f.collection_select :winning_team_id, Team.all, :id, :name, { include_blank: 'None yet' }, { class: 'select2 w-full' } %>
+      <%= f.collection_select :winning_team_id, Team.all, :id, :name, { include_blank: 'None yet' }, { class: 'select' } %>
     </div>
     <div>
       <%= f.label :home_team_score, class: 'label' %>

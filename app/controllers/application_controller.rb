@@ -2,12 +2,7 @@ class ApplicationController < ActionController::Base
   include Pagy::Backend
   before_action :authenticate_user!
   before_action :configure_permitted_parameters, if: :devise_controller?
-  before_action :user_time_zone, if: :current_user
-
-  def user_time_zone
-    time_zone = current_user.time_zone.blank? ? 'Monterrey' : current_user.time_zone
-    config.time_zone = time_zone
-  end
+  around_action :set_time_zone, if: :current_user
 
   def after_invite_path_for(resource)
     edit_user_registration_path
@@ -29,5 +24,9 @@ class ApplicationController < ActionController::Base
 
   def user_not_authorized
     flash[:error] = 'No tienes acceso'
+  end
+
+  def set_time_zone
+    Time.use_zone(current_user.time_zone) { yield }
   end
 end

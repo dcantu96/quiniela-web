@@ -1,12 +1,12 @@
 <div class='bg-white px-6 py-3 shadow-sm'>
-  <div class="flex mb-6 items-center">
-    <i class="fa-solid fa-users fa-2x p-1 mr-3 fill-current transition-all duration-300 text-indigo-900"></i>
+  <div class="flex items-center">
+    <i class="fa-solid fa-calendar p-1 mr-3 fill-current transition-all duration-300 text-indigo-900"></i>
     <%= link_to 'Week', admin_week_path(@match.week), class: 'text-md text-indigo-900 mr-3 underline' %>
     <div class="text-md text-indigo-900 mr-3">&#x2f;</div>
-    <h1 class='text-xl text-indigo-900 mr-3'>Edit Match</h1>
+    <h1 class='text-indigo-900 text-md'>Edit Match</h1>
   </div>
 </div>
-<div class='p-6 container mx-auto'>
+<div class='p-6 container mx-auto text-left'>
   <%= form_with model: [:admin, @match] do |f| %>
     <% if @match.errors.any? %>
       <div>
@@ -18,21 +18,17 @@
       </div>
     <% end %>
     <div class='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-8'>
-      <div> 
-        <%= f.label 'Semana', class: 'label' %>
-        <%= f.collection_select :week_id, Week.order(number: :asc), :id, :number, {}, { class: 'select' } %>
-      </div>
       <div data-controller='select'> 
         <%= f.label :visit_team, class: 'label' %>
-        <%= f.collection_select :visit_team_id, Team.all, :id, :name, {}, { class: 'select2 w-full' } %>
+        <%= f.collection_select :visit_team_id, Team.all, :id, :name, {}, { class: 'select' } %>
       </div>
       <div data-controller='select'> 
         <%= f.label :home_team, class: 'label' %>
-        <%= f.collection_select :home_team_id, Team.all, :id, :name, {}, { class: 'select2 w-full' } %>
+        <%= f.collection_select :home_team_id, Team.all, :id, :name, {}, { class: 'select' } %>
       </div>
       <div data-controller='select'> 
         <%= f.label :winning_team, class: 'label' %>
-        <%= f.collection_select :winning_team_id, Team.all, :id, :name, { include_blank: 'None yet' }, { class: 'select2 w-full' } %>
+        <%= f.collection_select :winning_team_id, @match_teams, :id, :name, { include_blank: 'None yet' }, { class: 'select' } %>
       </div>
       <div>
         <%= f.label :home_team_score, class: 'label' %>
@@ -61,6 +57,11 @@
         <% end %>
       </div>
     </div>
+      <p class='font-bold mb-4'>Cuidado, es peligroso modificar la semana de el juego. Solo modificar este valor si sabes lo que estas haciendo</p>
+      <div class='mb-4'> 
+        <%= f.label 'Semana', class: 'label' %>
+        <%= f.collection_select :week_id, Week.order(number: :asc), :id, :number, {}, { class: 'select' } %>
+      </div>
     <%= f.submit class: 'btn btn--primary' %>
   <% end %>
 </div>

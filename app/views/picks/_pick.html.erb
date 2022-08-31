@@ -68,7 +68,7 @@
         Start Time
       </p>
       <h2 class='text-sm md:text-md mb-4 text-gray-800'>
-        <%= pick.match.start_time ? pick.match.start_time.in_time_zone(current_user.time_zone).to_formatted_s(:short) : 'TBA' %>
+        <%= pick.match.start_time ? Time.zone.at(pick.match.start_time).to_formatted_s(:short) : 'TBA' %>
       </h2>
       <p class='text-xs font-light text-gray-500'>
         Lock Time

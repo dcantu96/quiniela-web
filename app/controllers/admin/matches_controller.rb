@@ -12,7 +12,11 @@ class Admin::MatchesController < Admin::BaseController
 
   def show; end
 
-  def edit; end
+  def edit
+    if @match.home_team_id && @match.visit_team_id
+      @match_teams = Team.where(id: [@match.home_team_id, @match.visit_team_id])
+    end
+  end
 
   def create
     @match = Match.new match_params
