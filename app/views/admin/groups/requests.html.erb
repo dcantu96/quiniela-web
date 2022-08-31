@@ -13,50 +13,21 @@
     </div>
   <% end %> 
 
-  <h2 class='text-lg text-left mb-4'>Requests</h2>
-  <div class="lg:shadow lg:overflow-hidden lg:border-b lg:border-gray-200 sm:rounded-lg mb-4">
-    <div class="lg:table w-full rounded min-w-full divide-y divide-gray-200">
-      <div class="hidden lg:table-header-group bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-        <div class="lg:table-cell px-6 py-3">Username</div>
-        <div class="lg:table-cell px-6 py-3">Phone</div>
-        <div class="lg:table-cell px-6 py-3">Group</div>
-        <div class="lg:table-cell px-6 py-3">Email</div>
-        <div class="lg:table-cell px-6 py-3">Accounts</div>
-        <div class="lg:table-cell px-6 py-3">Actions</div>
+  <h2 class='text-lg text-left mb-4'>Requests for <b><%= @group.name %> - <%= @group.tournament.year %> </b></h2>
+  <div class="shadow overflow-x-scroll border-b border-gray-200 mb-4">
+    <div class="table w-full rounded min-w-full">
+      <div class="table-header-group bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+        <div class="table-cell px-6 py-3">Username</div>
+        <div class="table-cell px-6 py-3">Name</div>
+        <div class="table-cell px-6 py-3">Phone</div>
+        <div class="table-cell px-6 py-3">Email</div>
+        <div class="table-cell px-6 py-3">Accounts</div>
+        <div class="table-cell px-6 py-3">Prev Memberships</div>
+        <div class="table-cell px-6 py-3 w-96">Actions</div>
       </div>
-      <div class="grid grid-cols-1 gap-8 lg:table-row-group lg:bg-white divide-y divide-gray-200">
-        <% @requests.each do |request| %>
-          <div class="bg-white rounded-xl lg:rounded-none lg:table-row shadow-lg grid grid-cols-2 text-left">
-            <div class="lg:table-cell px-6 py-6 pb-1 lg:py-3 lg:px-6 whitespace-nowrap">
-              <div class="lg:hidden text-sm text-gray-500">Username</div>
-              <div class="text-sm font-medium text-gray-900"><%= request.account.username %></div>
-            </div>
-            <div class="lg:table-cell px-6 py-6 pb-1 lg:py-3 lg:px-6 whitespace-nowrap">
-              <div class="lg:hidden text-sm text-gray-500">Phone</div>
-              <div class="text-sm font-medium text-indigo-600">
-                <a href="tel:<%= request.account.user.phone %>"><%= request.account.user.phone %></a>
-              </div>
-            </div>
-            <div class="lg:table-cell px-6 py-6 pb-1 lg:py-3 lg:px-6 whitespace-nowrap">
-              <div class="lg:hidden text-sm text-gray-500">Group</div>
-              <div class="text-sm text-gray-900"><%= request.group.name %></div>
-            </div>
-            <div class="lg:table-cell px-6 py-6 pb-1 lg:py-3 lg:px-6 whitespace-nowrap">
-              <div class="lg:hidden text-sm text-gray-500">Email</div>
-              <div class="text-sm text-gray-900"><%= request.account.user.email %></div>
-            </div>
-            <div class="lg:table-cell px-6 py-6 pb-1 lg:py-3 lg:px-6 whitespace-nowrap">
-              <div class="lg:hidden text-sm text-gray-500">Accounts</div>
-              <div class="text-sm text-gray-900"><%= request.account.user.accounts.with_group(request.group.id).count %></div>
-            </div>
-            <div class="lg:table-cell px-6 py-6 pb-4 lg:py-3 lg:px-6 whitespace-nowrap col-span-2">
-              <div class='flex flex-wrap'>
-                <%= button_to 'Accept', [:admin, request], params: { status: 'accept' }, class: 'btn btn--primary py-1' %>
-                <%= button_to 'Reject', [:admin, request], params: { status: 'reject' }, form: { data: { turbo_confirm: 'This will reject the request. Are you sure?' } }, class: 'btn btn--danger py-1 ml-4' %>
-              </div>
-            </div>
-          </div>
-        <% end %>
+      <div class="table-row-group bg-white">
+        <%# request partial in admin/requests/_request %>
+        <%= render @requests %>
         <% if @requests.length == 0 %>
           <div class="col-span-full rounded-xl p-6 shadow-lg bg-white">
             <div class="flex text-md text-indigo-900 items-center">
