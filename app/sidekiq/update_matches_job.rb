@@ -1,5 +1,5 @@
 class UpdateMatchesJob
-  include Sidekiq::Worker
+  include Sidekiq::Job
   sidekiq_options queue: 'default'
 
   def perform(tournament_id)
