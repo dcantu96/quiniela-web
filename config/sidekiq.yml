@@ -1,8 +1,10 @@
----
-:verbose: false
-:concurrency:  5
-:queues:
-  - [main, 5]
+development:
+  :concurrency: 5
+
 production:
-  :queues:
-    - [main, 5]
+  :concurrency: 10
+
+:max_retries: 1
+
+:queues:
+  - default
