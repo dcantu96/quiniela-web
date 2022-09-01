@@ -9,6 +9,8 @@ class Match < ApplicationRecord
   after_save :update_week_match_order,  if: :saved_change_to_start_time?
   before_save :update_picked_team, if: :will_save_change_to_home_team_id?
   before_save :update_picked_team, if: :will_save_change_to_visit_team_id?
+  validates_uniqueness_of :week, scope: [:visit_team, :home_team]
+
 
   def update_picks
     picks.where(picked_team: winning_team).find_each { |p| p.update correct: true }
@@ -80,7 +82,7 @@ class Match < ApplicationRecord
       group.memberships.each do |membership|
         membership_weeks = membership.membership_weeks
         membership_week = membership_weeks.find_or_create_by membership: membership, week: week
-        picks.create membership_week: membership_week, week: week
+        picks.create membership_week: membership_week
       end
     end
   end

@@ -57,88 +57,72 @@ class Week < ApplicationRecord
   end
 
   def generate_matches(doc=espn_schedule_table)
+    base_url = 'https://www.espn.com'
     tables = doc.css('div.ResponsiveTable')
+    match_order = 0
     tables.each do |table|
       # 1. If the row is showing bye week matches continue to next row
-      bye_text = table.css('div.ResponsiveTable Table__THEAD Table__TH').text
+      bye_text = table.css('.Table__THEAD .Table__TH').text
       return if bye_text.downcase === 'bye'
 
-      # 2. Set match values
-      day = table.css('div.Table__Title').first.children.text
-      away_team_text = table.css('tbody.Table__TBODY tr td')[0].text
-      home_team_text = table.css('tbody.Table__TBODY tr td')[1].text
-      espn_time_text = table.css('tbody.Table__TBODY tr td')[2].text
-      match_time = Time.zone.parse(day + espn_time_text)
+      table_rows =  table.css('tbody.Table__TBODY tr')
+      table_rows.each do |row|
+        # 2. Get and parse match teams text
 
-      home_team_text.delete! '@'
-      home_team_text.squish!
+        # 3. Fetch and parse match teams text
+        match_url = row.css('.date__col').first.children.first.attributes['href'].value
+        match_doc = Nokogiri::HTML(URI.open(base_url + match_url))
+        away_team_abbrev = match_doc.css('.team.away span.abbrev')[0].text
+        home_team_abbrev = match_doc.css('.team.home span.abbrev')[0].text
 
-      puts 'away_team_text'
-      puts away_team_text
+        # 4. Find teams
+        visit_team = Team.find_by short_name: away_team_abbrev
+        home_team = Team.find_by short_name: home_team_abbrev
 
-      puts 'home_team_text'
-      puts home_team_text
+        # 5. Guard clause if teams not found
+        return if visit_team.nil? || home_team.nil?
 
-      puts 'espn_time_text'
-      puts espn_time_text
-
-      puts 'match_time'
-      puts match_time
-
-      # 3. Find teams
-      visit_team = Team.where("name like ?", "%#{away_team_text}%").first
-      home_team = Team.where("name like ?", "%#{home_team_text}%").first
-
-      # 4. Guard clause if teams not found
-      return if visit_team.nil? || home_team.nil?
-
-      # 5. Find any invalid matches
-      invalid_visit_team_matches = matches.where(visit_team: visit_team).where.not(home_team: home_team)
-      invalid_home_team_matches = matches.where(home_team: home_team).where.not(visit_team: visit_team)
-      if invalid_visit_team_matches.present?
-        invalid_visit_team_matches.destroy
-      end
-      if invalid_home_team_matches.present?
-        invalid_home_team_matches.destroy
-      end
-      
-      puts 'invalid_visit_team_matches'
-      puts invalid_visit_team_matches.length
-
-      puts 'invalid_home_team_matches'
-      puts invalid_home_team_matches.length
-
-      puts 'match_time'
-      puts match_time
-
-      # 6. Try to find a valid matchup
-      valid_match = matches.find_by(visit_team: visit_team, home_team: home_team)
-
-      # 7. If there is one, update the time if it is different
-      if valid_match.present?
-        puts 'valid match present'
-        puts valid_match.start_time != match_time
-        puts valid_match.home_team.name
-        puts valid_match.visit_team.name
-        puts valid_match.week.number
-        puts valid_match.start_time
-        # if valid_match.start_time != match_time
-        #   puts 'update time to: '
-        #   puts match_time
-        #   valid_match.update start_time: match_time
-        # end
-      else
-        # 8. lastly, we create the valid matchup
-        puts 'create_match'
-        puts home_team.name
-        puts visit_team.name
-        puts match_time
-        new_match = matches.build home_team: home_team, visit_team: visit_team, start_time: match_time
-        if new_match.save?
-          puts 'save match'
-        else
-          puts new_match.errors.full_messages
+        # 6. Find any invalid matches
+        invalid_visit_team_matches = matches.where(visit_team: visit_team).where.not(home_team: home_team)
+        invalid_home_team_matches = matches.where(home_team: home_team).where.not(visit_team: visit_team)
+        if invalid_visit_team_matches.present?
+          invalid_visit_team_matches.destroy_all
         end
+        if invalid_home_team_matches.present?
+          invalid_home_team_matches.destroy_all
+        end
+
+        # 7. Try to find a valid matchup
+        valid_match = matches.find_by(visit_team: visit_team, home_team: home_team)
+
+
+        game_time_container = match_doc.css('.game-status span')[1]
+        maybe_time = game_time_container.present? ? game_time_container.attr('data-date') : nil
+        match_time = maybe_time.present? ? Time.parse(maybe_time) : nil
+
+        # 8. If there is one, update the time if it is different
+        if valid_match.present?
+          if match_time.nil?
+            valid_match.update start_time: nil
+          else
+            if valid_match.start_time != match_time
+              valid_match.update start_time: match_time
+            end
+          end
+          if valid_match.order != match_order
+            valid_match.update order: match_order
+          end
+        else
+          # 9. lastly, we create the valid matchup
+          new_match = matches.build home_team: home_team, visit_team: visit_team, start_time: match_time, order: match_order
+          if new_match.valid?
+            new_match.save
+            puts 'save match'
+          else
+            puts new_match.errors.full_messages
+          end
+        end
+        match_order = match_order + 1
       end
     end
   end

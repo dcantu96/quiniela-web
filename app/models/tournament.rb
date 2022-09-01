@@ -34,19 +34,15 @@ class Tournament < ApplicationRecord
 
   def generate_week_matches
     require 'open-uri'
-    valid_week_url = true
     iterable_week = 1
-    while valid_week_url do
-      begin
-        doc = Nokogiri::HTML(URI.open("https://www.espn.com/nfl/schedule/_/week/#{iterable_week}/year/#{year}/seasontype/2", redirect: :true))
+    loop do
+      doc = Nokogiri::HTML(URI.open("https://www.espn.com/nfl/schedule/_/week/#{iterable_week}/year/#{year}/seasontype/2", redirect: :true))
+      empty_text = doc.css('.EmptyTable-caption.Table__Title').text
+      break if empty_text.include? 'No Data Available'
 
-        new_week = weeks.find_or_create_by number: iterable_week
-        new_week.generate_matches(doc)
-        iterable_week = iterable_week + 1
-
-      rescue
-        valid_week_url = false
-      end
+      new_week = weeks.find_or_create_by number: iterable_week
+      new_week.generate_matches(doc)
+      iterable_week = iterable_week + 1
     end
   end
 end
