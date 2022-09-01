@@ -1,9 +1,14 @@
+SIDEKIQ_REDIS_CONFIGURATION = {
+  url: ENV.fetch(ENV.fetch("REDIS_PROVIDER", "REDIS_URL"), nil), # use REDIS_PROVIDER for Redis environment variable name, defaulting to REDIS_URL 
+  ssl_params: { verify_mode: OpenSSL::SSL::VERIFY_NONE }, # we must trust Heroku and AWS here
+}
+
 Sidekiq.configure_server do |config|   
-  config.redis = { url: Rails.env.production? ? ENV['REDIS_URL'] : 'redis://127.0.0.1:7372/0', network_timeout: 5 } 
+  config.redis = SIDEKIQ_REDIS_CONFIGURATION
 end
 
 Sidekiq.configure_client do |config|   
-  config.redis = { url: Rails.env.production? ? ENV['REDIS_URL'] : 'redis://127.0.0.1:7372/0', network_timeout: 5 } 
+  config.redis = SIDEKIQ_REDIS_CONFIGURATION
 end
 
 
