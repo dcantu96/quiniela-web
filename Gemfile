@@ -55,6 +55,8 @@ gem 'ransack'
 gem 'premailer-rails'
 gem 'sidekiq'
 gem 'nokogiri', '~> 1.12', '>= 1.12.3'
+gem "sentry-ruby"
+gem "sentry-rails"
 
 group :development, :test do
   gem 'pry'
