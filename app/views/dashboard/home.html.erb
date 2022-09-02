@@ -15,7 +15,9 @@
         <div class="lg:table-cell px-6 py-3">Acciones</div>
       </div>
       <div class="grid grid-cols-1 gap-8 lg:table-row-group lg:bg-white divide-y divide-gray-200">
-        <% @active_memberships.each { |member| render partial: '/memberships/home_membership', locals: { member: member } } %>
+        <% @active_memberships.each do |member| %>
+          <%= render partial: '/memberships/home_membership', locals: { member: member } %>
+        <% end %>
         <% @requests.pending.each do |request| %>
           <div class="bg-white rounded-xl lg:rounded-none lg:table-row shadow-lg grid grid-cols-2">
             <div class="lg:table-cell px-6 py-6 lg:py-3 lg:px-6 whitespace-nowrap">
