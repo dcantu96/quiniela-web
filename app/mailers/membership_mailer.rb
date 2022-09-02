@@ -8,4 +8,10 @@ class MembershipMailer < ActionMailer::Base
     @user = @membership.account.user
     mail(to: @user.email, subject: "#{@membership.account.username}, you have missing picks!")
   end
+
+  def membership_created(membership)
+    @membership = membership
+    @user = @membership.account.user
+    mail(to: @user.email, subject: "#{@membership.account.username}, you have been added to #{@membership.group.name} - #{@membership.group.tournament.year}!")
+  end
 end

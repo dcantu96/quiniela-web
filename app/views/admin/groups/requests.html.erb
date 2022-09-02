@@ -40,7 +40,7 @@
     </div>
   </div>
 
-  <h2 class='text-lg text-left mb-4'>Veteranos</h2>
+  <h2 class='text-lg text-left mb-4'>Veteranos que no han solicitado acceso</h2>
 
   <div class="shadow overflow-x-scroll border-b border-gray-200 mb-4">
     <div class="table w-full rounded min-w-full">
@@ -50,6 +50,7 @@
         <div class="table-cell px-6 py-3">Phone</div>
         <div class="table-cell px-6 py-3">Email</div>
         <div class="table-cell px-6 py-3 w-32">Prev Memberships</div>
+        <div class="table-cell px-6 py-3 w-32">Actions</div>
       </div>
       <div class="table-row-group bg-white">
 
@@ -76,6 +77,13 @@
                   <%= group.name %> - <%= group.tournament.year %> 
                 </span>
               <% end %>
+            </div>
+            <div class="table-cell py-1 md:py-3 px-6 whitespace-nowrap gap-x-4">
+              <%= form_with model: [:admin, Membership.new] do |f| %>
+                <%= f.hidden_field :group_id, value: @group.id %>
+                <%= f.hidden_field :account_id, value: veteran.id %>
+                <%= f.submit 'Agregar', class: 'btn btn--primary py-1' %>
+              <% end %> 
             </div>
           </div>
         <% end %>
