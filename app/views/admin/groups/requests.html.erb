@@ -39,4 +39,55 @@
       </div>
     </div>
   </div>
+
+  <h2 class='text-lg text-left mb-4'>Veteranos</h2>
+
+  <div class="shadow overflow-x-scroll border-b border-gray-200 mb-4">
+    <div class="table w-full rounded min-w-full">
+      <div class="table-header-group bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+        <div class="table-cell px-6 py-3">Username</div>
+        <div class="table-cell px-6 py-3">Name</div>
+        <div class="table-cell px-6 py-3">Phone</div>
+        <div class="table-cell px-6 py-3">Email</div>
+        <div class="table-cell px-6 py-3 w-32">Prev Memberships</div>
+      </div>
+      <div class="table-row-group bg-white">
+
+        <% @veterans.each do |veteran| %>
+          <% suspended_memberships = veteran.user.memberships.suspended %>
+          <div class="table-row text-left even:bg-white odd:bg-gray-100">
+            <div class="table-cell py-1 md:py-3 px-6 whitespace-nowrap">
+              <div class="text-sm font-medium text-gray-900"><%= veteran.username %></div>
+            </div>
+            <div class="table-cell py-1 md:py-3 px-6 whitespace-nowrap">
+              <div class="text-sm font-medium text-gray-900"><%= veteran.user.full_name %></div>
+            </div>
+            <div class="table-cell py-1 md:py-3 px-6 whitespace-nowrap">
+              <div class="text-sm font-medium text-indigo-600">
+                <a href="tel:<%= veteran.user.phone %>"><%= veteran.user.phone %></a>
+              </div>
+            </div>
+            <div class="table-cell py-1 md:py-3 px-6 whitespace-nowrap">
+              <div class="text-sm text-gray-900"><%= veteran.user.email %></div>
+            </div>
+            <div class="table-cell py-1 md:py-3 px-6 whitespace-nowrap gap-x-4">
+              <% veteran.groups.finished.each do |group| %>
+                <span class="px-2 mb-1 whitespace-no-wrap inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-200 text-blue-800">
+                  <%= group.name %> - <%= group.tournament.year %> 
+                </span>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+        
+        <% if @veterans.count == 0 %>
+          <div class="col-span-full rounded-xl p-6 shadow-lg bg-white">
+            <div class="flex text-md text-indigo-900 items-center">
+              No veterans pending found
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
 </div>
