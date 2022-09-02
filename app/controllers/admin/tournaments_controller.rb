@@ -18,16 +18,13 @@ class Admin::TournamentsController < Admin::BaseController
   end
 
   def generate_week_matches
-    UpdateMatchesJob.perform_later(@tournament.id)
+    MatchSchedulesJob.perform_later(@tournament.id)
     redirect_to admin_groups_path, notice: 'Matches Generated Successfully'
   end
 
   def update_week_matches
-    if @tournament.generate_week_matches
-      redirect_to admin_groups_path, notice: 'Matches Generated Successfully'
-    else
-      redirect_to admin_groups_path, alert: 'Error generating matches'
-    end
+    MatchSchedulesJob.perform_later(@tournament.id)
+    redirect_to admin_groups_path, notice: 'Matches updated Successfully'
   end
 
   def create

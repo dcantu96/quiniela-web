@@ -1,6 +1,5 @@
-class UpdateMatchesJob
-  include Sidekiq::Job
-  sidekiq_options queue: 'default'
+class MatchSchedulesJob < ApplicationJob 
+  queue_as :default
 
   def perform(tournament_id)
     tournament = Tournament.find_by id: tournament_id

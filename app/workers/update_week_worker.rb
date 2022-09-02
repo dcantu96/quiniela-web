@@ -1,5 +1,4 @@
 class UpdateWeekWorker
-  include Sidekiq::Worker
 
   def perform(group)
     week = group.tournament.current_week

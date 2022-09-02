@@ -53,7 +53,6 @@ gem 'pagy', '~> 4.11'
 gem 'ajax-datatables-rails'
 gem 'ransack'
 gem 'premailer-rails'
-gem 'sidekiq'
 gem 'nokogiri', '~> 1.12', '>= 1.12.3'
 gem "sentry-ruby"
 gem "sentry-rails"
@@ -76,3 +75,5 @@ group :development do
   gem "web-console"
   gem 'letter_opener'
 end
+
+gem "good_job", "~> 3.4"
