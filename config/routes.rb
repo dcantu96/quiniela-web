@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  authenticate :user, -> (user) { user.admin? } do
+    mount GoodJob::Engine => 'good_job'
+  end
   root to: 'dashboard#home'
   get '/dashboard/join-groups', to: 'dashboard#join_groups'
   devise_for :users, controllers: {
