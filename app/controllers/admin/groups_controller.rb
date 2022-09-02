@@ -78,7 +78,7 @@ class Admin::GroupsController < Admin::BaseController
 
   def requests
     @requests = @group.requests.pending
-    @veterans = Account.includes(memberships: [:group]).where.not(id: @group.requests.pluck(:account_id)).where(memberships: { groups: { finished: true } })
+    @veterans = Account.includes(memberships: [:group]).where.not(id: @group.requests.pluck(:account_id) + @group.accounts.ids).where(memberships: { groups: { finished: true } })
   end
 
   def settings
