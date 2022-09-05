@@ -19,8 +19,10 @@ class MembershipsController < ApplicationController
   end
 
   def picks
-    @untie_pick = @picks.joins(:match).where(matches: { untie: true }).first
+    @untie_pick = @picks.nil? ? nil : @picks.joins(:match).where(matches: { untie: true }).first
     @weeks = @membership.group.tournament.weeks
+    @membership_week = @membership.membership_weeks.find_by(week: @week)
+    @points = @membership_week.present? ? @membership_week.points : nil
   end
 
   def public_picks
@@ -53,12 +55,11 @@ class MembershipsController < ApplicationController
   def set_week_and_picks
     filtering_params.present? ? (
       @week = @membership.group.tournament.weeks.find_by(id: filtering_params[:week_id])
-      @picks = @membership.membership_weeks.find_by(week: @week).picks
+      @picks = @membership.picks_of(@week)
       ) : (
       @week = @membership.group.tournament.current_week
       @picks = @membership.current_week_picks
     )
-    @picks = @picks.includes(:picked_team, match: [:home_team, :visit_team, :winning_team]).order('matches.order')
   end
 
   def filtering_params

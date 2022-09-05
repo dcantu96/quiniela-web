@@ -1,7 +1,5 @@
-<div class='bg-white px-6 py-3 shadow-sm text-left'>
-  <h1 class='text-lg text-indigo-900 mr-3'>New Match for Week <%= @week.number %> of <%= @week.tournament.name %></h1>
-</div>
 <div class='p-6 container mx-auto text-left'>
+  <h1 class='text-lg text-indigo-900 mb-4'>New Match for Week <%= @week.number %> of <%= @week.tournament.name %></h1>
   <%= form_with model: [:admin, :week, @match] do |f| %>
     <% if @match.errors.any? %>
       <div>

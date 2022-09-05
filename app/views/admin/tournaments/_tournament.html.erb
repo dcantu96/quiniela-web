@@ -6,22 +6,24 @@
   </td>
   <td class="px-6 py-4 whitespace-nowrap">
     <div class="text-sm font-medium text-gray-900">
-        <%= tournament.sport.name %>
-      </div>
+      <%= tournament.sport.name %>
+    </div>
   </td>
   <td class="px-6 py-4 whitespace-nowrap">
     <div class="text-sm font-medium text-gray-900">
-        <%= tournament.year %>
-      </div>
+      <%= tournament.year %>
+    </div>
   </td>
   <td class="px-6 py-4 whitespace-nowrap">
-    <div class="text-sm font-medium text-gray-900">
-        <%= link_to tournament.groups.count, admin_tournament_groups_path(tournament), class: 'text-md text-indigo-900 flex items-center' %>
-      </div>
+    <% tournament.groups.each do |group| %>
+      <%= link_to members_admin_group_path(group), class: 'px-2 mb-1 whitespace-no-wrap inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-200 text-blue-800' do %>
+        <%= group.name %> - <%= tournament.year %> 
+      <% end %>
+    <% end %>
   </td>
   <td class="px-6 py-4 whitespace-nowrap">
     <div class="flex">
-        <%= link_to "Edit", edit_admin_tournament_path(tournament), class: 'btn btn--primary inline-block mr-2' %>
-      </div>
+      <%= link_to "Edit", edit_admin_tournament_path(tournament), class: 'btn btn--primary inline-block mr-2' %>
+    </div>
   </td>
 </tr>

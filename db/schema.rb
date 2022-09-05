@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_02_031039) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_04_200145) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -152,8 +152,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_02_031039) do
     t.integer "points", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "group_id"
-    t.index ["group_id"], name: "index_membership_weeks_on_group_id"
     t.index ["membership_id"], name: "index_membership_weeks_on_membership_id"
     t.index ["week_id"], name: "index_membership_weeks_on_week_id"
   end
@@ -295,7 +293,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_02_031039) do
   add_foreign_key "matches", "teams", column: "visit_team_id"
   add_foreign_key "matches", "teams", column: "winning_team_id"
   add_foreign_key "matches", "weeks"
-  add_foreign_key "membership_weeks", "groups"
   add_foreign_key "membership_weeks", "memberships"
   add_foreign_key "membership_weeks", "weeks"
   add_foreign_key "memberships", "accounts"

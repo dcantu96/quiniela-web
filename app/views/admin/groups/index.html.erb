@@ -1,11 +1,7 @@
 <div class='p-6 container mx-auto'>
   <div class='mb-4'>
     <div class='flex items-center mb-2'>
-      <% if @tournament %>
-        <h1 class='text-xl text-indigo-900 mr-4'>Grupos activos de <b><%= @tournament.name %></b></h1>
-      <% else %>
-        <h1 class='text-xl text-indigo-900'>Grupos activos <%= link_to 'Nuevo Grupo', new_admin_group_path, class: 'btn btn--primary' %></h1>
-      <% end %>
+      <h1 class='text-xl text-indigo-900'>Grupos activos <%= link_to 'Nuevo Grupo', new_admin_group_path, class: 'btn btn--primary' %></h1>
     </div>
   </div>
   <div class='grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mb-8'>
@@ -14,11 +10,7 @@
 
   <div class='mb-4'>
     <div class='flex items-center mb-2'>
-      <% if @tournament %>
-        <h1 class='text-xl text-indigo-900 mr-4'>Grupos terminados de <b><%= @tournament.name %></b></h1>
-      <% else %>
-        <h1 class='text-xl text-indigo-900'>Grupos terminados</h1>
-      <% end %>
+      <h1 class='text-xl text-indigo-900'>Grupos terminados</h1>
     </div>
   </div>
   <div class='grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mb-8'>

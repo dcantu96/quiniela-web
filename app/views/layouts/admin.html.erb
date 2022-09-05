@@ -36,11 +36,15 @@
             <i class="fa-solid fa-table mr-3 fill-current"></i>
             <span>Usuarios</span>
           <% end %>
+          <%= link_to admin_tournaments_path, class: "text-md text-indigo-900 flex items-center border-b-2 pb-3 px-2 #{current_page?(admin_tournaments_path) ? 'border-orange-400' : 'border-transparent hover:border-gray-400'}" do %>
+            <i class="fa-solid fa-table mr-3 fill-current"></i>
+            <span>Torneos</span>
+          <% end %>
         </div>
       </div>
       <%= yield %>
     </main>
-  </body>>
+  </body>
 </html>
 
 

@@ -1,6 +1,5 @@
 <div class='p-6 container mx-auto text-left'>
-  <p class='mb-2'>Torneo: <%= @group.tournament.name %></p>
-  <p class='mb-2'>Año: <%= @group.tournament.year %></p>
+  <%= link_to "#{@group.tournament.name} - #{@group.tournament.year}", admin_tournament_path(@group.tournament), class: 'text-sm font-medium text-indigo-600' %>
   <p class='mb-2'>Semana Actual: <%= @current_week ? @current_week.number : 'No hay semanas' %></p>
   <p class='mb-2'>Membresias Activas: <%= @group.memberships.active.length %></p>
   <p class='mb-2'>Solicitudes Pendientes: <%= @group.requests.pending.length %></p>
@@ -14,12 +13,4 @@
       <span>No hay juegos</span>
     <% end %>
   </p>
-
-  <% if @group.tournament.weeks.count != 0 %>
-    <p>Cantidad de semanas: <%= @group.tournament.weeks.count %></p>
-    <%= button_to 'Actualizar Semanas', update_week_matches_admin_tournament_path(@group.tournament), class: 'btn btn--primary mb-4 inline-block' %>
-  <% else %>
-    <p>No hay semanas. Crear semanas</p>
-    <%= button_to 'Crear Semanas', generate_week_matches_admin_tournament_path(@group.tournament), class: 'btn btn--primary mb-4' %>
-  <% end %>
 </div>

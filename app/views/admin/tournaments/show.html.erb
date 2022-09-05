@@ -1,16 +1,16 @@
-<%= render 'show_header' %>
-
-<div class='p-6 container mx-auto'>
+<div class='p-6 container mx-auto text-left'>
   <div class='mb-4'>
     <div class='flex items-center mb-2'>
       <h1 class='text-xl text-indigo-900 mr-4'><%= @tournament.name %></h1>
       <%= link_to 'Nueva Semana', new_admin_tournament_week_path(@tournament), class: 'btn btn--secondary' %>
-      <% if @tournament.weeks.present? %>
-        <%= button_to 'Actualizar Semanas', generate_week_matches_admin_tournament_path(@tournament), class: 'btn btn--secondary' %>
-      <% else %>
-        <%= button_to 'Crear Semanas', generate_week_matches_admin_tournament_path(@tournament), class: 'btn btn--secondary' %>
-       <% end %>
     </div>
+      <% if @tournament.weeks.count != 0 %>
+        <p>Cantidad de semanas: <%= @tournament.weeks.count %></p>
+        <%= button_to 'Actualizar Semanas', update_week_matches_admin_tournament_path(@tournament), class: 'btn btn--primary mb-4 inline-block' %>
+      <% else %>
+        <p>No hay semanas. Crear semanas</p>
+        <%= button_to 'Crear Semanas', generate_week_matches_admin_tournament_path(@tournament), class: 'btn btn--primary mb-4' %>
+      <% end %>
   </div>
   <div class="flex flex-col">
     <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -31,7 +31,7 @@
               </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
-              <% @tournament.weeks.each do |week|  %>
+              <% @weeks.each do |week|  %>
                 <tr>
                   <td class="px-6 py-4 whitespace-nowrap">
                     <div class="text-sm font-medium text-indigo-900">
@@ -40,12 +40,21 @@
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap">
                     <div class="text-sm font-medium text-indigo-900">
-                      <%= week.finished ? 'Yes' : 'No' %>
+                      <%= button_to [:toggle_finished, :admin, week], form: { data: { turbo_confirm: 'This will toggle week finished status. Are you sure?' } }, class: 'btn btn--primary py-1 bg-gray-500' do %>
+                        <% if week.finished? %>
+                          <span>Yes</span>
+                          <i class="fa-solid fa-check ml-1"></i>
+                        <% else %>
+                          <span>No</span>
+                          <i class="fa-solid fa-times ml-1"></i>
+                        <% end %>
+                      <% end %>
                     </div>
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="flex">
-                      <%= button_to "Update week", update_matches_admin_tournament_week_path(tournament_id: week.tournament_id, week_id: week.id), class: 'btn btn--primary', data: { confirm: 'This will fetch the winner from espn and will not do anything if no winner is set.', disable_with: 'loading...' } %>
+                    <div class="flex gap-4">
+                      <%= button_to 'Update match results', [:update_match_results, :admin, week], form: { data: { turbo_confirm: 'This send a request to fetch match results in ESPN. Are you sure?' } }, class: 'btn btn--primary py-1' %>
+                      <%= button_to 'Update/Generate matches', [:update_matches, :admin, week], form: { data: { turbo_confirm: 'This send a request to fetch match schedules in ESPN. Are you sure?' } }, class: 'btn btn--primary py-1' %>
                     </div>
                   </td>
                 </tr>

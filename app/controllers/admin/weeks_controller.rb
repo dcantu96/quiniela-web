@@ -1,6 +1,5 @@
 class Admin::WeeksController < Admin::BaseController
-  before_action :set_week, only: [:update, :show, :edit, :generate_week_matches, :update_matches]
-  before_action :set_group, only: [:generate_week_matches]
+  before_action :set_week, only: [:update, :show, :edit, :update_matches, :update_match_results, :delete_matches, :toggle_finished]
 
   def index
     @weeks = Week.all
@@ -12,18 +11,29 @@ class Admin::WeeksController < Admin::BaseController
 
   def show
     @matches = @week.matches.includes(:home_team, :visit_team, :winning_team).order(order: :asc)
+    @next_week = @week.tournament.weeks.find_by(number: @week.number + 1)
+    @prev_week = @week.tournament.weeks.find_by(number: @week.number - 1)
   end
 
-  def generate_week_matches
-    if @week.generate_matches
-      redirect_to matches_admin_group_path(@group, week_id: @week.id), notice: 'Matches generated successfully'
-    end
+  def update_match_results
+    WeekMatchResultsJob.perform_later(@week.id)
+    redirect_to admin_week_path(@week), notice: 'Updating week match results. This could take 2 minutes.'
   end
 
   def update_matches
-    if @week.update_matches
-      redirect_to admin_week_path(@week), notice: 'Attempted to update matches, please check manually'
+    WeekMatchesJob.perform_later(@week.id)
+    redirect_to admin_week_path(@week), notice: 'Updating week matches. This could take 2 minutes.'
+  end
+
+  def delete_matches
+    if @week.matches.destroy_all
+      redirect_to admin_week_path(@week), notice: 'Matches deleted successfully'
     end
+  end
+
+  def toggle_finished
+    @week.update finished: !@week.finished
+    redirect_to admin_tournament_path(@week.tournament), notice: 'Week set to finished.'
   end
 
   def edit

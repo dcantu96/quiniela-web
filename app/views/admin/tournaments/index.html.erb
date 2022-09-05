@@ -1,5 +1,8 @@
-<%= render 'header' %>
-<div class='p-6 container mx-auto'>
+<div class='p-6 container mx-auto text-left'>
+  <div class="flex mb-4 items-center">
+    <h1 class='text-xl text-indigo-900 mr-3'>Tournaments</h1>
+    <%= link_to 'New', new_admin_tournament_path, class: 'btn btn--primary py-1' %>
+  </div>
   <div class="flex flex-col">
     <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
       <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">

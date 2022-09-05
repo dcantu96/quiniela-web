@@ -1,5 +1,5 @@
 class Admin::MatchesController < Admin::BaseController
-  before_action :set_match, only: [:update, :show, :edit, :set_winner, :fetch_winner]
+  before_action :set_match, only: [:update, :show, :edit, :set_winner, :fetch_winner, :destroy]
 
   def index
     @matches = Match.all
@@ -23,13 +23,21 @@ class Admin::MatchesController < Admin::BaseController
     if @match.save
       redirect_to admin_week_path(@match.week), notice: 'Match created successfully'
     else
-      redirect_to new_admin_match_path, alert: @match.errors.full_messages.first
+      redirect_to new_admin_week_match_path(@match.week), alert: @match.errors.full_messages.first
     end       
   end
 
   def update
     if @match.update match_params
       redirect_to admin_week_path(@match.week), notice: 'Match updated successfully'
+    else
+      redirect_to edit_admin_match_path(@match), alert: @match.errors.full_messages.first
+    end
+  end
+
+  def destroy
+    if @match.destroy
+      redirect_to admin_week_path(@match.week), notice: 'Match destroyed successfully'
     else
       redirect_to edit_admin_match_path(@match), alert: @match.errors.full_messages.first
     end
@@ -44,14 +52,6 @@ class Admin::MatchesController < Admin::BaseController
     if @match.save
       @match.update_picks
       redirect_to root_path, notice: "Match winner set to #{@match.winning_team.short_name} updated successfully"
-    end
-  end
-
-  def fetch_winner
-    if @match.fetch_result @match.week.espn_schedule_table
-      redirect_to admin_week_path(@match.week), notice: "Match winner set to #{@match.winning_team.short_name} updated successfully"
-    else
-      redirect_to admin_week_path(@match.week), alert: 'Match not result not found yet'
     end
   end
 

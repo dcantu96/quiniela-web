@@ -49,12 +49,11 @@ class Admin::MembershipsController < Admin::BaseController
   def set_week_and_picks
     filtering_params.present? ? (
       @week = @membership.group.tournament.weeks.find_by(id: filtering_params[:week_id])
-      @picks = @membership.membership_weeks.find_by(week: @week).picks
+      @picks = @membership.picks_of(@week)
       ) : (
       @week = @membership.group.tournament.current_week
       @picks = @membership.current_week_picks
     )
-    @picks = @picks.includes(:picked_team, match: [:home_team, :visit_team, :winning_team]).order('matches.order')
   end
 
   def filtering_params

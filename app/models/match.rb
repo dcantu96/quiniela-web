@@ -6,14 +6,26 @@ class Match < ApplicationRecord
   has_many :picks, dependent: :destroy
   after_create :generate_picks
   before_save :set_new_membership_week_to_picks, if: :will_save_change_to_week_id?
-  after_save :update_week_match_order,  if: :saved_change_to_start_time?
   before_save :update_picked_team, if: :will_save_change_to_home_team_id?
   before_save :update_picked_team, if: :will_save_change_to_visit_team_id?
   validates_uniqueness_of :week, scope: [:visit_team, :home_team]
+  validate :uniqueness_of_matches
+
+  def uniqueness_of_matches
+    matches_to_check = week.matches.where.not(id: self.id)
+    invalid_matches = matches_to_check.where(visit_team: visit_team)
+      .or(matches_to_check.where(home_team: visit_team))
+      .or(matches_to_check.where(visit_team: home_team))
+      .or(matches_to_check.where(home_team: home_team))
+    #  There cannot be another match in the same week with one of these teams
+    if invalid_matches.present?
+      errors.add(:match, "Invalid. Week #{week.number} already has a match with #{visit_team.name} and/or #{home_team.name}")
+    end
+  end
 
 
   def update_picks
-    picks.where(picked_team: winning_team).find_each { |p| p.update correct: true }
+    picks.where(picked_team: winning_team).update_all correct: true
   end
 
   def update_picked_team
@@ -41,49 +53,12 @@ class Match < ApplicationRecord
     start_time ? Time.current > start_time : false
   end
 
-  def fetch_result(doc)
-    td = doc.at("td a[name='&lpos=nfl:schedule:score']:contains('#{home_team.short_name}')")
-    return false if td.nil?
-    
-    score_text = td.children.text
-    scores = score_text.split(',')
-    new_home_team_score = nil
-    new_visit_team_score = nil
-    scores.each do |score|
-      team_score = score.split(' ')
-      new_home_team_score = team_score.second.to_i if team_score.first == home_team.short_name
-      new_visit_team_score = team_score.second.to_i if team_score.first == visit_team.short_name
-    end
-    if new_home_team_score.present? && new_visit_team_score.present?
-      if new_home_team_score == new_visit_team_score
-        self.update tie: true, home_team_score: new_home_team_score, visit_team_score: new_visit_team_score
-      else
-        if new_home_team_score > new_visit_team_score
-          self.update winning_team: home_team, home_team_score: new_home_team_score, visit_team_score: new_visit_team_score
-        else
-          self.update winning_team: visit_team, home_team_score: new_home_team_score, visit_team_score: new_visit_team_score
-        end
-      end
-    end
-  end
-
-  private
-
-  def update_week_match_order
-    week.matches.order(start_time: :asc).each_with_index do |match, i|
-      match.update order: i
-    end
-  end
-
   # This functions will generate picks once a match is created
   # The picks this function creates are any picks that are duplicate
   def generate_picks
-    week.tournament.groups.each do |group|
-      group.memberships.each do |membership|
-        membership_weeks = membership.membership_weeks
-        membership_week = membership_weeks.find_or_create_by membership: membership, week: week
-        picks.create membership_week: membership_week
-      end
+    week.tournament.memberships.each do |membership|
+      membership_week = MembershipWeek.find_or_create_by membership: membership, week: week
+      Pick.find_or_create_by membership_week: membership_week, match: self
     end
   end
 end

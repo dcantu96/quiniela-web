@@ -10,7 +10,14 @@ class Membership < ApplicationRecord
   scope :finished, -> { includes(:group).where group: { finished: true } }
 
   def current_week_picks
-    current_membership_week.picks
+    return nil if current_membership_week.nil?
+    current_membership_week.picks.includes(:picked_team, match: [:home_team, :visit_team, :winning_team]).order('matches.order')
+  end
+
+  def picks_of(week)
+    membership_week = membership_weeks.find_by(week: week)
+    return nil if membership_week.nil?
+    membership_week.picks.includes(:picked_team, match: [:home_team, :visit_team, :winning_team]).order('matches.order')
   end
 
   def current_membership_week

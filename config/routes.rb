@@ -3,7 +3,8 @@ Rails.application.routes.draw do
     mount GoodJob::Engine => 'good_job'
   end
   root to: 'dashboard#home'
-  get '/dashboard/join-groups', to: 'dashboard#join_groups'
+  get '/join-groups', to: 'dashboard#join_groups'
+  get '/rules', to: 'dashboard#rules'
   devise_for :users, controllers: {
     sessions: 'sessions',
     confirmations: 'confirmations',
@@ -43,7 +44,6 @@ Rails.application.routes.draw do
       end
     end
     resources :tournaments do
-      resources :groups, only: [:index]
       resources :weeks, only: [:new, :create] do 
         member do
           post :update_matches
@@ -58,7 +58,10 @@ Rails.application.routes.draw do
     resources :weeks do
       resources :matches, only: [:new, :create]
       member do
-        post :generate_week_matches
+        patch :update_match_results
+        patch :update_matches
+        patch :delete_matches
+        patch :toggle_finished
       end
     end
     resources :sports do
@@ -77,6 +80,8 @@ Rails.application.routes.draw do
     resources :picks, only: [:update]
     resources :updates
   end
+
+
 
   resources :accounts
   resources :picks

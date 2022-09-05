@@ -1,7 +1,7 @@
-<div class='p-6 container mx-auto'>
-  <div class='flex flex-wrap mb-4'>
-    <h2 class='text-xl text-indigo-900 mr-4'>Hola, <b><%= current_user.full_name %></b></h2>
-  </div>
+<div class='p-6 container mx-auto text-left'>
+  <h2 class='text-xl text-indigo-900 br-4'>Hola, <b><%= current_user.full_name %></b></h2>
+
+  <%= link_to 'Reglas', rules_path, class: "underline text-indigo-900 text-lg mb-4" %>
 
   <h2 class='text-lg mb-4 text-left'>Mis cuentas</h2>
   <div class="lg:shadow lg:overflow-hidden lg:border-b lg:border-gray-200 sm:rounded-lg mb-4">
@@ -54,7 +54,7 @@
           <div class="bg-white rounded-xl lg:rounded-none lg:table-row shadow-lg grid grid-cols-1">
             <div class="lg:table-cell px-6 py-6 lg:py-3 lg:px-6 whitespace-nowrap">
               <div class="text-sm font-medium text-gray-500 text-left">
-                <%= link_to 'Únete a la quiniela', dashboard_join_groups_path, class: "underline text-indigo-900" %>
+                <%= link_to 'Únete a la quiniela', join_groups_path, class: "underline text-indigo-900" %>
               </div>
             </div>
             <div class="lg:table-cell">

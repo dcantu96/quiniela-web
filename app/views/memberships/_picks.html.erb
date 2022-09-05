@@ -1,5 +1,9 @@
-<% @picks.each do |pick| %>
-  <div id="pick-<%= pick.id %>">
-    <%= render pick %>
-  </div>
+<% if @picks.nil? %>
+  No picks
+<% else %>
+  <% @picks.each do |pick| %>
+    <div id="pick-<%= pick.id %>">
+      <%= render pick %>
+    </div>
+  <% end %>
 <% end %>
