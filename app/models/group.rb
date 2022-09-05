@@ -15,8 +15,10 @@ class Group < ApplicationRecord
 
   def daily_update
     week = tournament.current_week
-    week.fetch_match_results
-    week.update_picks
+    tournament.update_week_matches(week.number)
+    week.matches.each do |match|
+      match.update_picks
+    end
     update_member_positions
     AdminMailer.update_success(week, self).deliver_now
   end

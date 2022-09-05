@@ -33,39 +33,38 @@ class Tournament < ApplicationRecord
     end
   end
 
-  def generate_week_matches(week = nil)
+  def generate_week_matches(default_week = nil)
     require 'open-uri'
-    iterable_week = 1
+    iterable_week = default_week || 1
     loop do
-      week = week || iterable_week
-      doc = Nokogiri::HTML(URI.open("https://www.espn.com/nfl/schedule/_/week/#{week}/year/#{year}/seasontype/2", redirect: :true))
+      doc = Nokogiri::HTML(URI.open("https://www.espn.com/nfl/schedule/_/week/#{iterable_week}/year/#{year}/seasontype/2", redirect: :true))
       empty_text = doc.css('.EmptyTable-caption.Table__Title').text
       tables = doc.css('div.ResponsiveTable')
       break if empty_text.include? 'No Data Available'
       break if tables.length == 0
 
-      new_week = weeks.find_or_create_by number: week
+      new_week = weeks.find_or_create_by number: iterable_week
       new_week.generate_matches(doc)
-      break if week.present?
+      break if default_week.present?
 
       iterable_week = iterable_week + 1
     end
   end
 
-  def update_week_matches(week = nil)
+  def update_week_matches(default_week = nil)
     require 'open-uri'
-    iterable_week = 1
+    iterable_week = default_week || 1
     loop do
-      week = week || iterable_week
-      doc = Nokogiri::HTML(URI.open("https://www.espn.com/nfl/schedule/_/week/#{week}/year/#{year}/seasontype/2", redirect: :true))
+      week = default_week || iterable_week
+      doc = Nokogiri::HTML(URI.open("https://www.espn.com/nfl/schedule/_/week/#{iterable_week}/year/#{year}/seasontype/2", redirect: :true))
       empty_text = doc.css('.EmptyTable-caption.Table__Title').text
       tables = doc.css('div.ResponsiveTable')
       break if empty_text.include? 'No Data Available'
       break if tables.length == 0
 
-      new_week = weeks.find_or_create_by number: week
+      new_week = weeks.find_or_create_by number: iterable_week
       new_week.update_match_results(doc)
-      break if week.present?
+      break if default_week.present?
 
       iterable_week = iterable_week + 1
     end
