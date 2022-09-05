@@ -32,7 +32,7 @@ class Membership < ApplicationRecord
       maybe_delete_request.destroy
     end
     group.tournament.weeks.each do |week|
-      membership_weeks.create group: group, week: week
+      membership_weeks.create week: week
     end
   end
 end
