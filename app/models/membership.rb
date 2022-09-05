@@ -3,7 +3,7 @@ class Membership < ApplicationRecord
   belongs_to :group
   has_many :membership_weeks, dependent: :destroy
   has_many :picks, through: :membership_weeks
-  after_create :generate_weeks
+  after_create :generate_weeks_and_picks
   validates :account, uniqueness: { scope: :group }
   scope :active, -> { includes(:group).where(group: { finished: false }, suspended: false) }
   scope :suspended, -> { where(suspended: true) }
@@ -26,13 +26,8 @@ class Membership < ApplicationRecord
 
   private
 
-  def generate_weeks
-    maybe_delete_request = account.requests.find_by(group: group)
-    if maybe_delete_request.present?
-      maybe_delete_request.destroy
-    end
-    group.tournament.weeks.each do |week|
-      membership_weeks.create week: week
-    end
+  # This action will create weeks and picks
+  def generate_weeks_and_picks
+    MembershipInitializerJob.perform_later(id)
   end
 end

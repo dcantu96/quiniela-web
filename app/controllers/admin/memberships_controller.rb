@@ -1,5 +1,5 @@
 class Admin::MembershipsController < Admin::BaseController
-  before_action :set_membership, only: [:picks, :settings, :update, :destroy]
+  before_action :set_membership, only: [:picks, :settings, :update, :destroy, :reset]
   before_action :set_group, only: [:picks, :settings, :update]
   before_action :set_week_and_picks, only: [:show, :picks]
 
@@ -42,6 +42,11 @@ class Admin::MembershipsController < Admin::BaseController
     else
       redirect_to admin_request_path(@membership.group), alert: @membership.errors.full_messages.first
     end       
+  end
+
+  def reset
+    MembershipInitializerJob.perform_later(@membership.id)
+    redirect_to members_admin_group_path(@membership.group), notice: 'Membership reset in progress.' 
   end
 
   private

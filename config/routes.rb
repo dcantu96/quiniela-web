@@ -13,7 +13,11 @@ Rails.application.routes.draw do
   }
   namespace :admin do
     resources :users, only: [:index, :show]
-    resources :memberships, only: [:update, :create, :destroy]
+    resources :memberships, only: [:update, :create, :destroy] do
+      member do
+        patch :reset
+      end
+    end
     resources :groups do
       resources :memberships, only: [:update] do 
         member do
