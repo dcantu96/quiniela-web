@@ -2,10 +2,10 @@ class Group < ApplicationRecord
   belongs_to :tournament
   has_many :requests, dependent: :destroy
   has_many :memberships, dependent: :destroy
-  has_many :membership_weeks
-  has_many :group_weeks, dependent: :destroy
-  has_many :winners, through: :membership_weeks
   has_many :accounts, through: :memberships
+  has_many :membership_weeks, through: :memberships
+  has_many :winners, through: :membership_weeks
+  has_many :group_weeks, dependent: :destroy
   validates_presence_of :name
   after_create :generate_group_weeks
   scope :active, -> { where finished: false }

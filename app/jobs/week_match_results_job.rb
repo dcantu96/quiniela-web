@@ -6,7 +6,9 @@ class WeekMatchResultsJob < ApplicationJob
     if week.present?
       week.tournament.update_week_matches(week.number)
       week.update_match_picks
-      week.tournament.groups.update_member_positions
+      week.tournament.groups.each do |group|
+        group.update_member_positions
+      end
       AdminMailer.update_success(week, group).deliver_now
     end
   end
