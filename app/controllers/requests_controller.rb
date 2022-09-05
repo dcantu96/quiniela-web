@@ -2,9 +2,9 @@ class RequestsController < ApplicationController
   def create
     @request = Request.new request_params
     if @request.save
-      redirect_to dashboard_join_groups_path, notice: 'Request created successfully'
+      redirect_to join_groups_path, notice: 'Request created successfully'
     else
-      redirect_to dashboard_join_groups_path, alert: @request.errors.full_messages.first
+      redirect_to join_groups_path, alert: @request.errors.full_messages.first
     end 
   end
 

@@ -4,7 +4,7 @@
     <p class='mb-2'><b>Nota importante:</b> actualmente ya cuentas con los usernames en la lista debajo. Si deseas usar uno de ellos para unirte a otro grupo, da click en cualquiera de ellos.</p>
     <ol class='mb-4'>
       <% current_user.accounts.each do |account| %>
-        <li class='text-md font-bold'>- <%= link_to account.username, dashboard_join_groups_path, class: "underline" %></li>
+        <li class='text-md font-bold'>- <%= link_to account.username, join_groups_path, class: "underline" %></li>
       <% end %>
     </ol>
   <% end %>
