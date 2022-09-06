@@ -6,7 +6,9 @@ class MembershipsController < ApplicationController
   layout 'membership'
 
   def show
-    @membership_weeks = @membership.membership_weeks
+    @q = @membership.membership_weeks.ransack(params[:q])
+    @q.sorts = 'week_number asc' if @q.sorts.empty?
+    @membership_weeks = @q.result.includes(:week)
   end
 
   def table
