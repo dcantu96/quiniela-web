@@ -20,6 +20,9 @@
               <% if membership.picks.count == 0 %>
                 <i class="fa-solid fa-exclamation-circle text-red-600"></i>
               <% end %>
+              <% if membership.membership_weeks.count != membership.group.tournament.weeks.count %>
+                <i class="fa-solid fa-bug text-red-600"></i>
+              <% end %>
             </div>
             <div class="table-cell py-1 md:py-3 px-6 whitespace-nowrap">
               <div class="text-sm font-medium text-gray-900"><%= membership.total %></div>

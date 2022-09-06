@@ -4,7 +4,15 @@ class MembershipWeek < ApplicationRecord
   has_many :picks, dependent: :destroy
   has_many :winners, dependent: :destroy
   validates :membership, uniqueness: { scope: :week }
+  validate :uniqueness_of_membership
   scope :current, -> (current_week) { where(week: current_week).limit(1) }
+
+  def uniqueness_of_membership
+    maybe_duplicate_weeks = membership.membership_weeks.joins(:week).where(week: { number: week.number })
+    if maybe_duplicate_weeks.count > 1
+      errors.add(:match, "Invalid. Week #{week.number} already exists in this membership")
+    end
+  end
 
   def untie_pick(untie_match)
     picks.find_by match: untie_match
