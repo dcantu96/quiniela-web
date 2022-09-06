@@ -56,24 +56,25 @@ class Week < ApplicationRecord
 
       table_rows =  table.css('tbody.Table__TBODY tr')
       table_rows.each do |row|
-        # 2. Get and parse match teams text
-
-        # 3. Fetch and parse match teams text
-        scheduled_match = row.css('.date__col a')
-        settled_match = row.css('.teams__col a')
+        # 2. Fetch result text
+        scheduled_match_container = row.css('.date__col a')
+        settled_match_container = row.css('.teams__col a')
         away_team_abbrev = nil
         home_team_abbrev = nil
         match_url = nil
         match_doc = nil
+        
+        result = team_result(settled_match_container.text)
 
-        if settled_match.text.present?
-          match_url = settled_match.first.attributes['href'].value
+        if settled_match_container.text.present?
+          match_url = settled_match_container.first.attributes['href'].value
           match_doc = Nokogiri::HTML(URI.open(base_url + match_url))
         else
-          match_url = scheduled_match.first.attributes['href'].value
+          match_url = scheduled_match_container.first.attributes['href'].value
           match_doc = Nokogiri::HTML(URI.open(base_url + match_url))
         end
 
+        # 3. Get and parse teams abbreviated names
         away_team_abbrev = match_doc.css('.team.away span.abbrev').text
         home_team_abbrev = match_doc.css('.team.home span.abbrev').text
 
@@ -84,44 +85,71 @@ class Week < ApplicationRecord
         # 5. Guard clause if teams not found
         next if visit_team.nil? || home_team.nil?
 
-        # 6. Find any invalid matches
-        invalid_visit_team_matches = matches.where(visit_team: visit_team).where.not(home_team: home_team)
-        invalid_home_team_matches = matches.where(home_team: home_team).where.not(visit_team: visit_team)
-        if invalid_visit_team_matches.present?
-          invalid_visit_team_matches.destroy_all
-        end
-        if invalid_home_team_matches.present?
-          invalid_home_team_matches.destroy_all
-        end
-
-        # 7. Try to find a valid matchup
+        # 6. Try to find a valid matchup
         valid_match = matches.find_by(visit_team: visit_team, home_team: home_team)
 
-
         game_time_container = match_doc.css('.game-status span')[1]
-        maybe_time = game_time_container.present? ? game_time_container.attr('data-date') : nil
-        match_time = maybe_time.present? ? Time.parse(maybe_time) : nil
+        maybe_date_raw = game_time_container.present? ? game_time_container.attr('data-date') : nil
+        maybe_match_time = maybe_date_raw.present? ? Time.parse(maybe_date_raw) : nil
 
         # 8. If there is one, update the match
         if valid_match.present?
-          if match_time.present?
-            if valid_match.start_time != match_time
-              valid_match.update start_time: match_time
+          if result.nil?
+            valid_match.update order: match_order, start_time: maybe_match_time
+          else
+            if result[:first_team][:score] == result[:second_team][:score]
+              valid_match.update order: match_order, 
+                start_time: maybe_match_time,
+                visit_team_score: result[:first_team][:score], 
+                home_team_score: result[:first_team][:score], 
+                tie: true
+            else
+              home_team_score = result[:first_team][:score]
+              visit_team_score = result[:second_team][:score]
+              if valid_match.home_team.short_name == result[:second_team][:abbr]
+                home_team_score = result[:second_team][:score]
+                visit_team_score = result[:first_team][:score]
+              end
+              valid_match.update order: match_order, 
+                start_time: maybe_match_time,
+                visit_team_score: visit_team_score,
+                home_team_score: home_team_score,
+                winning_team: home_team_score > visit_team_score ? valid_match.home_team : valid_match.visit_team
             end
           end
-          if valid_match.order != match_order
-            valid_match.update order: match_order
-          end
-          # 8.1. Generate valid picks for all memberships
+          # 8.1. Generate valid picks for all memberships. This step only when updating a current match
           valid_match.generate_picks
         else
           # 9. lastly, we create the valid matchup
-          new_match = matches.build home_team: home_team, visit_team: visit_team, start_time: match_time, order: match_order
+          new_match = matches.build home_team: home_team,
+            visit_team: visit_team,
+            start_time: maybe_match_time,
+            order: match_order
+          if result.present?
+            if result[:first_team][:score] == result[:second_team][:score]
+              new_match.visit_team_score = result[:first_team][:score]
+              new_match.home_team_score = result[:first_team][:score]
+              new_match.tie = true
+            else
+              home_team_score = result[:first_team][:score]
+              visit_team_score = result[:second_team][:score]
+              if new_match.home_team.short_name == result[:second_team][:abbr]
+                home_team_score = result[:second_team][:score]
+                visit_team_score = result[:first_team][:score]
+              end
+              new_match.visit_team_score = visit_team_score
+              new_match.home_team_score = home_team_score
+              new_match.winning_team = home_team_score > visit_team_score ? new_match.home_team : new_match.visit_team
+            end
+          end
+
           if new_match.valid?
             # 9.1. This will also generate picks
             new_match.save
             puts 'save match'
           else
+            
+            binding.pry
             puts new_match.errors.full_messages
           end
         end
@@ -130,76 +158,32 @@ class Week < ApplicationRecord
     end
   end
 
-  def update_match_results(doc)
-    base_url = 'https://www.espn.com'
-    tables = doc.css('div.ResponsiveTable')
-    match_order = 0
-    tables.each do |table|
-      # 1. If the row is showing bye week matches continue to next row
-      bye_text = table.css('.Table__THEAD .Table__TH').text
-      return if bye_text.downcase === 'bye'
+  # recieves: result_text = "PHI 32, ATL 6" | "" | nil
+  # returns nil or the hash object
+  def team_result(result_text)
+    return nil if result_text.nil?
+    return nil if result_text == ""
 
-      table_rows =  table.css('tbody.Table__TBODY tr')
-      table_rows.each do |row|
-        # 2. Get and parse match teams text
+    result_arr = result_text.split(',')
+    return nil if result_arr.length == 0
+    first_team_raw = result_arr[0].split(' ') # ['BUF', '17']
+    first_team_abbr = first_team_raw[0]
+    first_team_score = first_team_raw[1].to_i
 
-        # 3. Fetch result text
-        result_text_container = row.css('td.teams__col.Table__TD a')[0]
-        next if result_text_container.nil?
+    second_team_raw = result_arr[1].split(' ') # ['CAR', '10']
+    second_team_abbr = second_team_raw[0]
+    second_team_score = second_team_raw[1].to_i
 
-        result_text = result_text_container.text
-        next if result_text.nil?
-
-        result_arr = result_text.split(',')
-        next if result_arr.length == 0
-
-        first_team_raw = result_arr[0].split(' ') # ['BUF', '17']
-        first_team_abbr = first_team_raw[0]
-        first_team_score = first_team_raw[1].to_i
-
-        second_team_raw = result_arr[1].split(' ') # ['CAR', '10']
-        second_team_abbr = second_team_raw[0]
-        second_team_score = second_team_raw[1].to_i
-
-        # 4. Find teams
-        first_team = Team.find_by short_name: first_team_abbr
-        second_team = Team.find_by short_name: second_team_abbr
-
-        # 5. Guard clause if teams not found
-        next if first_team.nil? || second_team.nil?
-
-        # 7. Try to find a valid matchup
-        valid_matches = matches.where(visit_team: [first_team, second_team])
-
-        # 8. If there is one, update the match
-        if valid_matches.present? && valid_matches.count == 1
-          valid_match = valid_matches.first
-          if first_team_score == second_team_score
-            valid_match.update visit_team_score: second_team_score, home_team_score: second_team_score, tie: true
-          else
-            if valid_match.home_team.short_name == first_team_abbr
-              # first team is home team
-              home_team_score = first_team_score
-              visit_team_score = second_team_score
-              valid_match.update visit_team_score: visit_team_score,
-                home_team_score: home_team_score, 
-                winning_team: home_team_score > visit_team_score ? valid_match.home_team : valid_match.visit_team
-            else
-              # second team is home team
-              home_team_score = second_team_score
-              visit_team_score = first_team_score
-              valid_match.update visit_team_score: visit_team_score,
-                home_team_score: home_team_score, 
-                winning_team: home_team_score > visit_team_score ? valid_match.home_team : valid_match.visit_team
-            end
-          end
-        else
-          # 9. lastly, we create the valid matchup
-          puts 'no valid match found!'
-          next
-        end
-      end
-    end
+    return {
+      first_team: {
+        abbr: first_team_abbr,
+        score: first_team_score
+      },
+      second_team: {
+        abbr: second_team_abbr,
+        score: second_team_score
+      }
+    }
   end
 
   private

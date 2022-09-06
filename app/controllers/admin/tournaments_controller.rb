@@ -1,5 +1,5 @@
 class Admin::TournamentsController < Admin::BaseController
-  before_action :set_tournament, only: [:update, :show, :edit, :generate_tournament_matches, :update_tournament_matches, :destroy]
+  before_action :set_tournament, only: [:update, :show, :edit, :setup, :destroy]
 
   def index
     @tournaments = Tournament.all
@@ -14,17 +14,11 @@ class Admin::TournamentsController < Admin::BaseController
     @weeks = @tournament.weeks.order(number: :asc)
   end
 
-  def edit
-  end
+  def edit; end
 
-  def generate_tournament_matches
-    MatchSchedulesJob.perform_later(@tournament.id)
+  def setup
+    TournamentUpdaterJob.perform_later(@tournament.id)
     redirect_to admin_groups_path, notice: 'Generating tournament matches for the first time. This could take 5 minutes.'
-  end
-
-  def update_tournament_matches
-    MatchSchedulesJob.perform_later(@tournament.id)
-    redirect_to admin_groups_path, notice: 'Updating tournament matches. This could take 5 minutes.'
   end
 
   def create

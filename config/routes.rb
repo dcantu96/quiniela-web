@@ -48,22 +48,16 @@ Rails.application.routes.draw do
       end
     end
     resources :tournaments do
-      resources :weeks, only: [:new, :create] do 
-        member do
-          post :update_matches
-        end
-      end
+      resources :weeks, only: [:new, :create]
       member do
         get :weeks
-        post :update_week_matches
-        post :generate_week_matches
+        patch :setup
       end
     end
     resources :weeks do
       resources :matches, only: [:new, :create]
       member do
-        patch :update_match_results
-        patch :update_matches
+        patch :update_week
         patch :delete_matches
         patch :toggle_finished
       end
@@ -91,7 +85,7 @@ Rails.application.routes.draw do
   resources :picks
   resources :weeks
   resources :requests, only: [:create]
-  resources :memberships, expect: [:delete] do
+  resources :memberships, expect: [:delete, :update, :index] do
     member do
       get :table
       get :picks

@@ -7,8 +7,7 @@
   </div>
   <h1 class='text-xl text-indigo-900 mb-4'>Automated tasks</h1>
   <div class='flex items-center mb-4 gap-4'>
-    <%= button_to 'Update/Generate matches', [:update_matches, :admin, @week], form: { data: { turbo_confirm: 'This send a request to fetch match schedules in ESPN. Are you sure?' } }, class: 'btn btn--primary py-1' %>
-    <%= button_to 'Update match results', [:update_match_results, :admin, @week], form: { data: { turbo_confirm: 'This send a request to fetch match results in ESPN. Are you sure?' } }, class: 'btn btn--primary py-1' %>
+    <%= button_to "Actualizar semana #{@week.number}", [:update_week, :admin, @week], form: { data: { turbo_confirm: 'This send a request to fetch match schedules in ESPN. Are you sure?' } }, class: 'btn btn--primary py-1' %>
   </div>
   <div class="flex flex-col mb-4">
     <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">

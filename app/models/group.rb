@@ -15,12 +15,10 @@ class Group < ApplicationRecord
 
   def daily_update
     week = tournament.current_week
-    tournament.update_week_matches(week.number)
-    week.matches.each do |match|
-      match.update_picks
-    end
+    tournament.find_or_create_matches(week.number)
+    week.matches.each { |match| match.update_picks }
     update_member_positions
-    AdminMailer.update_success(week, self).deliver_now
+    AdminMailer.update_week_success(week).deliver_later
   end
 
 
@@ -46,15 +44,19 @@ class Group < ApplicationRecord
   end
 
   def update_member_positions
-    memberships.where(suspended: false)
-      .select('*, (select sum(points) from membership_weeks where membership_id = memberships.id) as new_total')
-      .order('new_total desc')
-      .each_with_index do |membership, index|
-        membership.update position: index + 1, total: membership.new_total
-      end
+    memberships_with_total.each_with_index do |membership, index|
+      membership.update position: index + 1, total: membership.new_total
+    end
   end
 
   private
+
+  def memberships_with_total
+    @memberships_with_total ||= memberships
+      .not_suspended
+      .select('*, (select sum(points) from membership_weeks where membership_id = memberships.id) as new_total')
+      .order('new_total desc')
+  end
 
   def generate_group_weeks
     tournament.weeks.each do |week|

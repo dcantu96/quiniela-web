@@ -5,7 +5,7 @@
     <div class="flex items-center">
       <div>
         <div class="text-sm font-medium text-gray-900 text-left">
-          <%= link_to member.account.username, picks_membership_path(member), class: "text-md text-indigo-900 flex items-center" %>
+          <%= link_to member.account.username, membership_path(member), class: "text-md text-indigo-900 flex items-center" %>
         </div>
         <div class="text-sm text-gray-500">
           <%= member.account.user.email %>

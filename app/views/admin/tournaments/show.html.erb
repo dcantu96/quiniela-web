@@ -1,16 +1,18 @@
 <div class='p-6 container mx-auto text-left'>
   <div class='mb-4'>
-    <div class='flex items-center mb-2'>
-      <h1 class='text-xl text-indigo-900 mr-4'><%= @tournament.name %></h1>
-      <%= link_to 'Nueva Semana', new_admin_tournament_week_path(@tournament), class: 'btn btn--secondary' %>
-    </div>
-      <% if @tournament.weeks.count != 0 %>
-        <p>Cantidad de semanas: <%= @tournament.weeks.count %></p>
-        <%= button_to 'Actualizar Semanas', update_week_matches_admin_tournament_path(@tournament), class: 'btn btn--primary mb-4 inline-block' %>
-      <% else %>
-        <p>No hay semanas. Crear semanas</p>
-        <%= button_to 'Crear Semanas', generate_week_matches_admin_tournament_path(@tournament), class: 'btn btn--primary mb-4' %>
+    <h1 class='text-xl text-indigo-900 mr-4'><%= @tournament.name %> - <%= @tournament.year %></h1>
+    <div class="gap-x-4 mb-2">
+      <h1 class='text-sm text-indigo-900'>Grupos</h1>
+      <% @tournament.groups.each do |group| %>
+        <span class="px-2 mb-1 whitespace-no-wrap inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-200 text-blue-800">
+          <%= group.name %> 
+        </span>
       <% end %>
+    </div>
+    <div class='flex items-center mb-2 gap-4'>
+      <%= link_to 'Nueva Semana', new_admin_tournament_week_path(@tournament), class: 'btn btn--secondary py-1' %>
+      <%= button_to 'Actualizar semanas', [:setup, :admin, @tournament], form: { data: { turbo_confirm: 'This send a request to fetch ALL WEEKS match schedules in ESPN. Are you sure?' } }, class: 'btn btn--primary py-1' %>
+    </div>
   </div>
   <div class="flex flex-col">
     <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -35,7 +37,7 @@
                 <tr>
                   <td class="px-6 py-4 whitespace-nowrap">
                     <div class="text-sm font-medium text-indigo-900">
-                      <%= link_to week.number, admin_week_path(week) %>
+                      <%= link_to "Semana #{week.number}", admin_week_path(week) %>
                     </div>
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap">
@@ -53,8 +55,7 @@
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap">
                     <div class="flex gap-4">
-                      <%= button_to 'Update match results', [:update_match_results, :admin, week], form: { data: { turbo_confirm: 'This send a request to fetch match results in ESPN. Are you sure?' } }, class: 'btn btn--primary py-1' %>
-                      <%= button_to 'Update/Generate matches', [:update_matches, :admin, week], form: { data: { turbo_confirm: 'This send a request to fetch match schedules in ESPN. Are you sure?' } }, class: 'btn btn--primary py-1' %>
+                      <%= button_to "Actualizar semana #{week.number}", [:update_week, :admin, week], form: { data: { turbo_confirm: 'This send a request to fetch match schedules in ESPN. Are you sure?' } }, class: 'btn btn--primary py-1' %>
                     </div>
                   </td>
                 </tr>

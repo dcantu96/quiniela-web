@@ -3,9 +3,13 @@ class AdminMailer < ActionMailer::Base
           from: 'notifications@qnflmty.com'
   layout 'mailer'
 
-  def update_success(week, group)
+  def update_week_success(week)
     @week = week
-    @group = group
-    mail(subject: "Update Complete | Week #{week.number}")
+    mail(subject: "Actualización completa | Semana #{week.number}")
+  end
+
+  def update_tournament_success(tournament)
+    @tournament = tournament
+    mail(subject: "Actualización de torneo exitosa!")
   end
 end

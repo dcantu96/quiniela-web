@@ -6,8 +6,7 @@ class MembershipsController < ApplicationController
   layout 'membership'
 
   def show
-    @untie_pick = @picks.joins(:match).where(matches: { untie: true }).first
-    @weeks = @membership.group.tournament.weeks
+    @membership_weeks = @membership.membership_weeks
   end
 
   def table

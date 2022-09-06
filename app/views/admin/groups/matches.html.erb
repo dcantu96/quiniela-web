@@ -23,12 +23,6 @@
   </div>
   <div class='mb-4 flex flex-wrap'>
     <%= link_to 'Reset Week Pick Points', reset_week_points_admin_group_path(group: @group, week_id: @week.id), method: :post, class: 'btn btn--danger py-1 m-1', data: { confirm: 'This will reset week picks', disable_with: 'loading...' } %>
-    <% if @week.matches.empty? %>
-      <%= link_to 'Update Matches', generate_week_matches_admin_week_path(id: @week, group_id: @group), method: :post, class: 'btn btn--primary py-1 m-1', data: { confirm: 'This will fetch all matches and create them', disable_with: 'loading...' } %>
-    <% end %>
-    <%= link_to '1 - Fetch All Match Results', fetch_match_results_admin_group_path(group: @group, week_id: @week.id), method: :post, class: 'btn btn--primary py-1 m-1', data: { confirm: 'This will fetch and assign all match results', disable_with: 'loading...' } %>
-    <%= link_to '2 - Update Picks and Week Points', update_picks_admin_group_path(group: @group, week_id: @week.id), method: :post, class: 'btn btn--primary py-1 m-1', data: { confirm: 'This will update all picks of current week', disable_with: 'loading...' } %>
-    <%= link_to '3 - Update Total Points', update_total_points_admin_group_path(group: @group, week_id: @week.id), method: :post, class: 'btn btn--primary py-1 m-1', data: { confirm: 'This will update all picks of current week', disable_with: 'loading...' } %>
   </div>
   <div class='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-8'>
     <%= render @matches %>

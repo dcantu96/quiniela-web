@@ -34,6 +34,10 @@
       </div>
       <div class="hidden md:flex mb-20 md:mb-0">
         <% if @membership.account.user == current_user %>
+          <%= link_to membership_path(@membership), class: "text-md text-indigo-900 flex items-center border-b-2 pb-3 px-2 #{current_page?(membership_path(@membership)) ? 'border-orange-400' : 'border-transparent hover:border-gray-400'}" do %>
+            <i class="fa-solid fa-chart-simple mr-3 fill-current"></i>
+            <span>Resumen</span>
+          <% end %>
           <%= link_to table_membership_path(@membership), class: "text-md text-indigo-900 flex items-center border-b-2 pb-3 px-2 #{current_page?(table_membership_path(@membership)) ? 'border-orange-400' : 'border-transparent hover:border-gray-400'}" do %>
             <i class="fa-solid fa-table mr-3 fill-current"></i>
             <span>Conso Week <%= @membership.group.tournament.current_week.number %></span>

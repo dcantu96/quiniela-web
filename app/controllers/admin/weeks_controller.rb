@@ -1,5 +1,5 @@
 class Admin::WeeksController < Admin::BaseController
-  before_action :set_week, only: [:update, :show, :edit, :update_matches, :update_match_results, :delete_matches, :toggle_finished]
+  before_action :set_week, only: [:update, :show, :edit, :update_week, :delete_matches, :toggle_finished]
 
   def index
     @weeks = Week.all
@@ -15,14 +15,9 @@ class Admin::WeeksController < Admin::BaseController
     @prev_week = @week.tournament.weeks.find_by(number: @week.number - 1)
   end
 
-  def update_match_results
-    WeekMatchResultsJob.perform_later(@week.id)
-    redirect_to admin_week_path(@week), notice: 'Updating week match results. This could take 2 minutes.'
-  end
-
-  def update_matches
-    WeekMatchesJob.perform_later(@week.id)
-    redirect_to admin_week_path(@week), notice: 'Updating week matches. This could take 2 minutes.'
+  def update_week
+    TournamentWeekUpdaterJob.perform_later(@week.id)
+    redirect_to admin_week_path(@week), notice: 'Updating tournament week matches. This could take 2 minutes.'
   end
 
   def delete_matches

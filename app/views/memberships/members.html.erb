@@ -1,31 +1,30 @@
-<div class='container mx-auto overflow-x-auto' data-controller='searchable'>
-  <input type="text" class='input my-2 mx-2' placeholder="Search usernames" data-action="keyup->searchable#search">
-  <div class='overflow-hidden'>
-    <div class='overflow-scroll h-screen w-full'>
-      <table>
-        <thead>
-          <tr>
-            <th class="p-3 sticky left-0 font-bold text-sm uppercase bg-gray-300 text-gray-700 table-cell">Username</th>
-            <th class="p-3 sticky left-0 font-bold text-sm uppercase bg-gray-300 text-gray-700 table-cell">Points</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @memberships.each_with_index do |membership, index| %>
-            <tr class="bg-white lg:hover:bg-gray-100 table-row flex-row flex-no-wrap mb-2 lg:mb-0" data-searchable-target='member' data-username="<%= membership.account.username %>">
-              <td class="p-3 text-center border-gray-300 table-cell hover:bg-gray-300 text-gray-800">
-                <div class='grid grid-cols-2'>
-                  <span><%= index + 1 %></span>
-                  <span><%= membership.account.username %></span>
-                </div>
-              </td>
-              <td class="p-3 text-center border-gray-300 table-cell hover:bg-gray-300 text-gray-800">
-                <span><%= membership.total %></span>
-              </td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
+<div class='container mx-auto p-4' data-controller='searchable'>
+  <input type="text" class='input mb-4 py-2 md:w-48' placeholder="Search usernames" data-action="keyup->searchable#search">
+
+  <div class="shadow overflow-x-scroll border-b border-gray-200 mb-4">
+    <div class="table w-full rounded min-w-full">
+      <div class="table-header-group bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+        <div class="table-cell px-3 py-3">#</div>
+        <div class="table-cell pr-6 py-3">Username</div>
+        <div class="table-cell px-6 py-3">Points</div>
+      </div>
+      <div class="table-row-group bg-white">
+        <% @memberships.each do |membership| %>
+          <div class="table-row text-left even:bg-white odd:bg-gray-100" data-searchable-target='member' data-username="<%= membership.account.username %>">
+            <div class="table-cell py-1 md:py-3 px-3 whitespace-nowrap">
+              <div class="text-sm font-medium text-gray-900"><%= membership.position %></div>
+            </div>
+            <div class="table-cell py-1 md:py-3 pr-6 whitespace-nowrap text-gray-900">
+              <%= membership.account.username %>
+            </div>
+            <div class="table-cell py-1 md:py-3 px-6 whitespace-nowrap">
+              <div class="text-sm font-medium text-gray-900"><%= membership.total %></div>
+            </div>
+          </div>
+        <% end %>
+      </div>
     </div>
   </div>
-</div>
 
+  </div>
+</div>

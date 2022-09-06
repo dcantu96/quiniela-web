@@ -9,9 +9,11 @@ class Match < ApplicationRecord
   before_save :update_picked_team, if: :will_save_change_to_home_team_id?
   before_save :update_picked_team, if: :will_save_change_to_visit_team_id?
   validates_uniqueness_of :week, scope: [:visit_team, :home_team]
-  validate :uniqueness_of_matches
+  validates_presence_of :week
+  validate :uniqueness_of_matches, :valid_match_winner
 
   def uniqueness_of_matches
+    return if week.nil?
     matches_to_check = week.matches.where.not(id: self.id)
     invalid_matches = matches_to_check.where(visit_team: visit_team)
       .or(matches_to_check.where(home_team: visit_team))
@@ -20,6 +22,13 @@ class Match < ApplicationRecord
     #  There cannot be another match in the same week with one of these teams
     if invalid_matches.present?
       errors.add(:match, "Invalid. Week #{week.number} already has a match with #{visit_team.name} and/or #{home_team.name}")
+    end
+  end
+
+  def valid_match_winner
+    return if winning_team.nil?
+    if winning_team.present? && winning_team != home_team && winning_team != visit_team
+      errors.add(:match, "Invalid winning team #{winning_team.name}. Team must be either #{visit_team.name} and/or #{home_team.name}")
     end
   end
 

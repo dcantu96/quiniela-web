@@ -7,6 +7,7 @@ class Membership < ApplicationRecord
   validates :account, uniqueness: { scope: :group }
   scope :active, -> { includes(:group).where(group: { finished: false }, suspended: false) }
   scope :suspended, -> { where(suspended: true) }
+  scope :not_suspended, -> { where(suspended: false) }
   scope :finished, -> { includes(:group).where group: { finished: true } }
 
   def current_week_picks
