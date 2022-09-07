@@ -7,7 +7,7 @@ class Request < ApplicationRecord
   validate :membership_not_present
 
   def membership_not_present
-    if account.memberships.where group: group
+    if account.memberships.where(group: group).present?
       errors.add(:request, "already exists")
     end
   end
