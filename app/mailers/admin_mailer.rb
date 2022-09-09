@@ -8,6 +8,11 @@ class AdminMailer < ActionMailer::Base
     mail(subject: "Actualización completa | Semana #{week.number}")
   end
 
+  def update_auto_week_success(week)
+    @week = week
+    mail(subject: "Actualización completa | Semana #{week.number}")
+  end
+
   def update_tournament_success(tournament)
     @tournament = tournament
     mail(subject: "Actualización de torneo exitosa!")
