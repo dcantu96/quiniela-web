@@ -37,14 +37,20 @@ class Tournament < ApplicationRecord
     require 'open-uri'
     iterable_week = default_week_number || 1
     loop do
-      doc = Nokogiri::HTML(URI.open("https://www.espn.com/nfl/schedule/_/week/#{iterable_week}/year/#{year}/seasontype/2", redirect: :true))
-      empty_text = doc.css('.EmptyTable-caption.Table__Title').text
-      tables = doc.css('div.ResponsiveTable')
-      break if empty_text.include? 'No Data Available'
-      break if tables.length == 0
+      content = URI.parse("https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?week=#{iterable_week}&limit=200").read
+      json = JSON.parse(content).deep_symbolize_keys
+
+      league = json[:leagues][0]
+      break if league.nil?
+      season = league[:season]
+      fetched_week = json[:week][:number]
+      break if season.nil? || fetched_week.nil?
+      break if season[:year] != year.strip.to_i || season[:type][:abbreviation] != 'reg'
+      matches = json[:events]
+      break if matches.nil? || matches.count == 0
 
       new_week = weeks.find_or_create_by number: iterable_week
-      new_week.generate_matches(doc)
+      new_week.generate_matches(matches)
       break if default_week_number.present?
 
       iterable_week = iterable_week + 1

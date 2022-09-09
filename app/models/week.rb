@@ -45,116 +45,62 @@ class Week < ApplicationRecord
     end
   end
 
-  def generate_matches(doc)
-    base_url = 'https://www.espn.com'
-    tables = doc.css('div.ResponsiveTable')
+  def generate_matches(matches_json)
     match_order = 0
-    tables.each do |table|
-      # 1. If the row is showing bye week matches continue to next row
-      bye_text = table.css('.Table__THEAD .Table__TH').text
-      return if bye_text.downcase === 'bye'
+    matches_json.each do |match_json|
+      match_time = Time.parse(match_json[:date])
+      home_team = nil
+      home_team_score = nil
+      visit_team = nil
+      visit_team_score = nil
+      winning_team = nil
 
-      table_rows =  table.css('tbody.Table__TBODY tr')
-      table_rows.each do |row|
-        # 2. Fetch result text
-        scheduled_match_container = row.css('.date__col a')
-        settled_match_container = row.css('.teams__col a')
-        away_team_abbrev = nil
-        home_team_abbrev = nil
-        match_url = nil
-        match_doc = nil
-        
-        result = team_result(settled_match_container.text)
+      competition = match_json[:competitions][0]
+      next if competition.nil?
+      competitors = competition[:competitors]
+      next if competitors.nil? || competitors.count != 2
 
-        if settled_match_container.text.present?
-          match_url = settled_match_container.first.attributes['href'].value
-          match_doc = Nokogiri::HTML(URI.open(base_url + match_url))
-        else
-          match_url = scheduled_match_container.first.attributes['href'].value
-          match_doc = Nokogiri::HTML(URI.open(base_url + match_url))
-        end
+      competitors.each do |competitor|
+        abbrev = competitor[:team][:abbreviation]
+        is_home_team = competitor[:homeAway] == 'home'
+        is_winner = competitor[:winner]
+        score = competitor[:score] # is string
 
-        # 3. Get and parse teams abbreviated names
-        away_team_abbrev = match_doc.css('.team.away span.abbrev').text
-        home_team_abbrev = match_doc.css('.team.home span.abbrev').text
-
-        # 4. Find teams
-        visit_team = Team.find_by short_name: away_team_abbrev
-        home_team = Team.find_by short_name: home_team_abbrev
-
-        # 5. Guard clause if teams not found
-        next if visit_team.nil? || home_team.nil?
-
-        # 6. Try to find a valid matchup
-        valid_match = matches.find_by(visit_team: visit_team, home_team: home_team)
-
-        game_time_container = match_doc.css('.game-status span')[1]
-        maybe_date_raw = game_time_container.present? ? game_time_container.attr('data-date') : nil
-        maybe_match_time = maybe_date_raw.present? ? Time.parse(maybe_date_raw) : nil
-
-        # 8. If there is one, update the match
-        if valid_match.present?
-          if result.nil?
-            valid_match.update order: match_order, start_time: maybe_match_time
+        team = Team.find_by(short_name: abbrev)
+        if team.present?
+          winning_team = team if is_winner
+          if is_home_team
+            home_team = team
+            home_team_score = score
           else
-            if result[:first_team][:score] == result[:second_team][:score]
-              valid_match.update order: match_order, 
-                start_time: maybe_match_time,
-                visit_team_score: result[:first_team][:score], 
-                home_team_score: result[:first_team][:score], 
-                tie: true
-            else
-              home_team_score = result[:first_team][:score]
-              visit_team_score = result[:second_team][:score]
-              if valid_match.home_team.short_name == result[:second_team][:abbr]
-                home_team_score = result[:second_team][:score]
-                visit_team_score = result[:first_team][:score]
-              end
-              valid_match.update order: match_order, 
-                start_time: maybe_match_time,
-                visit_team_score: visit_team_score,
-                home_team_score: home_team_score,
-                winning_team: home_team_score > visit_team_score ? valid_match.home_team : valid_match.visit_team
-            end
-          end
-          # 8.1. Generate valid picks for all memberships. This step only when updating a current match
-          valid_match.generate_picks
-        else
-          # 9. lastly, we create the valid matchup
-          new_match = matches.build home_team: home_team,
-            visit_team: visit_team,
-            start_time: maybe_match_time,
-            order: match_order
-          if result.present?
-            if result[:first_team][:score] == result[:second_team][:score]
-              new_match.visit_team_score = result[:first_team][:score]
-              new_match.home_team_score = result[:first_team][:score]
-              new_match.tie = true
-            else
-              home_team_score = result[:first_team][:score]
-              visit_team_score = result[:second_team][:score]
-              if new_match.home_team.short_name == result[:second_team][:abbr]
-                home_team_score = result[:second_team][:score]
-                visit_team_score = result[:first_team][:score]
-              end
-              new_match.visit_team_score = visit_team_score
-              new_match.home_team_score = home_team_score
-              new_match.winning_team = home_team_score > visit_team_score ? new_match.home_team : new_match.visit_team
-            end
-          end
-
-          if new_match.valid?
-            # 9.1. This will also generate picks
-            new_match.save
-            puts 'save match'
-          else
-            
-            binding.pry
-            puts new_match.errors.full_messages
+            visit_team = team
+            visit_team_score = score
           end
         end
-        match_order = match_order + 1
       end
+
+      # Match is all set by now. Now we need to update depending on if its a new match or not
+
+      # 6. Try to find a valid matchup
+      valid_match = matches.find_by(visit_team: visit_team, home_team: home_team)
+
+      if valid_match.present?
+        valid_match.update order: match_order, start_time: match_time, home_team_score: home_team_score, 
+          visit_team_score: visit_team_score, winning_team: winning_team
+        valid_match.generate_picks
+      else
+        new_match = matches.build order: match_order, start_time: match_time, home_team_score: home_team_score, 
+          visit_team_score: visit_team_score, winning_team: winning_team, home_team: home_team, visit_team: visit_team
+        if new_match.valid?
+          # 9.1. This will also generate picks
+          new_match.save
+          puts 'new match saved!'
+        else
+          puts new_match.errors.full_messages
+        end
+      end
+      
+      match_order = match_order + 1
     end
   end
 
