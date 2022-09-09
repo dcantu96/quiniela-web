@@ -8,6 +8,7 @@
         <div class="table-cell px-6 py-3">Name</div>
         <div class="table-cell px-6 py-3">Email</div>
         <div class="table-cell px-6 py-3">Phone</div>
+        <div class="table-cell px-6 py-3">Grupos</div>
         <div class="table-cell px-6 py-3">Fecha de Creación</div>
       </div>
       <div class="table-row-group bg-white">
@@ -26,6 +27,15 @@
               <div class="text-sm font-medium text-indigo-600">
                 <a href="tel:<%= account.user.phone %>"><%= account.user.phone %></a>
               </div>
+            </div>
+            <div class="table-cell py-1 md:py-3 px-6 whitespace-nowrap gap-x-4">
+              <% account.memberships.each do |membership| %>
+                <%= link_to "#{membership.group.name} - #{membership.group.tournament.year}", picks_admin_group_membership_path(membership.group, membership), class: 'px-2 mb-1 whitespace-no-wrap inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-200 text-blue-800' %>
+              <% end %>
+              
+              <% if account.memberships.count == 0 %>
+                <div class="text-sm font-medium text-gray-900">No tiene membresias</div>
+              <% end %>
             </div>
             <div class="table-cell py-1 md:py-3 px-6 whitespace-nowrap">
               <div class="text-sm font-medium text-gray-900"><%= account.created_at.to_formatted_s(:long) %></div>
