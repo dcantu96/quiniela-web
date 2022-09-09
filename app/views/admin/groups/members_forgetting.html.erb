@@ -2,7 +2,7 @@
   <h1 class='text-gray-500 text-lg p-4'>Members Forgetting Picks</h1>
   <div class='flex flex-col pb-2 px-4'>
     <p class='text-left mb-4'>Zona Horaria: <b><%= current_user.time_zone %></b></p>
-    <p class='text-left mb-4'><b><%= Time.zone.now %></b></p>
+    <p class='text-left mb-4'><b><%= Time.current %></b></p>
     <%= button_to 'Send reminder to all', notify_missing_picks_admin_group_path(id: @group.id), class: 'btn btn--primary py-1 m-1 inline-block mb-4', data: { confirm: 'This will send an email to each membership.', disable_with: 'loading...' } %>
   </div>
   <div class='overflow-hidden'>
@@ -26,7 +26,7 @@
             <th class="p-3 sticky left-0 font-bold text-sm uppercase bg-gray-300 text-gray-700 table-cell">Show Time</th>
             <% @matches.each do |match| %>
               <th class="p-3 font-bold text-sm uppercase text-gray-600 bg-gray-200 table-cell">
-                <span class="bg-blue-200 mt-1 px-2 py-1 text-xs uppercase block"><%= Time.zone.at(match.start_time).strftime("%a %H:%M") %></span>
+                <span class="bg-blue-200 mt-1 px-2 py-1 text-xs uppercase block"><%= match.start_time.present? ? match.start_time.strftime("%a %H:%M") : 'TBA' %></span>
               </th>
             <% end %>
           </tr>

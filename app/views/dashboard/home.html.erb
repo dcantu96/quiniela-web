@@ -38,7 +38,7 @@
               <span class="px-2 mb-1 whitespace-no-wrap inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-200 text-blue-800">
                 Solicitud pendiente
               </span>
-              <div class="text-sm text-gray-500 lg:mb-0 text-left">Fecha de Solicitud: <%= request.created_at.in_time_zone(current_user.time_zone).to_formatted_s(:short) %></div>
+              <div class="text-sm text-gray-500 lg:mb-0 text-left">Fecha de Solicitud: <%= request.created_at.to_formatted_s(:short) %></div>
             </div>
             <div class="lg:table-cell">
             </div>
