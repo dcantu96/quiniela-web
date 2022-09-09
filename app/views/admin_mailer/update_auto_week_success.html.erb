@@ -1,0 +1,33 @@
+<table class="email-table">
+  <tbody>
+    <tr class="header-row">
+      <td>
+        <h1>Hola,</h1>
+      </td>
+    </tr>
+
+    <tr class="body-row">
+      <td>
+        <p class='text-light text-indigo'>
+          Recibiste este correo porque se actualizó la <b>semana<%= @week.number %></b> automaticamente.
+        </p>
+      </td>
+    </tr>
+
+    <tr class="body-row">
+      <td>
+        <p class='text-light text-indigo'>
+          Los juegos de la semana <%= @week.number %> se fueron actualizados correctamente. Ademas, se actualizaron las posiciones de la tabla general asi como las posiciones de la tabla semanal <%= @week.number %> para todos los grupos de <b><%= @week.tournament.name %> - <%= @week.tournament.year %></b>
+        </p>
+      </td>
+    </tr>
+
+    <hr />
+
+    <tr class="footer-row">
+      <td class='text-indigo'>
+        <p>Este correo es automatizado. Fecha de actualización: <%= Time.current %></p>
+      </td>
+    </tr>
+  </tbody>
+</table>

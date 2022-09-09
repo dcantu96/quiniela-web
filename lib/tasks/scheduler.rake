@@ -5,6 +5,6 @@ task :update_current_week => :environment do
 
   week = tournament.current_week
   return if week.nil?
-  
-  TournamentWeekUpdaterJob.perform_later(tournament.current_week.id)
+
+  TournamentAutoWeekUpdaterJob.perform_later(tournament.current_week.id)
 end
