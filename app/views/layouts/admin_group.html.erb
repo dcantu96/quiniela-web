@@ -47,6 +47,10 @@
             <i class="fa-solid fa-list-check mr-3 fill-current"></i>
             <span>Solicitudes</span>
           <% end %>
+          <%= link_to users_admin_group_path(@group), class: "text-md text-indigo-900 flex items-center border-b-2 pb-3 px-2 #{current_page?(users_admin_group_path(@group)) ? 'border-orange-400' : 'border-transparent hover:border-gray-400'}" do %>
+            <i class="fa-solid fa-users mr-3 fill-current"></i>
+            <span>Usuarios</span>
+          <% end %>
           <%= link_to edit_admin_group_path(@group), class: "text-md text-indigo-900 flex items-center border-b-2 pb-3 px-2 #{current_page?(edit_admin_group_path(@group)) ? 'border-orange-400' : 'border-transparent hover:border-gray-400'}" do %>
             <i class="fa-solid fa-cog mr-3 fill-current"></i>
             <span>Configuración</span>

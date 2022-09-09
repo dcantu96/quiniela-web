@@ -32,6 +32,7 @@ Rails.application.routes.draw do
       end
       member do
         get :table
+        get :users
         get :members_forgetting
         get :danger_settings
         get :winners
