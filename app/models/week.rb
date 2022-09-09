@@ -3,6 +3,7 @@ class Week < ApplicationRecord
   has_many :group_weeks, dependent: :destroy
   has_many :membership_weeks, dependent: :destroy
   has_many :matches, dependent: :destroy
+  has_many :picks, through: :matches
   has_many :groups, through: :group_weeks
   after_create :generate_group_weeks
   validates :number, uniqueness: { scope: :tournament }
@@ -33,8 +34,8 @@ class Week < ApplicationRecord
   end
 
   def update_match_picks
-    matches.each do |match|
-      match.update_picks if match.winning_team.present?
+    matches.where.not(winning_team: nil).each do |match|
+      match.update_picks
     end
   end
 
