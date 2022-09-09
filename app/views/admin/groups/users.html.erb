@@ -8,9 +8,10 @@
         <div class="table-cell px-6 py-3">Email</div>
         <div class="table-cell px-6 py-3">Phone</div>
         <div class="table-cell px-6 py-3">Usernames</div>
+        <div class="table-cell px-6 py-3">Total a pagar</div>
+        <div class="table-cell px-6 py-3">Pagado</div>
       </div>
       <div class="table-row-group bg-white">
-
         <% @users.each do |user_with_memberships| %>
           <% user = user_with_memberships[0] %>
           <% memberships = user_with_memberships[1] %>
@@ -31,8 +32,35 @@
                 <%= link_to membership.account.username, picks_admin_group_membership_path(membership.group, membership), class: 'px-2 mb-1 whitespace-no-wrap inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-200 text-blue-800' %>
               <% end %>
             </div>
+            <div class="table-cell py-1 md:py-3 px-6 whitespace-nowrap">
+              <div class="text-sm font-medium text-gray-900">$<%= memberships.count * 110 %>.00</div>
+            </div>
+            <div class="table-cell py-1 md:py-3 px-6 whitespace-nowrap">
+              <div class="text-sm font-medium text-gray-900">$<%= Membership.where(id:memberships.pluck(:id)).all_paid.count * 110 %>.00</div>
+            </div>
           </div>
         <% end %>
+        <div class="table-row text-left even:bg-white odd:bg-gray-100">
+            <div class="table-cell py-1 md:py-3 px-6 whitespace-nowrap">
+              <div class="text-sm font-medium text-gray-900"></div>
+            </div>
+            <div class="table-cell py-1 md:py-3 px-6 whitespace-nowrap">
+              <div class="text-sm font-medium text-gray-900"></div>
+            </div>
+            <div class="table-cell py-1 md:py-3 px-6 whitespace-nowrap">
+              <div class="text-sm font-medium text-indigo-600">
+              </div>
+            </div>
+            <div class="table-cell py-1 md:py-3 px-6 whitespace-nowrap gap-x-4">
+              <div class="text-sm font-medium text-gray-900">Total</div>
+            </div>
+            <div class="table-cell py-1 md:py-3 px-6 whitespace-nowrap">
+              <div class="text-sm font-bold text-gray-900">$<%= @group.memberships.count * 110 %>.00</div>
+            </div>
+            <div class="table-cell py-1 md:py-3 px-6 whitespace-nowrap">
+              <div class="text-sm font-bold text-gray-900">$<%= Membership.where(id:@group.memberships.pluck(:id)).all_paid.count * 110 %>.00</div>
+            </div>
+          </div>
       </div>
     </div>
   </div>

@@ -8,6 +8,7 @@ class Membership < ApplicationRecord
   scope :active, -> { includes(:group).where(group: { finished: false }, suspended: false) }
   scope :suspended, -> { where(suspended: true) }
   scope :not_suspended, -> { where(suspended: false) }
+  scope :all_paid, -> { where(paid: true) }
   scope :finished, -> { includes(:group).where group: { finished: true } }
 
   def current_week_picks
