@@ -41,6 +41,7 @@ Rails.application.routes.draw do
         get :members
         get :matches
         get :autocomplete
+        get :inactive_accounts
         post :reset_week_points
         post :fetch_match_results
         post :update_picks
