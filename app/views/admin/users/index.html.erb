@@ -16,7 +16,7 @@
           <div class="bg-white rounded-xl lg:rounded-none lg:table-row shadow-lg grid grid-cols-2 text-left gap-y-4 py-4 mb-4 lb:mb-0">
             <div class="lg:table-cell px-6 lg:py-3 whitespace-nowrap">
               <div class="lg:hidden text-sm text-gray-500">Nombre Completo</div>
-              <div class="text-sm font-medium text-gray-900"><%= user.full_name %></div>
+              <%= link_to user.full_name, admin_user_path(user), class: "text-sm font-medium text-indigo-800" %>
             </div>
             <div class="lg:table-cell px-6 lg:py-3 whitespace-nowrap">
               <div class="lg:hidden text-sm text-gray-500">Telefono</div>

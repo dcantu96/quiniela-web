@@ -18,4 +18,8 @@ class User < ApplicationRecord
   def group_ids
     memberships.pluck(:group_id)
   end
+
+  def name_and_email
+    full_name + ' - ' + email
+  end
 end
