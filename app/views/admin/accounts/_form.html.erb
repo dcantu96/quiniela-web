@@ -5,6 +5,10 @@
       <%= f.label :username, class: 'label' %>
       <%= f.text_field :username, class: 'input', required: true %>
     </div>
+    <div> 
+      <%= f.label :user, class: 'label' %>
+      <%= f.collection_select :user_id, User.all.order(full_name: :asc), :id, :name_and_email, { required: true }, { class: 'input w-48' } %>
+    </div>
     <%= f.fields_for :requests do |request_form| %>
       <div data-controller='select'> 
         <%= request_form.label :group, class: 'label' %>

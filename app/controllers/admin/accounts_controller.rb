@@ -20,7 +20,7 @@ class Admin::AccountsController < Admin::BaseController
 
   def update
     if @account.update account_params
-      redirect_to root_path, notice: 'Account updated successfully'
+      redirect_to admin_user_path(@account.user), notice: 'Account updated successfully'
     else
       redirect_to edit_account_path(@account), alert: @account.errors.full_messages.first
     end
