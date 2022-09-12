@@ -12,7 +12,13 @@
         <% @user.accounts.each do |account| %>
           <div class="table-row text-left even:bg-white odd:bg-gray-100">
             <div class="table-cell py-1 md:py-3 px-6 whitespace-nowrap">
-              <div class="text-sm font-medium text-gray-900"><%= account.username %></div>
+              <div class='inline-flex flex-row flex-nowrap align-start gap-2'>
+                <p class="text-sm font-medium text-gray-900"><%= account.username %>
+                  <%= link_to edit_admin_account_path(account), class: 'text-indigo-800 ml-1' do %>
+                    <i class='fa-solid fa-xs fa-edit'></i>
+                  <% end %>
+                </p>
+              </div>
             </div>
             <div class="table-cell py-1 md:py-3 px-6 whitespace-nowrap gap-x-4">
               <% account.memberships.each do |membership| %>
@@ -27,14 +33,16 @@
               <div class="text-sm font-medium text-gray-900"><%= account.created_at.to_formatted_s(:long) %></div>
             </div>
             <div class="table-cell py-1 md:py-3 px-6 whitespace-nowrap">
+              <div class='flex flex-row flex-nowrap align-start gap-4'>
               <%= form_with model: [:admin, account] do |f| %>
-                <div class='flex align-start gap-4'>
+                <div class='flex flex-row flex-nowrap align-start gap-4'>
                   <div> 
                     <%= f.collection_select :user_id, User.all, :id, :name_and_email, { required: true }, { class: 'input w-48 py-1' } %>
                   </div>
                   <%= f.submit 'Transferir', form: { data: { turbo_confirm: 'This will transfer the account to the selected user. Are you sure?' } }, class: 'btn btn--primary py-1' %>
                 </div>
-              <% end %> 
+              <% end %>
+              </div>
             </div>
           </div>
         <% end %>
