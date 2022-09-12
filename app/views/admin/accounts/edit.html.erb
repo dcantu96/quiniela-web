@@ -1,11 +1,5 @@
-<div class='bg-white px-6 py-3 shadow-sm'>
-  <div class="flex mb-6 items-center">
-    <i class="fa-solid fa-users fa-2x p-1 mr-3 fill-current transition-all duration-300 text-indigo-900"></i>
-    <%= link_to 'Home', root_path, class: 'text-md text-indigo-900 mr-3 underline' %>
-    <div class="text-md text-indigo-900 mr-3">&#x2f;</div>
-    <h1 class='text-xl text-indigo-900 mr-3'>Edit <%= @account.username %></h1>
-  </div>
-</div>
-<div class='p-6 container mx-auto'>
+<div class='p-6 container mx-auto text-left'>
+  <h1>Edit</h1>
   <%= render 'form' %>
+  <%= button_to 'Delete', [:admin, @account], method: :delete, form: { data: { turbo_confirm: 'This will destroy the account and all its memberships. Are you sure?' } }, class: 'btn btn--danger py-1 mt-4' %>
 </div>

@@ -1,5 +1,5 @@
 class Admin::AccountsController < Admin::BaseController
-  before_action :set_account, only: [:update, :edit]
+  before_action :set_account, only: [:update, :edit, :destroy]
 
   def new
     @account = Account.new
@@ -23,6 +23,15 @@ class Admin::AccountsController < Admin::BaseController
       redirect_to root_path, notice: 'Account updated successfully'
     else
       redirect_to edit_account_path(@account), alert: @account.errors.full_messages.first
+    end
+  end
+
+  def destroy
+    @user = @account.user
+    if @account.destroy
+      redirect_to admin_user_path(@user), notice: 'Account destroyed successfully'
+    else
+      redirect_to edit_admin_account_path(@account), alert: @account.errors.full_messages.first
     end
   end
 
