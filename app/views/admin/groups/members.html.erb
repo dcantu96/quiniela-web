@@ -13,7 +13,9 @@
         <% @memberships.each do |membership| %>
           <div class="table-row text-left even:bg-white odd:bg-gray-100" data-searchable-target='member' data-username="<%= membership.account.username %>">
             <div class="table-cell py-1 md:py-3 px-3 whitespace-nowrap">
-              <div class="text-sm font-medium text-gray-900"><%= membership.position %></div>
+              <% if !membership.suspended %>
+                <div class="text-sm font-medium text-gray-900"><%= membership.position %></div>
+              <% end %>
             </div>
             <div class="table-cell py-1 md:py-3 pr-6 whitespace-nowrap">
               <%= link_to membership.account.username, picks_admin_group_membership_path(membership.group, membership), class: 'text-sm font-medium text-indigo-900' %>
@@ -23,6 +25,13 @@
               <% if membership.membership_weeks.count != membership.group.tournament.weeks.count %>
                 <i class="fa-solid fa-bug text-red-600"></i>
               <% end %>
+              
+              <% if membership.suspended %>
+                <span class="px-2 mb-1 whitespace-no-wrap inline-flex text-xs leading-5 font-semibold rounded-full bg-red-200 text-red-800">
+                  suspendido
+                </span>
+              <% end %>
+              
             </div>
             <div class="table-cell py-1 md:py-3 px-6 whitespace-nowrap">
               <div class="text-sm font-medium text-gray-900"><%= membership.total %></div>
