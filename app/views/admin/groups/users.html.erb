@@ -29,11 +29,20 @@
             </div>
             <div class="table-cell py-1 md:py-3 px-6 whitespace-nowrap gap-x-4">
               <% memberships.each do |membership| %>
-                <%= link_to membership.account.username, picks_admin_group_membership_path(membership.group, membership), class: 'px-2 mb-1 whitespace-no-wrap inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-200 text-blue-800' %>
+                <%= link_to membership.account.username, picks_admin_group_membership_path(membership.group, membership), class: "px-2 mb-1 whitespace-no-wrap inline-flex text-xs leading-5 font-semibold rounded-full #{membership.suspended ? 'bg-red-200 text-red-800' : 'bg-blue-200 text-blue-800'}" %>
               <% end %>
             </div>
             <div class="table-cell py-1 md:py-3 px-6 whitespace-nowrap">
-              <div class="text-sm font-medium text-gray-900">$<%= memberships.count * 110 %>.00</div>
+              <div class="text-sm font-medium text-gray-900">
+                <% suspended = memberships.pluck(:suspended).select { |m| m == true } %>
+                <% if suspended.count > 0 %>
+                  <span class='line-through'>$<%= memberships.count * 110 %>.00</span> <span>$<%= (memberships.count - suspended.count) * 110 %>.00</span>
+                <% else %>
+                  $<%= memberships.count * 110 %>.00
+                <% end %>
+                
+                
+              </div>
             </div>
             <div class="table-cell py-1 md:py-3 px-6 whitespace-nowrap">
               <div class="text-sm font-medium text-gray-900">$<%= Membership.where(id:memberships.pluck(:id)).all_paid.count * 110 %>.00</div>
@@ -55,7 +64,7 @@
               <div class="text-sm font-medium text-gray-900">Total</div>
             </div>
             <div class="table-cell py-1 md:py-3 px-6 whitespace-nowrap">
-              <div class="text-sm font-bold text-gray-900">$<%= @group.memberships.count * 110 %>.00</div>
+              <div class="text-sm font-bold text-gray-900">$<%= @group.memberships.not_suspended.count * 110 %>.00</div>
             </div>
             <div class="table-cell py-1 md:py-3 px-6 whitespace-nowrap">
               <div class="text-sm font-bold text-gray-900">$<%= Membership.where(id:@group.memberships.pluck(:id)).all_paid.count * 110 %>.00</div>
