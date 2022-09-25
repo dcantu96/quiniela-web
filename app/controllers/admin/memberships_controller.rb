@@ -5,7 +5,7 @@ class Admin::MembershipsController < Admin::BaseController
 
   def picks
     @untie_pick = @picks.joins(:match).where(matches: { untie: true }).first
-    @weeks = @membership.group.tournament.weeks
+    @weeks = @membership.group.tournament.weeks.order(number: :asc)
   end
   
   def settings

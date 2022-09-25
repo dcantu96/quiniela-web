@@ -13,7 +13,7 @@ class MembershipsController < ApplicationController
 
   def table
     @tournament = @membership.group.tournament
-    @weeks = @tournament.weeks
+    @weeks = @tournament.weeks.order(number: :asc)
     @week = filtering_params[:week_id] ? @tournament.weeks.find_by(id: filtering_params[:week_id]) : @tournament.current_week
     @matches = @week.matches.includes(:home_team, :visit_team, :winning_team).order(order: :asc)
     @q = @membership.group.memberships.ransack(params[:q])
@@ -32,7 +32,7 @@ class MembershipsController < ApplicationController
 
   def picks
     @untie_pick = @picks.nil? ? nil : @picks.joins(:match).where(matches: { untie: true }).first
-    @weeks = @membership.group.tournament.weeks
+    @weeks = @membership.group.tournament.weeks.order(number: :asc)
     @membership_week = @membership.membership_weeks.find_by(week: @week)
     @points = @membership_week.present? ? @membership_week.points : nil
   end
@@ -40,7 +40,7 @@ class MembershipsController < ApplicationController
   def public_picks
     @picks = @picks.viewable
     @untie_pick = @picks.joins(:match).where(matches: { untie: true }).first
-    @weeks = @membership.group.tournament.weeks
+    @weeks = @membership.group.tournament.weeks.order(number: :asc)
   end
 
   def members

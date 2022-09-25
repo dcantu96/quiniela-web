@@ -28,7 +28,7 @@ class Admin::GroupsController < Admin::BaseController
   end
 
   def matches
-    @weeks = @group.tournament.weeks
+    @weeks = @group.tournament.weeks.order(number: :asc)
     if filtering_params.present?
       @week = @group.tournament.weeks.find_by(id: filtering_params[:week_id])
       @matches = @week.matches.includes(:home_team, :visit_team, :winning_team).order(order: :asc)
@@ -45,7 +45,7 @@ class Admin::GroupsController < Admin::BaseController
 
   def table
     tournament = @group.tournament
-    @weeks = tournament.weeks
+    @weeks = tournament.weeks.order(number: :asc)
     week = filtering_params[:week_id] ? tournament.weeks.find_by(id: filtering_params[:week_id]) : tournament.current_week
     @pagy, @records = pagy(@group.membership_weeks_of(week), items: 20)
     @matches = week.matches.includes(:home_team, :visit_team, :winning_team).order(order: :asc)
