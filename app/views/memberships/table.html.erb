@@ -1,9 +1,9 @@
-<div class='overflow-x-auto' data-controller='searchable'>
-  <div class='hidden md:flex flex-col pb-2 px-4'>
+<div class='text-left px-4'>
+  <div class='hidden md:flex flex-col pb-2'>
     <h3 class="text-sm uppercase text-gray-600 pb-2">User Time Zone <b><%= current_user.time_zone %></b><span class='ml-2 font-bold underline'><%= link_to 'Edit', edit_user_registration_path %></span></h3>
     <h4 class="text-sm uppercase text-gray-600"><%= Time.current.to_formatted_s(:long) %></h4>
   </div>
-  <div data-controller="toggle" class='mb-4 px-4'>
+  <div data-controller="toggle" class='mb-4'>
     <div class='flex items-center mb-2'>
       <button class="btn btn--primary"
         data-action="toggle#toggle"
@@ -14,56 +14,15 @@
     </div>
     <%= render 'filters' %>
   </div>
-  <div class='w-full lg:w-2/3 xl:w-1/2 px-4 pb-4' data-controller='search' data-search-url="autocomplete">
-    <div class='relative'>
-      <input type="text" class='input' placeholder="Search anything" data-action="keyup->search#search">
-      <div class='absolute z-70 mt-1 mr-4 bg-white w-full overflow-hidden rounded-lg shadow-lg' data-search-target='results'>
-      </div>
-    </div>
-  </div>
-  <div class='overflow-hidden'>
-    <div class='overflow-scroll w-full'>
-      <table>
-        <thead>
-          <tr>
-            <th class="sticky z-40 left-0 top-0 p-1 font-bold text-sm uppercase bg-gray-300 text-gray-700 table-cell">Matches</th>
-            <% @matches.each do |match| %>
-              <th class="sticky z-30 top-0 p-1 font-bold text-sm uppercase text-gray-600 table-cell bg-gray-200">
-                <div class="w-32">
-                  <%= match.visit_team.short_name %>
-                  <% if match.started? %>
-                    <span class='text-black font-extrabold'><%= match.picks.where(membership_week: @membership.group.membership_weeks, picked_team: match.visit_team).count %></span>
-                  <% end %>
-                  @ <%= match.home_team.short_name %>
-                  <% if match.started? %>
-                    <span class='text-black font-extrabold'><%= match.picks.where(membership_week: @membership.group.membership_weeks, picked_team: match.home_team).count %></span>
-                  <% end %>
-                  <% if match.untie %>
-                    <span class="bg-black m-1 px-1 py-1 text-xs text-white uppercase">MNF</span>
-                  <% end %>
-                  <% if match.premium %>
-                    <span class="bg-green-600 m-1 px-1 py-1 text-xs text-white uppercase">PREM</span>
-                  <% end %>
-                </div>
-              </th>
-            <% end %>
-          </tr>
-          <tr>
-            <th class="p-1 sticky left-0 bg-gray-300 table-cell"></th>
-            <% @matches.each do |match| %>
-              <th class="p-1 font-bold text-sm uppercase text-gray-600 bg-gray-200 table-cell">
-                <span class="bg-blue-200 mt-1 px-2 py-1 text-xs uppercase block"><%= match.start_time.present? ? match.start_time.strftime("%a %H:%M") : 'TBA' %></span>
-              </th>
-            <% end %>
-          </tr>
-        </thead>
-        <tbody>
-          <%= render 'members' %>
-        </tbody>
-      </table>
-    </div>
-  </div>
-  <div class='py-3'>
-    <%== pagy_nav(@pagy) %>
-  </div>
+
+  <%= search_form_for @q, url: table_membership_path(@membership), data: { controller: 'debounce',
+                                                    debounce_target: 'form',
+                                                    turbo_frame: 'search',
+                                                    turbo_action: 'advance' }, class: 'mb-4' do |f| %>
+    <%= f.search_field :account_username_or_account_user_full_name_or_account_user_email_cont, placeholder: "Buscar usuarios", autocomplete: "off", class: "border border-blue-500 rounded p-2", data: { action: "input->debounce#search" } %>
+    <%= f.submit 'Search', class: 'hidden' %>
+  <% end %>
 </div>
+
+<%= render partial: 'membership_weeks_table', locals: { memberships_weeks: @memberships_weeks, matches: @matches, pagy: @pagy } %>
+

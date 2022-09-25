@@ -89,6 +89,7 @@ Rails.application.routes.draw do
   resources :requests, only: [:create]
   resources :memberships, expect: [:delete, :update, :index] do
     member do
+      get :search
       get :table
       get :picks
       get :public_picks

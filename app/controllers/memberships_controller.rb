@@ -12,11 +12,22 @@ class MembershipsController < ApplicationController
   end
 
   def table
-    tournament = @membership.group.tournament
-    @weeks = tournament.weeks
-    week = filtering_params[:week_id] ? tournament.weeks.find_by(id: filtering_params[:week_id]) : tournament.current_week
-    @pagy, @records = pagy(@membership.group.membership_weeks_of(week), items: 20)
-    @matches = week.matches.includes(:home_team, :visit_team, :winning_team).order(order: :asc)
+    @tournament = @membership.group.tournament
+    @weeks = @tournament.weeks
+    @week = filtering_params[:week_id] ? @tournament.weeks.find_by(id: filtering_params[:week_id]) : @tournament.current_week
+    @matches = @week.matches.includes(:home_team, :visit_team, :winning_team).order(order: :asc)
+    @q = @membership.group.memberships.ransack(params[:q])
+    @memberships = @q.result(distinct: true).limit(20)
+
+    @memberships_weeks_ransack = MembershipWeek.where(membership: @memberships, week: @week).joins(:membership)
+      .order('membership_weeks.points DESC, memberships.position ASC')
+      .includes(picks: [:picked_team, match: [:winning_team, :home_team, :visit_team]], membership: [:account, :group])
+
+    @pagy, @memberships_weeks = pagy(@memberships_weeks_ransack, items: 20)
+    
+    if turbo_frame_request?
+      render partial: 'membership_weeks_table', locals: { memberships_weeks: @memberships_weeks, matches: @matches, pagy: @pagy }
+    end
   end
 
   def picks
