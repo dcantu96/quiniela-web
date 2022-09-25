@@ -17,7 +17,7 @@ class MembershipsController < ApplicationController
     @week = filtering_params[:week_id] ? @tournament.weeks.find_by(id: filtering_params[:week_id]) : @tournament.current_week
     @matches = @week.matches.includes(:home_team, :visit_team, :winning_team).order(order: :asc)
     @q = @membership.group.memberships.ransack(params[:q])
-    @memberships = @q.result(distinct: true).limit(20)
+    @memberships = @q.result(distinct: true)
 
     @memberships_weeks_ransack = MembershipWeek.where(membership: @memberships, week: @week).joins(:membership)
       .order('membership_weeks.points DESC, memberships.position ASC')
