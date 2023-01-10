@@ -47,6 +47,7 @@ Rails.application.routes.draw do
         post :update_picks
         post :update_total_points
         post :notify_missing_picks
+        patch :update_memberships
       end
     end
     resources :tournaments do

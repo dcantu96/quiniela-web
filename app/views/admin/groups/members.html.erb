@@ -25,6 +25,9 @@
               <% if membership.membership_weeks.count != membership.group.tournament.weeks.count %>
                 <i class="fa-solid fa-bug text-red-600"></i>
               <% end %>
+              <% if membership.forgot_picks %>
+                <i class="fa-solid fa-exclamation-circle text-red-600"></i>
+              <% end %>
               
               <% if membership.suspended %>
                 <span class="px-2 mb-1 whitespace-no-wrap inline-flex text-xs leading-5 font-semibold rounded-full bg-red-200 text-red-800">

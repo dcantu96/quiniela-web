@@ -1,7 +1,7 @@
 class Admin::GroupsController < Admin::BaseController
   before_action :set_group, only: [:edit, :update, :matches, :requests, :winners, :members, :danger_settings, :destroy,
     :table, :members_forgetting, :autocomplete, :reset_week_points, :update_picks, :fetch_match_results, 
-    :update_total_points, :settings, :notify_missing_picks, :users, :inactive_accounts]
+    :update_total_points, :settings, :notify_missing_picks, :users, :inactive_accounts, :update_memberships]
   before_action :set_week, only: [:reset_week_points, :update_picks, :fetch_match_results, :update_total_points]
   layout 'admin_group', except: [:index, :new]
 
@@ -151,6 +151,11 @@ class Admin::GroupsController < Admin::BaseController
     else
       redirect_back fallback_location: matches_admin_group_path(@group), alert: 'Error updating picks'
     end
+  end
+
+  def update_memberships
+    MembershipUpdaterJob.perform_later(@group.id)
+    redirect_to settings_admin_group_path(@group), notice: 'Updating Memberships. This could take 2 minutes.'
   end
 
   def autocomplete

@@ -17,4 +17,9 @@ class AdminMailer < ActionMailer::Base
     @tournament = tournament
     mail(subject: "Actualización de torneo exitosa!")
   end
+
+  def update_memberships_success(group)
+    @group = group
+    mail(subject: "Actualización de membresías exitosa!")
+  end
 end
