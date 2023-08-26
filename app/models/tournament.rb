@@ -39,13 +39,12 @@ class Tournament < ApplicationRecord
     loop do
       content = URI.parse("https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?week=#{iterable_week}&limit=200").read
       json = JSON.parse(content).deep_symbolize_keys
-
-      league = json[:leagues][0]
-      break if league.nil?
-      season = league[:season]
+      season = json[:season]
+      break if season.nil?
       fetched_week = json[:week][:number]
-      break if season.nil? || fetched_week.nil?
-      break if season[:year] != year.strip.to_i || season[:type][:abbreviation] != 'reg'
+      break if fetched_week.nil?
+      break if season[:year] != year.strip.to_i
+      break if season[:type] != 2 # Type "2" is Regular Season
       matches = json[:events]
       break if matches.nil? || matches.count == 0
 
