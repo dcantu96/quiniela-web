@@ -14,7 +14,4 @@ class DashboardController < ApplicationController
     @memberships = current_user.memberships
     @empty_groups = Group.includes(:membership).where.not(memberships: @memberships)
   end
-
-  def rules
-  end
 end
