@@ -7,6 +7,7 @@
     <span class="text-xl font-bold block px-4 pt-2 pb-1 text-gray-800"><%= current_user.full_name %></span>
     <span class="block px-4 pb-2 text-gray-800"><%= current_user.email %></span>
     <%= link_to 'Gestiona tu cuenta', edit_user_registration_path, class: 'block px-4 pb-2 text-blue-700 hover:underline' %>
+    <%= link_to 'Grupo de WhatsApp', 'https://chat.whatsapp.com/LO0q9ldhuD6EYJVGLMgSOg', class: 'block px-4 pb-2 text-blue-700 hover:underline' if current_user.has_at_least_one_membership? %>
     <%= link_to 'Reglas', rules_path, class: 'block px-4 pb-2 text-blue-700 hover:underline' %>
     <%= link_to 'Acceso Admins', admin_groups_path, class: 'block px-4 pb-2 text-blue-700 hover:underline' if current_user.admin? %>
     <hr />

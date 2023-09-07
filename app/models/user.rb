@@ -22,4 +22,8 @@ class User < ApplicationRecord
   def name_and_email
     full_name + ' - ' + email
   end
+
+  def has_at_least_one_membership?
+    memberships.present?
+  end
 end
