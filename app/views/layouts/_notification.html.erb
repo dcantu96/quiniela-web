@@ -1,6 +1,6 @@
 <% color = flash_type == 'notice' ? 'bg-green-100 border-l-green-700 text-green-700' : 'bg-red-100 border-l-red-700 text-red-700' %>
-<div class="px-4 py-2 w-80 flex justify-between align-top rounded <%= color %> border-l-4" role="alert" data-controller="flash">
-  <p class="text-left flex-1"><span class="font-bold"><%= flash_type.capitalize %></span> - <%= message %></p>
+<div class="px-4 py-2 w-80 flex justify-between items-center rounded <%= color %> border-l-4" role="alert" data-controller="flash">
+  <p class="text-left flex-1 self-center"><span class="font-bold"><%= flash_type.capitalize %></span> - <%= message %></p>
   <button type="button" data-action="flash#dismiss" class="cursor-pointer block px-2 py-0.5 rounded h-fit <%= flash_type == 'notice' ? 'bg-green-300' : 'bg-red-300' %>">
     <i class="fa-solid fa-times fa-sm font-bold"></i>
   </button>
