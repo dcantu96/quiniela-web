@@ -133,6 +133,10 @@ class Week < ApplicationRecord
     }
   end
 
+  def self.ransackable_attributes(auth_object = nil)
+    ["created_at", "finished", "id", "number", "tournament_id", "updated_at"]
+  end
+
   private
 
   def generate_group_weeks
