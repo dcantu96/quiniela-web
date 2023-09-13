@@ -1,0 +1,146 @@
+<div class='p-6 container mx-auto text-left'>
+  <% if @accounts.empty? %>
+    <h1 class='text-xl text-indigo-900 mb-4 font-bold'>Genera tu primer username</h1>
+    <p class='mb-4'>En el formulario debajo puedes crear otro "username" y gestionarlo en esta misma sesión con tu correo <b><%= current_user.email %></b></p>
+    <%= form_with model: Account.new do |f| %>
+      <div class='w-full'>
+        <%= f.hidden_field :user_id, value: current_user.id %>
+        <div class='grid grid-cols-1 gap-6 mb-8'>
+          <div>
+            <%= f.label :username, class: 'label' %>
+            <%= f.text_field :username, class: 'input', required: true %>
+          </div>
+          <ul>
+            <li class="text-left">Asegurate de que tu "username" sea de <b>3 a 12 caracteres</b> de largo</li>
+            <li class="text-left">Solo letras y/o numeros son permitidos</li>
+          </ul>
+        </div>
+        <%= f.submit 'Crear',  class: 'btn btn--primary' %>
+      </div>
+    <% end %>
+  <% else %>
+    <h2 class='text-xl mb-4 text-left text-bold'>Unirme a la quiniela</h2>
+    <p class='text-lg mb-4 text-left'>Debajo aparecen los <b>usernames</b> de la cuenta <b><%= current_user.email %></b> que pueden solicitar acceso. <%= link_to 'Crear nuevo username', new_account_path, class: 'inline text-blue-700 hover:underline' %></p>
+    <div class="lg:shadow lg:overflow-hidden lg:border-b lg:border-gray-200 sm:rounded-lg mb-4">
+      <div class="lg:table w-full rounded min-w-full divide-y divide-gray-200">
+        <div class="hidden lg:table-header-group bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+          <div class="lg:table-cell px-6 py-3">Username</div>
+          <div class="lg:table-cell px-6 py-3">Grupo</div>
+          <div class="lg:table-cell px-6 py-3">Acciones</div>
+        </div>
+        <div class="grid grid-cols-1 gap-8 lg:table-row-group lg:bg-white divide-y divide-gray-200">
+          <% @accounts.each do |account| %>
+            <% grupos = Group.where.not(id: account.group_ids).where(finished: false, private: false) %>
+            <% grupos.each do |group| %>
+              <div class="bg-white rounded-xl lg:rounded-none lg:table-row shadow-lg grid grid-cols-3">
+                <div class="lg:table-cell px-6 py-6 pb-1 lg:py-3 lg:px-6 whitespace-nowrap text-left">
+                  <div class="lg:hidden text-sm text-gray-500 text-left">Username</div>
+                  <div class="text-sm font-medium text-gray-900 text-left"><%= account.username %></div>
+                </div>
+                <div class="lg:table-cell px-6 py-6 pb-2 lg:py-3 lg:px-6 text-left col-span-2">
+                  <div class="lg:hidden text-sm text-gray-500 text-left">Grupo</div>
+                  <div class="text-sm font-medium text-gray-900 text-left">
+                    <%= group.name %>
+                  </div>
+                  <div class="text-sm text-gray-500"><%= group.tournament.name %> - <%= group.tournament.year %></div>
+                </div>
+                <div class="lg:table-cell px-6 py-6 pb-3 lg:py-3 lg:px-6 text-left col-span-3">
+                  <div class="lg:hidden text-sm text-gray-500 text-left">Acciones</div>
+                  <% request = group.requests.find_by(id: account.request_ids)%>
+                  <% if request.present? %>
+                    <% if request.denied? %>
+                      <span class="px-2 mb-1 whitespace-no-wrap inline-flex text-xs leading-5 font-semibold rounded-full bg-red-200 text-red-800">
+                        Solicitud negada
+                      </span>                      
+                    <% else %>
+                      <span class="px-2 mb-1 whitespace-no-wrap inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-200 text-blue-800">
+                        Solicitud pendiente
+                      </span>
+                      <div class="text-sm text-gray-500 mb-4 lg:mb-0">Fecha de Solicitud: <%= request.created_at.to_formatted_s(:short) %></div>
+                    <% end %>
+                  <% else %>
+                    <%= form_for Request.new do |f| %>
+                      <%= f.hidden_field :group_id, value: group.id %>
+                      <%= f.hidden_field :account_id, value: account.id %>
+                      <%= f.submit 'Solicitar acceso', class: 'btn btn--primary py-1' %>
+                    <% end %>
+                  <% end %>
+                </div>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <% if @denied_requests.present? %>
+      <h2 class='text-xl mb-4 text-left text-bold'>Solicitudes rechazadas</h2>
+      <div class="lg:shadow lg:overflow-hidden lg:border-b lg:border-gray-200 sm:rounded-lg mb-4">
+        <div class="lg:table w-full rounded min-w-full divide-y divide-gray-200">
+          <div class="hidden lg:table-header-group bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <div class="lg:table-cell px-6 py-3">Username</div>
+            <div class="lg:table-cell px-6 py-3">Grupo</div>
+            <div class="lg:table-cell px-6 py-3">Fecha</div>
+          </div>
+          <div class="grid grid-cols-1 gap-8 lg:table-row-group lg:bg-white divide-y divide-gray-200">
+            <% @denied_requests.each do |request| %>
+              <div class="lg:table-cell px-6 py-6 pb-1 lg:py-3 lg:px-6 whitespace-nowrap text-left">
+                <div class="lg:hidden text-sm text-gray-500 text-left">Username</div>
+                <div class="text-sm font-medium text-gray-900 text-left"><%= request.account.username %></div>
+              </div>
+              <div class="lg:table-cell px-6 py-6 pb-1 lg:py-3 lg:px-6 whitespace-nowrap text-left">
+                <div class="lg:hidden text-sm text-gray-500 text-left">Grupo</div>
+                <div class="text-sm font-medium text-gray-900 text-left"><%= request.group.name %> - <%= request.group.tournament.year %></div>
+              </div>
+              <div class="lg:table-cell px-6 py-6 pb-1 lg:py-3 lg:px-6 whitespace-nowrap text-left">
+                <div class="lg:hidden text-sm text-gray-500 text-left">Fecha</div>
+                <div class="text-sm font-medium text-gray-900 text-left"><%= request.updated_at %></div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+
+    <h2 class='text-xl mb-4 text-left text-bold'>Usernames activos</h2>
+    <% @active_memberships.group_by(&:group).each do |group, memberships| %>
+      <div class="relative">
+        <div class="bg-gray-200 text-left text-xs text-gray-800 uppercase flex items-center shadow-lg <%= 'top-0 sticky' if @active_memberships.count > 1 %> rounded-xl mb-4 flex-wrap py-3 gap-4">
+          <div class="px-6 font-bold"><%= group.name %> - <%= group.tournament.year  %></div>
+          <div class="px-6 font-bold">Semana - <%= group.tournament.current_week.number %></div>
+          <div class="px-6 flex-1 flex gap-2 w-48">
+            <%= link_to table_membership_path(memberships.first), class: "btn btn--primary py-1" do %>
+              <i class="fa-solid fa-table mr-2 fill-current"></i>
+              <span>Conso</span>
+            <% end %>
+            <%= link_to winners_membership_path(memberships.first), class: "btn btn--primary py-1" do %>
+              <i class="fa-solid fa-star mr-2 fill-current"></i>
+              <span>Wins</span>
+            <% end %>
+            <%= link_to members_membership_path(memberships.first), class: "btn btn--primary py-1" do %>
+              <i class="fa-solid fa-table mr-2 fill-current"></i>
+              <span>Tabla</span>
+            <% end %>
+          </div>
+        </div>
+        <div class="lg:shadow lg:overflow-hidden lg:border-b lg:border-gray-200 sm:rounded-lg mb-4">
+          <div class="lg:table w-full rounded min-w-full divide-y divide-gray-200">
+            <div class="hidden lg:table-header-group bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <div class="lg:table-cell px-6 py-3">Usuario</div>
+              <div class="lg:table-cell px-6 py-3">Puntos</div>
+              <div class="lg:table-cell px-6 py-3">Posición</div>
+              <div class="lg:table-cell px-6 py-3">Acciones</div>
+            </div>
+            <div class="grid grid-cols-1 gap-8 lg:table-row-group lg:bg-white divide-y divide-gray-200">
+              <% memberships.each do |member| %>
+                <%= render partial: '/memberships/home_membership', locals: { member: member } %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+  <br>
+  <%= link_to 'Reglas', rules_path, class: "underline text-indigo-900 text-lg mb-4" %>
+</div>

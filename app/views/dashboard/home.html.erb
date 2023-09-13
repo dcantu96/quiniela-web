@@ -20,47 +20,6 @@
     <% end %>
   <% end %>
 
-  <% if @active_memberships.present? %>
-    <h2 class='text-lg mb-4 text-left text-bold'>Mis cuentas activas</h2>
-    <% @active_memberships.group_by(&:group).each do |group, memberships| %>
-      <div class="relative">
-        <div class="bg-gray-200 text-left text-xs text-gray-800 uppercase flex items-center shadow-lg <%= 'top-0 sticky' if @active_memberships.count > 1 %> rounded-xl mb-4 flex-wrap py-3 gap-4">
-          <div class="px-6 font-bold"><%= group.name %> - <%= group.tournament.year  %></div>
-          <div class="px-6 font-bold">Semana - <%= group.tournament.current_week.number %></div>
-          <div class="px-6 flex-1 flex gap-2 w-48">
-            <%= link_to table_membership_path(memberships.first), class: "btn btn--primary py-1" do %>
-              <i class="fa-solid fa-table mr-2 fill-current"></i>
-              <span>Conso</span>
-            <% end %>
-            <%= link_to winners_membership_path(memberships.first), class: "btn btn--primary py-1" do %>
-              <i class="fa-solid fa-star mr-2 fill-current"></i>
-              <span>Wins</span>
-            <% end %>
-            <%= link_to members_membership_path(memberships.first), class: "btn btn--primary py-1" do %>
-              <i class="fa-solid fa-table mr-2 fill-current"></i>
-              <span>Tabla</span>
-            <% end %>
-          </div>
-        </div>
-        <div class="lg:shadow lg:overflow-hidden lg:border-b lg:border-gray-200 sm:rounded-lg mb-4">
-          <div class="lg:table w-full rounded min-w-full divide-y divide-gray-200">
-            <div class="hidden lg:table-header-group bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              <div class="lg:table-cell px-6 py-3">Usuario</div>
-              <div class="lg:table-cell px-6 py-3">Puntos</div>
-              <div class="lg:table-cell px-6 py-3">Posición</div>
-              <div class="lg:table-cell px-6 py-3">Acciones</div>
-            </div>
-            <div class="grid grid-cols-1 gap-8 lg:table-row-group lg:bg-white divide-y divide-gray-200">
-              <% memberships.each do |member| %>
-                <%= render partial: '/memberships/home_membership', locals: { member: member } %>
-              <% end %>
-            </div>
-          </div>
-        </div>
-      </div>
-    <% end %>
-  <% end %>
-
   <% if @requests.pending.present? %>
     <h2 class='text-lg mb-4 text-left text-bold'>Solicitudes pendientes</h2>
 
@@ -99,8 +58,54 @@
       </div>
     </div>
   <% end %>
+
+  <% if @active_memberships.present? %>
+    <h2 class='text-lg mb-4 text-left text-bold'>
+      Mis cuentas activas
+      <%= link_to accounts_path do %>
+        <span class='underline text-blue-800 text-sm'>detalles</span>
+      <% end %>
+    </h2>
+    <% @active_memberships.group_by(&:group).each do |group, memberships| %>
+      <div class="relative">
+        <div class="bg-gray-200 text-left text-xs text-gray-800 uppercase flex items-center shadow-lg <%= 'top-0 sticky' if @active_memberships.count > 1 %> rounded-xl mb-4 flex-wrap py-3 gap-4">
+          <div class="px-6 font-bold"><%= group.name %> - <%= group.tournament.year  %></div>
+          <div class="px-6 font-bold">Semana - <%= group.tournament.current_week.number %></div>
+          <div class="px-6 flex-1 flex gap-2 w-48">
+            <%= link_to table_membership_path(memberships.first), class: "btn btn--primary py-1" do %>
+              <i class="fa-solid fa-table mr-2 fill-current"></i>
+              <span>Conso</span>
+            <% end %>
+            <%= link_to winners_membership_path(memberships.first), class: "btn btn--primary py-1" do %>
+              <i class="fa-solid fa-star mr-2 fill-current"></i>
+              <span>Wins</span>
+            <% end %>
+            <%= link_to members_membership_path(memberships.first), class: "btn btn--primary py-1" do %>
+              <i class="fa-solid fa-table mr-2 fill-current"></i>
+              <span>Tabla</span>
+            <% end %>
+          </div>
+        </div>
+        <div class="lg:shadow lg:overflow-hidden lg:border-b lg:border-gray-200 sm:rounded-lg mb-4">
+          <div class="lg:table w-full rounded min-w-full divide-y divide-gray-200">
+            <div class="hidden lg:table-header-group bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <div class="lg:table-cell px-6 py-3">Usuario</div>
+              <div class="lg:table-cell px-6 py-3">Puntos</div>
+              <div class="lg:table-cell px-6 py-3">Posición</div>
+              <div class="lg:table-cell px-6 py-3">Acciones</div>
+            </div>
+            <div class="grid grid-cols-1 gap-8 lg:table-row-group lg:bg-white divide-y divide-gray-200">
+              <% memberships.each do |member| %>
+                <%= render partial: '/memberships/home_membership', locals: { member: member } %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
   
-  <% if @joinable_groups.present? %>
+  <% if @joinable_groups.present? && @active_memberships.empty? && @accounts.present? %>
     <div class="bg-white rounded-xl lg:rounded-none lg:table-row shadow-lg grid grid-cols-1">
       <div class="lg:table-cell px-6 py-6 lg:py-3 lg:px-6 whitespace-nowrap">
         <div class="text-sm font-medium text-gray-500 text-left">

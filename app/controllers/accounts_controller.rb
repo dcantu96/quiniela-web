@@ -1,6 +1,13 @@
 class AccountsController < ApplicationController
   before_action :set_account, only: [:update, :show, :edit]
 
+  def index
+    @active_memberships = current_user.memberships.active
+    @requests = current_user.requests.pending
+    @accounts = current_user.accounts
+    @denied_requests = current_user.requests.denied
+  end
+
   def new
     @account = Account.new
     @account.requests.build
