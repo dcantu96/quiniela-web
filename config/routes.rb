@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   end
   root to: 'dashboard#home'
   get '/join-groups', to: 'dashboard#join_groups'
+  get '/not-paid', to: 'not_paid#index'
   get '/rules', to: 'public#rules'
   devise_for :users, controllers: {
     sessions: 'sessions',
