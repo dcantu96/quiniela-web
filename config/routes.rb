@@ -50,6 +50,7 @@ Rails.application.routes.draw do
         patch :update_memberships
       end
     end
+    resources :blog_posts
     resources :tournaments do
       resources :weeks, only: [:new, :create]
       member do

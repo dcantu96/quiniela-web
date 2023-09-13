@@ -1,12 +1,16 @@
-<header class='px-6 lg:px-8 bg-white flex flex-wrap items-center py-2'>
-  <div class='flex-1 flex items-center'>
+<header class='container mx-auto px-6 lg:px-8 flex flex-wrap items-center py-2 justify-between'>
+  <div class='flex justify-between md:pb-2 items-center'>
     <%= link_to root_path do %>
-      <%= image_tag 'logo.svg', alt: 'Logo', class: 'h-8' %>
+      <%= image_tag 'logo.svg', alt: 'Logo', class: 'h-12 mr-3' %>
     <% end %>
-    <span class='text-gray-900 ml-2'>QNFLMTY 2023</span>
+    <div class="flex flex-col">
+      <div class='flex items-center text-lg text-indigo-900'>
+        <h1>QNFLMTY 2023</h1>
+      </div>
+      <div class='flex items-center text-lg text-indigo-900'>
+        <h1 class='text-xl font-bold'><%= @current_user.full_name %></h1>
+      </div>
+    </div>
   </div>
-
-  <div class="flex items-center lg:w-auto" id="menu">
-    <%= render 'layouts/account_button' %>
-  </div>
+  <%= render 'layouts/account_button' %>
 </header>

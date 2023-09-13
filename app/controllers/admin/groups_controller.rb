@@ -6,7 +6,6 @@ class Admin::GroupsController < Admin::BaseController
   layout 'admin_group', except: [:index, :new]
 
   def index
-    @groups = Group.includes(:tournament)
     if params[:tournament_id]
       @groups = Group.includes(:tournament).where(tournament_id: params[:tournament_id])
       @tournament = Tournament.find_by(id: params[:tournament_id])
@@ -188,6 +187,6 @@ class Admin::GroupsController < Admin::BaseController
   end
 
   def group_params
-    params.require(:group).permit :name, :private, :tournament_id, :finished
+    params.require(:group).permit :name, :private, :tournament_id, :finished, :joinable
   end
 end

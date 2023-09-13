@@ -9,9 +9,9 @@ class Group < ApplicationRecord
   validates_presence_of :name
   after_create :generate_group_weeks
   scope :active, -> { where finished: false }
+  scope :joinable, -> { where finished: false, joinable: true, private: false }
   scope :finished, -> { where finished: true }
   validates :name, uniqueness: { scope: :tournament_id }
-
 
   def daily_update
     week = tournament.current_week

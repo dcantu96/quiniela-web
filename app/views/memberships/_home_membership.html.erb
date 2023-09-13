@@ -1,28 +1,12 @@
 <% current_membership_week = member.current_membership_week %>
-<div class="bg-white rounded-xl lg:rounded-none lg:table-row shadow-lg grid grid-cols-2 text-left">
+<div class="bg-white rounded-xl lg:rounded-none lg:table-row shadow-lg grid grid-cols-3 text-left">
   <div class="lg:table-cell px-6 py-6 pb-2 lg:py-3 lg:px-6 whitespace-nowrap">
     <div class="lg:hidden text-sm text-gray-500 text-left">Username</div>
     <div class="flex items-center">
-      <div>
-        <div class="text-sm font-medium text-gray-900 text-left">
-          <%= link_to member.account.username, membership_path(member), class: "text-md text-indigo-900 flex items-center" %>
-        </div>
-        <div class="text-sm text-gray-500">
-          <%= member.account.user.email %>
-        </div>
+      <div class="text-sm font-medium text-gray-900 text-left">
+        <%= link_to member.account.username, membership_path(member), class: "text-md text-indigo-900 flex items-center" %>
       </div>
     </div>
-  </div>
-  <div class="lg:table-cell px-6 py-6 pb-2 lg:py-3 lg:px-6 text-left">
-    <div class="lg:hidden text-sm text-gray-500 text-left">Group</div>
-    <div class="text-sm font-medium text-gray-900 text-left">
-      <%= link_to member.group.name, table_membership_path(member), class: "text-md text-indigo-900 flex items-center" %>
-    </div>
-    <div class="text-sm text-gray-500"><%= member.group.tournament.name %> - <%= member.group.tournament.year %></div>
-  </div>
-  <div class="lg:table-cell px-6 py-6 pb-2 lg:py-3 lg:px-6 whitespace-nowrap">
-    <div class="lg:hidden text-sm text-gray-500 text-left">Week Number</div>
-    <div class="text-sm text-gray-900 text-left"><%= current_membership_week.present? ? current_membership_week.week.number : 'No hay semanas' %></div>
   </div>
   <div class="lg:table-cell px-6 py-6 pb-2 lg:py-3 lg:px-6 whitespace-nowrap">
     <div class="lg:hidden text-sm text-gray-500 text-left">Points</div>
@@ -32,23 +16,11 @@
     <div class="lg:hidden text-sm text-gray-500 text-left">Position</div>
     <div class="text-sm text-gray-900 text-left"><%= member.position %></div>
   </div>
-  <div class="lg:table-cell px-6 py-6 pb-4 lg:py-3 lg:px-6 whitespace-nowrap col-span-2">
-    <div class='flex flex-wrap gap-x-3 gap-y-2'>
-      <%= link_to table_membership_path(member), class: "btn btn--primary" do %>
-        <i class="fa-solid fa-table mr-3 fill-current"></i>
-        <span>Conso</span>
-      <% end %>
-      <%= link_to picks_membership_path(member), class: "btn btn--primary" do %>
-        <i class="fa-solid fa-money-bill-wave-alt mr-3 fill-current"></i>
+  <div class="lg:table-cell px-6 py-6 pb-4 lg:py-3 lg:px-6 whitespace-nowrap col-span-3">
+    <div class='flex flex-wrap gap-x-3 gap-y-2 w-full'>
+      <%= link_to picks_membership_path(member), class: "btn btn--primary py-1 w-full text-center" do %>
+        <i class="fa-solid fa-money-bill-wave-alt mr-2 fill-current"></i>
         <span>Picks</span>
-      <% end %>
-      <%= link_to members_membership_path(member), class: "btn btn--primary" do %>
-        <i class="fa-solid fa-users mr-3 fill-current"></i>
-        <span>Tabla</span>
-      <% end %>
-      <%= link_to winners_membership_path(member), class: "btn btn--primary" do %>
-        <i class="fa-solid fa-star mr-3 fill-current"></i>
-        <span>Wins</span>
       <% end %>
     </div>
   </div>

@@ -1,7 +1,7 @@
 <div class='p-6 container mx-auto text-left'>
   <div class="flex mb-4 items-center">
-    <h1 class='text-xl text-indigo-900 mr-3'>Tournaments</h1>
-    <%= link_to 'New', new_admin_tournament_path, class: 'btn btn--primary py-1' %>
+    <h1 class='text-xl text-indigo-900 mr-3'>Publicaciones</h1>
+    <%= link_to 'New', new_admin_blog_post_path, class: 'btn btn--primary py-1' %>
   </div>
   <div class="flex flex-col">
     <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -11,16 +11,13 @@
             <thead>
               <tr class="bg-gray-200">
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Name
+                  Title
                 </th>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Sport
+                  Publicado
                 </th>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Year
-                </th>
-                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Groups
+                  Última actialización
                 </th>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Actions
@@ -28,7 +25,7 @@
               </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
-              <%= render @tournaments.order(year: :desc) %>
+              <%= render @blog_posts %>
             </tbody>
           </table>
         </div>

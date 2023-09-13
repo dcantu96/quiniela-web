@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @layer components {
   body::-webkit-scrollbar {
     width: 0.25rem;

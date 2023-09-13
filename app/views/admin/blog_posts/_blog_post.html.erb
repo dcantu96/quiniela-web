@@ -1,0 +1,26 @@
+<tr>
+  <td class="px-6 py-4 whitespace-nowrap">
+    <div class="text-sm font-medium text-gray-900">
+        <%= link_to blog_post.title, admin_blog_post_path(blog_post), class: "text-md text-indigo-900 flex items-center" %>
+      </div>
+  </td>
+  <td class="px-6 py-4 whitespace-nowrap">
+    <div class="text-sm font-medium text-gray-900">
+      <% if blog_post.published %>
+        <i class="fa-solid fa-check fill-current"></i>
+      <% else %>
+        <i class="fa-solid fa-times fill-current"></i>
+      <% end %>
+    </div>
+  </td>
+  <td class="px-6 py-4 whitespace-nowrap">
+    <div class="text-sm font-medium text-gray-900">
+      <%= blog_post.updated_at.to_formatted_s(:long) %>
+    </div>
+  </td>
+  <td class="px-6 py-4 whitespace-nowrap">
+    <div class="flex">
+      <%= link_to "Edit", edit_admin_blog_post_path(blog_post), class: 'btn btn--primary inline-block mr-2' %>
+    </div>
+  </td>
+</tr>
