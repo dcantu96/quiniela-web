@@ -19,4 +19,12 @@ class Account < ApplicationRecord
   def account_detail
     "#{username} - #{user.email}"
   end
+
+  def self.ransackable_attributes(auth_object = nil)
+    ["created_at", "id", "updated_at", "user_id", "username"]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    ["groups", "memberships", "requests", "user", "week_wins"]
+  end
 end

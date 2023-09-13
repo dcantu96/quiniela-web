@@ -40,6 +40,10 @@
             <i class="fa-solid fa-table mr-3 fill-current"></i>
             <span>Torneos</span>
           <% end %>
+          <%= link_to admin_blog_posts_path, class: "text-md text-indigo-900 flex items-center border-b-2 pb-3 px-2 #{current_page?(admin_blog_posts_path) ? 'border-orange-400' : 'border-transparent hover:border-gray-400'}" do %>
+            <i class="fa-solid fa-newspaper mr-3 fill-current"></i>
+            <span>Publicaciones</span>
+          <% end %>
         </div>
       </div>
       <%= yield %>

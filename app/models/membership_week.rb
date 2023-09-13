@@ -17,4 +17,12 @@ class MembershipWeek < ApplicationRecord
   def untie_pick(untie_match)
     picks.find_by match: untie_match
   end
+
+  def self.ransackable_attributes(auth_object = nil)
+    ["created_at", "id", "membership_id", "points", "updated_at", "week_id"]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    ["membership", "picks", "week", "winners"]
+  end
 end

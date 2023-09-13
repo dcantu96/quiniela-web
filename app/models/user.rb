@@ -26,4 +26,8 @@ class User < ApplicationRecord
   def has_at_least_one_membership?
     memberships.present?
   end
+
+  def self.ransackable_attributes(auth_object = nil)
+    ["confirmation_sent_at", "confirmation_token", "confirmed_at", "created_at", "email", "encrypted_password", "full_name", "id", "phone", "remember_created_at", "reset_password_sent_at", "reset_password_token", "time_zone", "unconfirmed_email", "updated_at"]
+  end
 end

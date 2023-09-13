@@ -1,10 +1,10 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "3.0.2"
+ruby "3.2.2"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem "rails", "~> 7.0.3", ">= 7.0.3.1"
+gem "rails", "~> 7.0.8", ">= 7.0.8"
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
@@ -50,7 +50,6 @@ gem 'json'
 gem 'rolify'
 gem 'mini_magick'
 gem 'pagy', '~> 4.11'
-gem 'ajax-datatables-rails'
 gem 'ransack'
 gem 'premailer-rails'
 gem 'nokogiri', '~> 1.12', '>= 1.12.3'

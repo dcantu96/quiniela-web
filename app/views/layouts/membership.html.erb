@@ -9,24 +9,20 @@
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
-    <link href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" rel="stylesheet">
-	  <link href="https://cdn.datatables.net/responsive/2.2.5/css/responsive.dataTables.min.css" rel="stylesheet">
   </head>
 
   <body class='antialiased bg-indigo-100 font-sans font-normal leading-relaxed text-gray-800 font-base'>
     <%= render 'layouts/notifications' %>
     <header class='bg-white px-6 py-3 md:pb-0 shadow-sm'>
-      <div class='flex justify-between md:pb-2'>
+      <div class='flex justify-between md:pb-2 items-center'>
         <%= link_to root_path do %>
           <%= image_tag 'logo.svg', alt: 'Logo', class: 'h-12 mr-3' %>
         <% end %>
         <div class="flex flex-col mr-auto">
           <div class='flex items-center text-lg text-indigo-900'>
-            <i class="fa-solid fa-users mr-1"></i>
             <h1><%= @membership.group.name %> <%= @membership.group.tournament.year %></h1>
           </div>
           <div class='flex items-center text-lg text-indigo-900'>
-            <i class="fa-solid fa-user ml-1 mr-2"></i>
             <h1 class='text-xl font-bold'><%= @membership.account.username %></h1>
           </div>
         </div>

@@ -19,6 +19,13 @@
       <div class='checkbox-toggle__fill'></div>
     <% end %>
   </div>
+  <div class='mb-4'>
+    <%= f.label :joinable, class: 'checkbox-toggle mb-4' do %>
+      <span class='checkbox-toggle__text'>Se puede ingresar al grupo?</span>
+      <%= f.check_box :joinable, class: 'checkbox-toggle__input' %>
+      <div class='checkbox-toggle__fill'></div>
+    <% end %>
+  </div>
   <div class='mb-4' data-controller='select'> 
     <%= f.label :tournament, class: 'label' %>
     <%= f.collection_select :tournament_id, Tournament.valid, :id, :with_year, {}, { class: 'select2' } %>

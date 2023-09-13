@@ -5,7 +5,7 @@
     </div>
   </div>
   <div class='grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mb-8'>
-    <%= render @groups.active || render('no_active_groups') %>
+    <%= render @groups.active.order("tournament.year DESC") || render('no_active_groups') %>
   </div>
 
   <div class='mb-4'>
@@ -14,6 +14,6 @@
     </div>
   </div>
   <div class='grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mb-8'>
-    <%= render(@groups.finished) || render('no_finished_groups') %>
+    <%= render @groups.finished.order("tournament.year DESC") || render('no_finished_groups') %>
   </div>
 </div>

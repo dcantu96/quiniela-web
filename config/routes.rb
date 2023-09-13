@@ -50,6 +50,7 @@ Rails.application.routes.draw do
         patch :update_memberships
       end
     end
+    resources :blog_posts
     resources :tournaments do
       resources :weeks, only: [:new, :create]
       member do
@@ -69,7 +70,7 @@ Rails.application.routes.draw do
       resources :teams, only: [:new, :create]
     end
     resources :winners, only: [:create]
-    resources :accounts, only: [:new, :edit, :create, :update, :destroy]
+    resources :accounts, only: [:index, :new, :edit, :create, :update, :destroy]
     resources :matches, only: [:edit, :update, :destroy] do
       member do
         post :set_winner
