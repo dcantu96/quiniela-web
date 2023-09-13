@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   include Pagy::Backend
   before_action :authenticate_user!
   before_action :configure_permitted_parameters, if: :devise_controller?
+  before_action :validate_user_payments, if: :current_user
   around_action :set_time_zone, if: :current_user
 
   def after_invite_path_for(resource)
@@ -11,6 +12,8 @@ class ApplicationController < ActionController::Base
   def after_sign_in_path_for(resource)
     root_path
   end
+
+  def not_paid; end
 
   protected
 
@@ -28,5 +31,11 @@ class ApplicationController < ActionController::Base
 
   def set_time_zone
     Time.use_zone(current_user.time_zone) { yield }
+  end
+
+  def validate_user_payments
+    if current_user.memberships.active.not_paid.present?
+      redirect_to not_paid_path if Time.now > Time.parse('2023-09-27 01:00:00 -0600')
+    end
   end
 end

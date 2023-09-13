@@ -7,6 +7,7 @@ class DashboardController < ApplicationController
     @finished_memberships = current_user.memberships.finished.includes(:account, group: [:tournament])
     @accounts = current_user.accounts
     @latest_post = BlogPost.published.last
+    @not_paid_memberships = current_user.memberships.active.not_paid
   end
 
   def join_groups
