@@ -14,6 +14,10 @@ class MembershipWeek < ApplicationRecord
     end
   end
 
+  def unpicked_picks_count
+    picks.where(picked_team: nil).count
+  end
+
   def untie_pick(untie_match)
     picks.find_by match: untie_match
   end
