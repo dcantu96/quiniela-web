@@ -1,0 +1,44 @@
+<div class='container mx-auto p-6'>
+  <h3 class='font-bold text-lg text-left mb-4'>Editar Semana <%= @group_week.week.number %></h3>
+  <h3 class='text-md text-left mb-4'>
+    Estatus de juegos de la semana - <b><%= @group_week.week.matches_settled? ? 'Juegos Terminados' : 'Juegos Pendientes'  %></b>
+  </h3>
+  <%= form_with model: [:admin, @group_week], class: 'flex justify-start flex-col w-full' do |f| %>
+    <% if @group_week.errors.any? %>
+      <ul>
+        <% @group_week.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    <% end %>
+    <div class='grid grid-cols-1 gap-6 md:gap-8 mb-8'>
+      <div>
+        <p class="font-semibold text-md text-left mb-2">Week Winners</p>
+        <% if @untie_match.present? %>
+          <p class="text-md text-left mb-2">Untie match score <%= @untie_match.visit_team.short_name %>@<%= @untie_match.home_team.short_name %> <%= @untie_match.visit_team_score %> - <%= @untie_match.home_team_score %> = <b><%= @untie_match.total_points %></b></p>
+        <% end %>
+        <% @highest_memberships.each do |membership_week| %>
+          <%= label_tag "winner_id_#{membership_week.id}", class: 'checkbox-toggle mb-4' do %>
+            <span class='checkbox-toggle__text'><%= membership_week.membership.account.username %> - points <%= membership_week.points %>
+            <% if @untie_match.present? %>
+               - untie points - <b><%= membership_week.picks.find_by(match: @untie_match).points %></b>
+            <% end %>
+            </span>
+            <%= check_box_tag 'group_week[winner_ids][]', membership_week.id, @week_winners_ids.include?(membership_week.id), id: "winner_id_#{membership_week.id}", class: 'checkbox-toggle__input' %>
+            <div class='checkbox-toggle__fill'></div>
+          <% end %>
+        <% end %>
+      </div>
+      <div data-controller='select'> 
+        <%= f.label :lowest_valid_points, class: 'label' %>
+        <%= f.select :lowest_valid_points, @lowest_valid_points_list, {}, { class: 'select' } %>
+      </div>
+    </div>
+    <h3 class='text-md text-left mb-4'>
+      Al guardar cambios se actualizaran los puntos de los miembros del grupo y se asignaran los ganadores correspondientes. Asimismo se marcará la semana como terminada y los miembros que olvidaron hacer sus picks serán marcados como ineligibles para el premio del penultimo lugar.
+    </h3>
+    <%= f.submit 'Actualizar', class: 'btn btn--primary' %>
+  <% end %>
+</div>
+
+<%# after that only with the lowest score available and a week finished you can now update group memberships positions and scores and make certain membership_weeks ineligeble for last bonus price %>

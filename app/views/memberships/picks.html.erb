@@ -1,9 +1,14 @@
 <div class='p-6 container mx-auto text-left'>
   <p class='mb-1'>Zona Horaria: <b><%= current_user.time_zone %></b></p>
   <p class='mb-2 text-gray-600'><%= Time.current %></p>
+  <% if @membership_week.forgot_picks %>
+    <div class="px-4 py-2 mb-4 w-full flex justify-between items-center rounded bg-red-100 border-l-red-700 text-red-700 border-l-4" role="alert">
+      <p class="text-left flex-1 self-center"><span class="font-bold">Aviso</span> - Olvidáste poner tus picks esta semana. Por lo tanto se te asigna lo que tiene el peor jugador de la semana: <b><%= @group_week.lowest_valid_points %> puntos</b></p>
+    </div>
+  <% end %>
   <div class="flex justify-between mb-2">
-    <div>
-      <div data-controller="toggle" class='mb-4'>
+    <div class='w-48'>
+      <div data-controller="toggle">
         <div class='flex items-center mb-2'>
           <h1 class='text-xl text-indigo-900 mr-4'>My Picks</h1>
           <button class="btn btn--primary"
@@ -15,7 +20,7 @@
         </div>
         <%= render 'filters' %>
       </div>
-      <h3 class='text-xl text-indigo-900'>Week <%= @week.number %> points <b><%= @points %></b></h3>
+      <h1 class='text-xl text-left text-indigo-900 mb-4 w-14'>Week <%= @week.number %> points <b><%= @points %></b></h1>
     </div>
     <div>
       <h5 class='text-xl text-indigo-900 text-right'>Status</h5>

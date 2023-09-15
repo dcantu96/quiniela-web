@@ -23,6 +23,10 @@ class Admin::GroupsController < Admin::BaseController
   def edit
   end
 
+  # def weeks
+  #   @weeks = @group.tournament.weeks.order(number: :asc)
+  # end
+
   def danger_settings
   end
 

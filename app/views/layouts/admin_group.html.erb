@@ -33,9 +33,9 @@
             <i class="fa-solid fa-table mr-3 fill-current"></i>
             <span>Consolidado</span>
           <% end %>
-          <%= link_to winners_admin_group_path(@group), class: "text-md text-indigo-900 flex items-center border-b-2 pb-3 px-2 #{current_page?(winners_admin_group_path(@group)) ? 'border-orange-400' : 'border-transparent hover:border-gray-400'}" do %>
-            <i class="fa-solid fa-star mr-3 fill-current"></i>
-            <span>Ganadores</span>
+          <%= link_to admin_group_weeks_path(@group), class: "text-md text-indigo-900 flex items-center border-b-2 pb-3 px-2 #{current_page?(admin_group_weeks_path(@group)) ? 'border-orange-400' : 'border-transparent hover:border-gray-400'}" do %>
+            <i class="fa-solid fa-w mr-3 fill-current"></i>
+            <span>Semanas</span>
           <% end %>
           <%= link_to matches_admin_group_path(@group), class: "text-md text-indigo-900 flex items-center border-b-2 pb-3 px-2 #{current_page?(matches_admin_group_path(@group)) ? 'border-orange-400' : 'border-transparent hover:border-gray-400'}" do %>
             <i class="fa-solid fa-football-ball mr-3 fill-current"></i>

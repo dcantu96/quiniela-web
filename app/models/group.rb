@@ -49,6 +49,18 @@ class Group < ApplicationRecord
     end
   end
 
+  def flag_invalid_membership_weeks_and_assign_lowest_valid_week_points(week_id)
+    week = Week.find_by id: week_id
+    group_week = group_weeks.find_by week: week
+    return if !week.matches_settled? || !week.finished
+
+    membership_weeks.where(week: week).each do |mw|
+      if group_week.lowest_valid_points.present? && mw.points < group_week.lowest_valid_points
+        mw.update points: group_week.lowest_valid_points, forgot_picks: true
+      end
+    end
+  end
+
   private
 
   def memberships_with_total

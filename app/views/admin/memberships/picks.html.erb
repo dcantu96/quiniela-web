@@ -1,6 +1,11 @@
 <%= render 'show_header' %>
 
 <div class='p-6 container mx-auto'>
+  <% if @membership_week.forgot_picks %>
+    <div class="px-4 py-2 mb-4 w-full flex justify-between items-center rounded bg-red-100 border-l-red-700 text-red-700 border-l-4" role="alert">
+      <p class="text-left flex-1 self-center"><span class="font-bold">Aviso</span> - Olvidáste poner tus picks esta semana. Por lo tanto se te asigna lo que tiene el peor jugador de la semana: <b><%= @group_week.lowest_valid_points %> puntos</b></p>
+    </div>
+  <% end %>
   <div data-controller="toggle" class='mb-4'>
     <div class='flex items-center mb-2'>
       <h1 class='text-xl text-indigo-900 mr-4'><%= @membership.account.username %>'s Picks</h1>
@@ -16,7 +21,8 @@
     <%= render 'filters' %>
   </div>
 
-  <h1 class='text-xl text-indigo-900 mb-4'>Week <%= @week.number %> points <b><%= @membership.membership_weeks.find_by(week: @week).points %></b></h1>
+  
+  <h1 class='text-xl text-left text-indigo-900 mb-4'>Week <%= @week.number %> points <b><%= @membership.membership_weeks.find_by(week: @week).points %></b></h1>
   <div class="mb-3">
     <h5 class='text-xl text-indigo-900 text-left'>Status</h5>
     <p class='text-gray-900 text-left'>Locked In <i class="fa-solid fa-lock fa-lg text-gray-500"></i></p>
@@ -28,11 +34,8 @@
     <p class='text-gray-900 text-left'>Monday Night <i class="fa-solid fa-m fa-lg text-gray-900"></i></p>
   </div>
 
-  <h4 class='text-xl text-indigo-900'>After modifying any of the picks, these changes need to be reflected in the public table positions.</h4>
-  <h4 class='text-xl text-indigo-900 mr-4'>To do so, please press these buttons below in order.</h4>
-  <%= button_to '1 - Update Picks and Week Points', update_picks_admin_group_path(id: @membership.group.id, week_id: params[:week_id] ? params[:week_id] : @week.id), class: 'btn btn--primary py-1 m-1 inline-block mb-4', data: { confirm: 'This will update all picks of current week', disable_with: 'loading...' } %>
-  <%= button_to '2 - Update Total Points', update_total_points_admin_group_path(id: @membership.group.id, week_id: params[:week_id] ? params[:week_id] : @week.id), class: 'btn btn--primary py-1 m-1 inline-block mb-4', data: { confirm: 'This will update all picks of current week', disable_with: 'loading...' } %>
-
+  <h4 class='text-xl text-indigo-900 mb-4'>After modifying any of the picks you need to manualy request to sync changes.</h4>
+  <%= button_to 'Sync Changes', [:update_week, :admin, @week], class: 'btn btn--primary py-1 mb-4' %>
   <div class='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-8'>
     <%= render 'picks' %>
   </div>

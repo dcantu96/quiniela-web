@@ -1,0 +1,40 @@
+<% winners = @winners.joins(membership_week: :week).where(membership_weeks: { week: group_week.week }) %>
+<tr>
+  <td class="px-6 py-4 whitespace-nowrap">
+    <div class="text-sm font-medium text-gray-900">
+        <%= group_week.week.number %>
+      </div>
+  </td>
+  <td class="px-6 py-4 whitespace-nowrap">
+    <div class="text-sm font-medium text-gray-900">
+      <% if winners %>
+        <% winners.each do |winner| %>
+          <%= winner.membership_week.membership.account.username %>
+          <%= winner.membership_week.points %>
+          <i class="fa-solid fa-star fill-current fa-sm"></i>
+          <br>
+        <% end %>
+      <% end %>
+    </div>
+  </td>
+  <td class="px-6 py-4 whitespace-nowrap">
+    <div class="text-sm font-medium text-gray-900">
+      <%= group_week.lowest_valid_points %>
+    </div>
+  </td>
+  <td class="px-6 py-4 whitespace-nowrap">
+    <div class="text-sm font-medium text-gray-900">
+      <%= group_week.week.tournament.current_week == group_week.week ? 'Activa' : group_week.week.finished ? 'Semana Terminada' :  'Proxima' %>
+    </div>
+  </td>
+  <td class="px-6 py-4 whitespace-nowrap">
+    <div class="text-sm font-medium text-gray-900">
+      <%= group_week.week.matches_settled? ? 'Juegos Terminados' : 'Juegos Pendientes'  %>
+    </div>
+  </td>
+  <td class="px-6 py-4 whitespace-nowrap">
+    <div class="flex">
+      <%= link_to "Editar", edit_admin_group_week_path(group_id: group_week.group, id: group_week), class: 'btn btn--primary inline-block mr-2' %>
+    </div>
+  </td>
+</tr>

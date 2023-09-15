@@ -48,6 +48,10 @@ class Match < ApplicationRecord
     end
   end
 
+  def total_points
+    visit_team_score + home_team_score
+  end
+
   def set_new_membership_week_to_picks
     picks.each do |pick|
       if week != pick.membership_week.week

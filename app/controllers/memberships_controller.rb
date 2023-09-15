@@ -33,6 +33,7 @@ class MembershipsController < ApplicationController
   def picks
     @untie_pick = @picks.nil? ? nil : @picks.joins(:match).where(matches: { untie: true }).first
     @weeks = @membership.group.tournament.weeks.order(number: :asc)
+    @group_week = @membership.group.group_weeks.find_by(week: @week)
     @membership_week = @membership.membership_weeks.find_by(week: @week)
     @points = @membership_week.present? ? @membership_week.points : nil
   end
