@@ -9,11 +9,12 @@ class TournamentAutoWeekUpdaterJob < ApplicationJob
       
       # reset picks and week points
       week.picks.update_all correct: false
-      week.membership_weeks.update_all points: 0
+      week.membership_weeks.update_all points: 0, forgot_picks: false
 
       # update picks and week points
       week.update_match_picks
       week.tournament.groups.each do |group|
+        group.flag_invalid_membership_weeks_and_assign_lowest_valid_week_points(week.id) if week.finished
         group.update_member_positions
       end
       AdminMailer.update_auto_week_success(week).deliver_later

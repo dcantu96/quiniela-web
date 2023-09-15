@@ -23,6 +23,10 @@ class Membership < ApplicationRecord
     membership_week.picks.includes(:picked_team, match: [:home_team, :visit_team, :winning_team]).order('matches.order')
   end
 
+  def forgotten_picks?
+    membership_weeks.where(forgot_picks: true).present?
+  end
+
   def current_membership_week
     membership_weeks.current(group.tournament.current_week).first
   end

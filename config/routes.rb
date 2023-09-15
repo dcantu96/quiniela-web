@@ -31,6 +31,7 @@ Rails.application.routes.draw do
           post :fetch_winner
         end
       end
+      resources :group_weeks, only: [:index, :show, :edit, :update], as: :weeks
       member do
         get :table
         get :users

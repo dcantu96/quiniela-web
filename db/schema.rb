@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_13_005838) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_15_004412) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -115,6 +115,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_13_005838) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "forgotten_picks_email", precision: nil
+    t.integer "lowest_valid_points"
     t.index ["group_id"], name: "index_group_weeks_on_group_id"
     t.index ["week_id"], name: "index_group_weeks_on_week_id"
     t.index ["winner_id"], name: "index_group_weeks_on_winner_id"
@@ -160,6 +161,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_13_005838) do
     t.integer "points", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "forgot_picks", default: false
     t.index ["membership_id"], name: "index_membership_weeks_on_membership_id"
     t.index ["week_id"], name: "index_membership_weeks_on_week_id"
   end
