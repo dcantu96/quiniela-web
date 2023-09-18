@@ -80,7 +80,7 @@ class Admin::MembershipsController < Admin::BaseController
   end
 
   def membership_params
-    params.require(:membership).permit :suspended, :paid, :notes
+    params.require(:membership).permit :suspended, :paid, :notes, :account_id
   end
 
   def new_membership_params
