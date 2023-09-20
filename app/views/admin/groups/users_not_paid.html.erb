@@ -1,0 +1,51 @@
+<div class='p-4 container mx-auto'>
+  <h2 class='text-lg text-left mb-4'><%= @users.count %> Usuarios que no han pagado</h2>
+
+  <div class="shadow overflow-x-scroll border-b border-gray-200 mb-4">
+    <div class="table w-full rounded min-w-full">
+      <div class="table-header-group bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+        <div class="table-cell px-6 py-3">Name</div>
+        <div class="table-cell px-6 py-3">Email</div>
+        <div class="table-cell px-6 py-3">Phone</div>
+        <div class="table-cell px-6 py-3">Usernames</div>
+        <div class="table-cell px-6 py-3">Total a pagar</div>
+        <div class="table-cell px-6 py-3">Pagado</div>
+      </div>
+      <div class="table-row-group bg-white">
+        <% @users.each do |user, memberships| %>
+          <div class="table-row text-left even:bg-white odd:bg-gray-100">
+            <div class="table-cell py-1 md:py-3 px-6 whitespace-nowrap">
+              <div class="text-sm font-medium text-gray-900"><%= user.full_name %></div>
+            </div>
+            <div class="table-cell py-1 md:py-3 px-6 whitespace-nowrap">
+              <div class="text-sm font-medium text-gray-900"><%= user.email %></div>
+            </div>
+            <div class="table-cell py-1 md:py-3 px-6 whitespace-nowrap">
+              <div class="text-sm font-medium text-indigo-600">
+                <a href="tel:<%= user.phone %>"><%= user.phone %></a>
+              </div>
+            </div>
+            <div class="table-cell py-1 md:py-3 px-6 whitespace-nowrap gap-x-4">
+              <% memberships.each do |membership| %>
+                <%= link_to membership.account.username, picks_admin_group_membership_path(membership.group, membership), class: "px-2 mb-1 whitespace-no-wrap inline-flex text-xs leading-5 font-semibold rounded-full #{membership.suspended ? 'bg-red-200 text-red-800' : 'bg-blue-200 text-blue-800'}" %>
+              <% end %>
+            </div>
+            <div class="table-cell py-1 md:py-3 px-6 whitespace-nowrap">
+              <div class="text-sm font-medium text-gray-900">
+                <% suspended = memberships.pluck(:suspended).select { |m| m == true } %>
+                <% if suspended.count > 0 %>
+                  <span class='line-through'>$<%= memberships.count * 110 %>.00</span> <span>$<%= (memberships.count - suspended.count) * 110 %>.00</span>
+                <% else %>
+                  $<%= memberships.count * 110 %>.00
+                <% end %>                
+              </div>
+            </div>
+            <div class="table-cell py-1 md:py-3 px-6 whitespace-nowrap">
+              <div class="text-sm font-medium text-gray-900">$<%= Membership.where(id:memberships.pluck(:id)).all_paid.count * 110 %>.00</div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
