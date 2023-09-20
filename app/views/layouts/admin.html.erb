@@ -27,7 +27,7 @@
           </div>
           <%= render 'layouts/account_button' %>
         </header>
-        <div class="flex overflow-x-scroll px-6">
+        <div class="flex overflow-x-scroll px-6 whitespace-nowrap">
           <%= link_to admin_groups_path, class: "text-md text-indigo-900 flex items-center border-b-2 pb-3 px-2 #{current_page?(admin_groups_path) ? 'border-orange-400' : 'border-transparent hover:border-gray-400'}" do %>
             <i class="fa-solid fa-users mr-3 fill-current"></i>
             <span>Grupos</span>
