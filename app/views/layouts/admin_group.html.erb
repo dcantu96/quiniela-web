@@ -49,6 +49,10 @@
             <i class="fa-solid fa-users mr-3 fill-current"></i>
             <span>Usuarios</span>
           <% end %>
+          <%= link_to users_not_paid_admin_group_path(@group), class: "text-md text-indigo-900 flex items-center border-b-2 pb-3 px-2 #{current_page?(users_not_paid_admin_group_path(@group)) ? 'border-orange-400' : 'border-transparent hover:border-gray-400'}" do %>
+            <i class="fa-solid fa-money-bills mr-3 fill-current"></i>
+            <span>Usuarios sin pagar</span>
+          <% end %>
           <%= link_to inactive_accounts_admin_group_path(@group), class: "text-md text-indigo-900 flex items-center border-b-2 pb-3 px-2 #{current_page?(inactive_accounts_admin_group_path(@group)) ? 'border-orange-400' : 'border-transparent hover:border-gray-400'}" do %>
             <i class="fa-solid fa-cog mr-3 fill-current"></i>
             <span>Cuentas Inactivas</span>

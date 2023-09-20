@@ -1,7 +1,7 @@
 class Admin::GroupsController < Admin::BaseController
   before_action :set_group, only: [:edit, :update, :matches, :requests, :winners, :members, :danger_settings, :destroy,
     :table, :members_forgetting, :autocomplete, :reset_week_points, :update_picks, :fetch_match_results, 
-    :update_total_points, :settings, :notify_missing_picks, :users, :inactive_accounts, :update_memberships]
+    :update_total_points, :settings, :notify_missing_picks, :users, :inactive_accounts, :update_memberships, :users_not_paid]
   before_action :set_week, only: [:reset_week_points, :update_picks, :fetch_match_results, :update_total_points]
   layout 'admin_group', except: [:index, :new]
 
@@ -109,6 +109,10 @@ class Admin::GroupsController < Admin::BaseController
 
   def users
     @users = @group.memberships.group_by{ |m| m.account.user }  
+  end
+
+  def users_not_paid
+    @users = @group.memberships.not_paid.group_by{ |m| m.account.user }  
   end
 
   def inactive_accounts
