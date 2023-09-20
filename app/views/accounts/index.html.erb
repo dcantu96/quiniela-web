@@ -104,38 +104,48 @@
 
     <h2 class='text-xl mb-4 text-left text-bold'>Usernames activos</h2>
     <% @active_memberships.group_by(&:group).each do |group, memberships| %>
-      <div class="relative">
-        <div class="bg-gray-200 text-left text-xs text-gray-800 uppercase flex items-center shadow-lg <%= 'top-0 sticky' if @active_memberships.count > 1 %> rounded-xl mb-4 flex-wrap py-3 gap-4">
-          <div class="px-6 font-bold"><%= group.name %> - <%= group.tournament.year  %></div>
-          <div class="px-6 font-bold">Semana - <%= group.tournament.current_week.number %></div>
-          <div class="px-6 flex-1 flex gap-2 w-48">
-            <%= link_to table_membership_path(memberships.first), class: "btn btn--primary py-1" do %>
-              <i class="fa-solid fa-table mr-2 fill-current"></i>
-              <span>Conso</span>
-            <% end %>
-            <%= link_to winners_membership_path(memberships.first), class: "btn btn--primary py-1" do %>
-              <i class="fa-solid fa-star mr-2 fill-current"></i>
-              <span>Wins</span>
-            <% end %>
-            <%= link_to members_membership_path(memberships.first), class: "btn btn--primary py-1" do %>
-              <i class="fa-solid fa-table mr-2 fill-current"></i>
-              <span>Tabla</span>
-            <% end %>
+      <div class="lg:shadow lg:overflow-hidden lg:border-b lg:border-gray-200 sm:rounded-lg mb-4">
+        <div class="lg:table w-full rounded min-w-full divide-y divide-gray-200">
+          <div class="hidden lg:table-header-group bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <div class="lg:table-cell px-6 py-3">Usuario</div>
+            <div class="lg:table-cell px-6 py-3">Grupo</div>
+            <div class="lg:table-cell px-6 py-3">Acumulado</div>
+            <div class="lg:table-cell px-6 py-3">Acciones</div>
           </div>
-        </div>
-        <div class="lg:shadow lg:overflow-hidden lg:border-b lg:border-gray-200 sm:rounded-lg mb-4">
-          <div class="lg:table w-full rounded min-w-full divide-y divide-gray-200">
-            <div class="hidden lg:table-header-group bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              <div class="lg:table-cell px-6 py-3">Usuario</div>
-              <div class="lg:table-cell px-6 py-3">Puntos</div>
-              <div class="lg:table-cell px-6 py-3">Posición</div>
-              <div class="lg:table-cell px-6 py-3">Acciones</div>
-            </div>
-            <div class="grid grid-cols-1 gap-8 lg:table-row-group lg:bg-white divide-y divide-gray-200">
-              <% memberships.each do |member| %>
-                <%= render partial: '/memberships/home_membership', locals: { member: member } %>
-              <% end %>
-            </div>
+          <div class="grid grid-cols-1 gap-8 lg:table-row-group lg:bg-white divide-y divide-gray-200">
+            <% memberships.each do |member| %>
+              <% current_membership_week = member.current_membership_week %>
+              <div class="bg-white rounded-xl lg:rounded-none lg:table-row shadow-lg grid grid-cols-3 text-left">
+                <div class="lg:table-cell px-6 py-6 pb-2 lg:py-3 lg:px-6 whitespace-nowrap">
+                  <div class="lg:hidden text-sm text-gray-500 text-left">Username</div>
+                  <div class="flex items-center">
+                    <div class="text-sm font-medium text-gray-900 text-left">
+                      <%= link_to member.account.username, membership_path(member), class: "text-md text-indigo-900 flex items-center" %>
+                    </div>
+                  </div>
+                </div>
+                <div class="lg:table-cell px-6 py-6 pb-2 lg:py-3 lg:px-6 whitespace-nowrap">
+                  <div class="lg:hidden text-sm text-gray-500 text-left">Grupo</div>
+                  <div class="text-sm text-gray-900 text-left"><%= group.name %> - <%= group.tournament.year  %></div>
+                </div>
+                <div class="lg:table-cell px-6 py-6 pb-2 lg:py-3 lg:px-6 whitespace-nowrap">
+                  <div class="lg:hidden text-sm text-gray-500 text-left">Acumulado</div>
+                  <div class="text-sm text-gray-900 text-left"><%= member.total_points %></div>
+                </div>
+                <div class="lg:table-cell px-6 py-6 pb-4 lg:py-3 lg:px-6 whitespace-nowrap col-span-3">
+                  <div class='flex flex-nowrap gap-x-3 gap-y-2 w-full'>
+                    <%= link_to picks_membership_path(member), class: "btn btn--primary py-1 w-full text-center" do %>
+                      <i class="fa-solid fa-money-bill-wave-alt mr-2 fill-current"></i>
+                      <span>Picks</span>
+                    <% end %>
+                    <%= link_to table_membership_path(member), class: "btn btn--primary py-1 w-full text-center" do %>
+                      <i class="fa-solid fa-table mr-2 fill-current"></i>
+                      <span>Conso</span>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+            <% end %>
           </div>
         </div>
       </div>
