@@ -31,6 +31,10 @@ class Membership < ApplicationRecord
     membership_weeks.current(group.tournament.current_week).first
   end
 
+  def total_points
+    membership_weeks.sum(:points)
+  end
+
   def self.ransackable_attributes(auth_object = nil)
     ["account_id", "created_at", "forgot_picks", "group_id", "id", "notes", "paid", "position", "suspended", "total", "updated_at"]
   end
