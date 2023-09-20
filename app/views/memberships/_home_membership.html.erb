@@ -9,7 +9,7 @@
     </div>
   </div>
   <div class="lg:table-cell px-6 py-6 pb-2 lg:py-3 lg:px-6 whitespace-nowrap">
-    <div class="lg:hidden text-sm text-gray-500 text-left">Puntos de la semana</div>
+    <div class="lg:hidden text-sm text-gray-500 text-left">Pts. Semana <%= current_membership_week.present? ? current_membership_week.week.number : '' %></div>
     <div class="text-sm text-gray-900 text-left"><%= current_membership_week.present? ? current_membership_week.points : '0' %></div>
   </div>
   <div class="lg:table-cell px-6 py-6 pb-2 lg:py-3 lg:px-6 whitespace-nowrap">
