@@ -35,7 +35,7 @@ class ApplicationController < ActionController::Base
 
   def validate_user_payments
     if current_user.memberships.active.not_paid.present?
-      redirect_to not_paid_path if Time.now > Time.parse('2023-09-27 01:00:00 -0600')
+      redirect_to not_paid_path if Time.now > Time.parse('2023-10-03 01:00:00 -0600')
     end
   end
 end
