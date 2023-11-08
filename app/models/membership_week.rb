@@ -6,6 +6,7 @@ class MembershipWeek < ApplicationRecord
   validates :membership, uniqueness: { scope: :week }
   validate :uniqueness_of_membership
   scope :current, -> (current_week) { where(week: current_week).limit(1) }
+  scope :active_members, -> { joins(:membership).where(memberships: { suspended: false }) }
 
   def uniqueness_of_membership
     maybe_duplicate_weeks = membership.membership_weeks.joins(:week).where(week: { number: week.number })
