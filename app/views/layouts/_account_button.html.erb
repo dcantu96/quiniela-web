@@ -8,6 +8,7 @@
     <span class="block px-4 pb-2 text-gray-800"><%= current_user.email %></span>
     <hr />
     <%= link_to 'Reglas', rules_path, class: 'block px-4 py-2 text-blue-700 hover:underline' %>
+    <%= link_to 'Premios', prizes_path, class: 'block px-4 pb-2 text-blue-700 hover:underline' %>
     <%= link_to 'Gestiona tu cuenta', edit_user_registration_path, class: 'block px-4 pb-2 text-blue-700 hover:underline' %>
     <%= link_to 'Nuevo username', new_account_path, class: 'block px-4 pb-2 text-blue-700 hover:underline' %>
     <%= link_to 'Acceso Admins', admin_groups_path, class: 'block px-4 pb-2 text-blue-700 hover:underline' if current_user.admin? %>

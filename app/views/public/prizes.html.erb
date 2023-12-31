@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>QNFLMTY 2023 - Premios</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body class='antialiased font-sans font-normal leading-relaxed text-gray-800 font-base'>
+    <%= render 'layouts/notifications' if current_user %>
+    <%= render 'layouts/header' if current_user %>
+    <div class='container mx-auto text-left lg:max-w-4xl px-10 py-4'>
+      <div class='text-center py-4'>
+        <h1 class='font-bold'>QUINIELA 3xH NFL 2023<h1>
+        <p class='italic'>est 1992</p>
+      </div> 
+
+      <div class='text-center pb-4'>
+        <h2 class='text-xl uppercase'>Premios (192) participantes</h2>
+      </div>
+
+      <p class='mb-4 container mx-auto'>Partiendo de la base que somos 192 participantes, vamos a premiar a los primeros 13 lugares + el tradicional premio al penúltimo lugar (US$100), solo los elegibles</p>
+
+      <div class="overflow-x-auto relative shadow-lg rounded-lg overflow-hidden sm:w-80 mx-auto">
+        <table class="w-full text-sm text-left text-gray-500">
+          <thead class="text-xs text-gray-700 uppercase bg-gray-50 border-b">
+            <tr>
+              <th scope="col" class="py-3 px-6">
+                Lugar
+              </th>
+              <th scope="col" class="py-3 px-6">
+                Premio (USD) 
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="odd:bg-white even:bg-gray-50 border-b">
+              <td class="py-4 px-6 font-medium text-gray-900">
+                Primero
+              </td>
+              <td class="py-4 px-6 text-gray-700">
+                $4,000.00
+              </td>
+            </tr>
+            <tr class="odd:bg-white even:bg-gray-50 border-b">
+              <td class="py-4 px-6 font-medium text-gray-900">
+                Segundo
+              </td>
+              <td class="py-4 px-6 text-gray-700">
+                $3,000.00
+              </td>
+            </tr>
+            <tr class="odd:bg-white even:bg-gray-50 border-b">
+              <td class="py-4 px-6 font-medium text-gray-900">
+                Tercero
+              </td>
+              <td class="py-4 px-6 text-gray-700">
+                $2,000.00
+              </td>
+            </tr>
+            <tr class="odd:bg-white even:bg-gray-50 border-b">
+              <td class="py-4 px-6 font-medium text-gray-900">
+                Cuarto
+              </td>
+              <td class="py-4 px-6 text-gray-700">
+                $1,750.00
+              </td>
+            </tr>
+            <tr class="odd:bg-white even:bg-gray-50 border-b">
+              <td class="py-4 px-6 font-medium text-gray-900">
+                Quinto
+              </td>
+              <td class="py-4 px-6 text-gray-700">
+                $1,500.00
+              </td>
+            </tr>
+            <tr class="odd:bg-white even:bg-gray-50 border-b">
+              <td class="py-4 px-6 font-medium text-gray-900">
+                Sexto
+              </td>
+              <td class="py-4 px-6 text-gray-700">
+                $1,250.00
+              </td>
+            </tr>
+            <tr class="odd:bg-white even:bg-gray-50 border-b">
+              <td class="py-4 px-6 font-medium text-gray-900">
+                Septimo
+              </td>
+              <td class="py-4 px-6 text-gray-700">
+                $1,000.00
+              </td>
+            </tr>
+            <tr class="odd:bg-white even:bg-gray-50 border-b">
+              <td class="py-4 px-6 font-medium text-gray-900">
+                Octavo
+              </td>
+              <td class="py-4 px-6 text-gray-700">
+                $850.00
+              </td>
+            </tr>
+            <tr class="odd:bg-white even:bg-gray-50 border-b">
+              <td class="py-4 px-6 font-medium text-gray-900">
+                Noveno
+              </td>
+              <td class="py-4 px-6 text-gray-700">
+                $600.00
+              </td>
+            </tr>
+            <tr class="odd:bg-white even:bg-gray-50 border-b">
+              <td class="py-4 px-6 font-medium text-gray-900">
+                Decimo
+              </td>
+              <td class="py-4 px-6 text-gray-700">
+                $500.00
+              </td>
+            </tr>
+            <tr class="odd:bg-white even:bg-gray-50 border-b">
+              <td class="py-4 px-6 font-medium text-gray-900">
+                11vo
+              </td>
+              <td class="py-4 px-6 text-gray-700">
+                $400.00
+              </td>
+            </tr>
+            <tr class="odd:bg-white even:bg-gray-50 border-b">
+              <td class="py-4 px-6 font-medium text-gray-900">
+                12vo
+              </td>
+              <td class="py-4 px-6 text-gray-700">
+                $300.00
+              </td>
+            </tr>
+            <tr class="odd:bg-white even:bg-gray-50 border-b">
+              <td class="py-4 px-6 font-medium text-gray-900">
+                13vo
+              </td>
+              <td class="py-4 px-6 text-gray-700">
+                $250.00
+              </td>
+            </tr>
+            <tr class="odd:bg-white even:bg-gray-50 border-b">
+              <td class="py-4 px-6 font-medium text-gray-900">
+                14vo
+              </td>
+              <td class="py-4 px-6 text-gray-700">
+                $210.00
+              </td>
+            </tr>
+            <tr class="odd:bg-white even:bg-gray-50">
+              <td class="py-4 px-6 font-medium text-gray-900">
+                Penultimo
+              </td>
+              <td class="py-4 px-6 text-gray-700">
+                $100.00
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>

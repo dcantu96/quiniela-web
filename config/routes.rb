@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   get '/join-groups', to: 'dashboard#join_groups'
   get '/not-paid', to: 'not_paid#index'
   get '/rules', to: 'public#rules'
+  get '/prizes', to: 'public#prizes'
   devise_for :users, controllers: {
     sessions: 'sessions',
     confirmations: 'confirmations',
