@@ -14,6 +14,9 @@ class Tournament < ApplicationRecord
   end
 
   def current_week
+    last_valid_week = weeks.where(finished: true).order(number: :desc).limit(1).first
+    return last_valid_week if weeks.where(finished: false).count == 0
+    
     @current_week ||= weeks.where(finished: false).order(number: :asc).limit(1).first
   end
 
