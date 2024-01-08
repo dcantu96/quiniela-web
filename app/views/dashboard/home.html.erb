@@ -76,7 +76,7 @@
       <div class="relative">
         <div class="bg-gray-200 text-left text-xs text-gray-800 uppercase flex items-center shadow-lg <%= 'top-0 sticky' if @active_memberships.count > 1 %> rounded-xl mb-4 flex-wrap py-3 gap-4">
           <div class="px-6 font-bold"><%= group.name %> - <%= group.tournament.year  %></div>
-          <div class="px-6 font-bold">Semana - <%= group.tournament.current_week.number %></div>
+          <div class="px-6 font-bold">Semana - <%= group.tournament.current_week.present? ? group.tournament.current_week.number : - %></div>
           <div class="px-6 flex-1 flex gap-2 w-48">
             <%= link_to table_membership_path(memberships.first), class: "btn btn--primary py-1" do %>
               <i class="fa-solid fa-table mr-2 fill-current"></i>
