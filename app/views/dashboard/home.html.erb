@@ -76,7 +76,7 @@
       <div class="relative">
         <div class="bg-gray-200 text-left text-xs text-gray-800 uppercase flex items-center shadow-lg <%= 'top-0 sticky' if @active_memberships.count > 1 %> rounded-xl mb-4 flex-wrap py-3 gap-4">
           <div class="px-6 font-bold"><%= group.name %> - <%= group.tournament.year  %></div>
-          <div class="px-6 font-bold">Semana - <%= group.tournament.current_week.present? ? group.tournament.current_week.number : - %></div>
+          <div class="px-6 font-bold">Semana - <%= group.tournament.current_week.number %></div>
           <div class="px-6 flex-1 flex gap-2 w-48">
             <%= link_to table_membership_path(memberships.first), class: "btn btn--primary py-1" do %>
               <i class="fa-solid fa-table mr-2 fill-current"></i>
@@ -96,7 +96,7 @@
           <div class="lg:table w-full rounded min-w-full divide-y divide-gray-200">
             <div class="hidden lg:table-header-group bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               <div class="lg:table-cell px-6 py-3">Usuario</div>
-              <div class="lg:table-cell px-6 py-3">Pts. Semana <%= memberships.first.current_membership_week.present? ? memberships.first.current_membership_week.week.number : '' %></div>
+              <div class="lg:table-cell px-6 py-3">Pts. Semana <%= memberships.first.current_membership_week.week.number %></div>
               <div class="lg:table-cell px-6 py-3">Acumulado</div>
               <div class="lg:table-cell px-6 py-3">Acciones</div>
             </div>
