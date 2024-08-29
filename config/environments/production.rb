@@ -68,9 +68,9 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.default_url_options = { host: 'www.qnflmty.com' }
   config.action_mailer.smtp_settings = {
-    :address              => 'smtp.sendgrid.net',
+    :address              => 'smtp.mailersend.net',
     :port                 => 587,
-    :user_name            => 'apikey',
+    :user_name            => 'MS_ULPLCn@qnflmty.com',
     :password             => ENV['PASSWORD'],
     :domain               => 'heroku.com',
     :authentication       => :plain,
