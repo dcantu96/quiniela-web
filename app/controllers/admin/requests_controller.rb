@@ -4,7 +4,7 @@ class Admin::RequestsController < Admin::BaseController
   def update
     if params[:status] == 'accept'
       AcceptRequestJob.perform_later(params[:id])
-      redirect_to requests_admin_group_path(@membership.group), notice: 'Request accepted'
+      redirect_to requests_admin_group_path(@request.group), notice: 'Request accepted'
     end
     if params[:status] == 'reject'
       RejectRequestJob.perform_later(params[:id])
