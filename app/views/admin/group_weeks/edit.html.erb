@@ -18,12 +18,17 @@
           <p class="text-md text-left mb-2">Untie match score <%= @untie_match.visit_team.short_name %>@<%= @untie_match.home_team.short_name %> <%= @untie_match.visit_team_score %> - <%= @untie_match.home_team_score %> = <b><%= @untie_match.total_points %></b></p>
         <% end %>
         <% @highest_memberships.each do |membership_week| %>
+          <% untie_pick = @untie_match.present? ? membership_week.picks.find_by(match: @untie_match) : nil %>
+          
           <%= label_tag "winner_id_#{membership_week.id}", class: 'checkbox-toggle mb-4' do %>
-            <span class='checkbox-toggle__text'><%= membership_week.membership.account.username %> - points <%= membership_week.points %>
-            <% if @untie_match.present? %>
-               - untie points - <b><%= membership_week.picks.find_by(match: @untie_match).points %></b>
-            <% end %>
+            <span class='checkbox-toggle__text'>
+              <%= membership_week.membership.account.username %> - points <%= membership_week.points %>
+              
+              <% if untie_pick.present? %>
+                - untie points - <b><%= untie_pick.points %></b>
+              <% end %>
             </span>
+            
             <%= check_box_tag 'group_week[winner_ids][]', membership_week.id, @week_winners_ids.include?(membership_week.id), id: "winner_id_#{membership_week.id}", class: 'checkbox-toggle__input' %>
             <div class='checkbox-toggle__fill'></div>
           <% end %>

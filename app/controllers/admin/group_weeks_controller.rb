@@ -11,15 +11,29 @@ class Admin::GroupWeeksController < Admin::BaseController
   def edit
     @week_winners_ids = @group_week.group.winners.joins(membership_week: :week).where(membership_weeks: { week: @group_week.week }).pluck(:membership_week_id)
     @untie_match = @group_week.week.untie_match
-    @highest_memberships ||= @group_week.group.membership_weeks
+
+    # Step 1: Get the highest points for the given week
+    highest_points = @group_week.group.membership_weeks
       .where(week: @group_week.week)
-      .includes(membership: :account)
-      .includes(:picks)
+      .maximum(:points)
+
+    # Step 2: Fetch memberships with the highest points and calculate untie_difference
+    memberships_with_highest_points = @group_week.group.membership_weeks
+      .where(week: @group_week.week, points: highest_points)
       .joins("LEFT JOIN picks AS untie_pick ON untie_pick.match_id = #{@untie_match.id} AND untie_pick.membership_week_id = membership_weeks.id")
       .select("membership_weeks.*, 
-              COALESCE(ABS((#{@untie_match.home_team_score} + #{@untie_match.visit_team_score}) - untie_pick.points), 999999) AS untie_difference")
-      .order('membership_weeks.points DESC, untie_difference ASC')
-      .limit(5)
+      COALESCE(ABS((#{@untie_match.home_team_score} + #{@untie_match.visit_team_score}) - untie_pick.points), 999999) AS untie_difference")
+
+    # Step 3: Find the minimum untie_difference among those with the highest points
+    lowest_untie_difference = memberships_with_highest_points.minimum("COALESCE(ABS((#{@untie_match.home_team_score} + #{@untie_match.visit_team_score}) - untie_pick.points), 999999)")
+
+    # Step 4: Fetch only the memberships with the highest points and the lowest untie_difference
+    @highest_memberships ||= memberships_with_highest_points
+      .where("COALESCE(ABS((#{@untie_match.home_team_score} + #{@untie_match.visit_team_score}) - untie_pick.points), 999999) = ?", lowest_untie_difference)
+      .includes(membership: :account) # Eager load membership and account to prevent N+1 in the view
+      .includes(:picks)               # Eager load picks to prevent N+1 when fetching untie match picks
+
+
     @lowest_valid_points_list ||= @group_week.group.membership_weeks.active_members.where(week: @group_week.week).order('points ASC').limit(10).map do |membership_week|
       ["#{membership_week.membership.account.username} - puntos #{membership_week.points} - picks vacios #{membership_week.picks.where(picked_team: nil).count}", membership_week.points]
     end
