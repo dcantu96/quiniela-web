@@ -10,12 +10,19 @@ class Admin::GroupWeeksController < Admin::BaseController
 
   def edit
     @week_winners_ids = @group_week.group.winners.joins(membership_week: :week).where(membership_weeks: { week: @group_week.week }).pluck(:membership_week_id)
-    @highest_memberships ||= @group_week.group.membership_weeks.where(week: @group_week.week).order('points DESC').limit(10)
     @untie_match = @group_week.week.untie_match
+    @highest_memberships ||= @group_week.group.membership_weeks
+      .where(week: @group_week.week)
+      .includes(membership: :account)
+      .includes(:picks)
+      .joins("LEFT JOIN picks AS untie_pick ON untie_pick.match_id = #{@untie_match.id} AND untie_pick.membership_week_id = membership_weeks.id")
+      .select("membership_weeks.*, 
+              COALESCE(ABS((#{@untie_match.home_team_score} + #{@untie_match.visit_team_score}) - untie_pick.points), 999999) AS untie_difference")
+      .order('membership_weeks.points DESC, untie_difference ASC')
+      .limit(5)
     @lowest_valid_points_list ||= @group_week.group.membership_weeks.active_members.where(week: @group_week.week).order('points ASC').limit(10).map do |membership_week|
       ["#{membership_week.membership.account.username} - puntos #{membership_week.points} - picks vacios #{membership_week.picks.where(picked_team: nil).count}", membership_week.points]
     end
-    
   end
 
   def update
