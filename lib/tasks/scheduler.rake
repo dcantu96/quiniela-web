@@ -1,5 +1,5 @@
 task :update_current_week => :environment do
-  year = '2024'
+  year = '2025'
   tournament = Tournament.find_by(year: year)
   return if tournament.nil? || tournament.current_week.nil? || tournament.current_week.finished
 
