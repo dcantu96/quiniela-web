@@ -68,10 +68,10 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.default_url_options = { host: 'www.qnflmty.com' }
   config.action_mailer.smtp_settings = {
-    :address              => 'smtp.mailersend.net',
+    :address              => ENV['MAILER_ADDRESS'],
     :port                 => 587,
-    :user_name            => 'MS_ULPLCn@qnflmty.com',
-    :password             => ENV['PASSWORD'],
+    :user_name            => ENV['MAILER_USERNAME'],
+    :password             => ENV['MAILER_PASSWORD'],
     :domain               => 'heroku.com',
     :authentication       => :plain,
     :enable_starttls_auto => true
