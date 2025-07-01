@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>QNFLMTY 2024 - Reglas</title>
+    <title>QNFLMTY <%= Time.zone.now.year %> - Reglas</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -16,7 +16,7 @@
     <%= render 'layouts/header' if current_user %>
     <div class='container mx-auto text-left lg:max-w-4xl px-10'>
       <div class='text-center py-4'>
-        <h1 class='font-bold'>QUINIELA 3xH NFL 2024<h1>
+        <h1 class='font-bold'>QUINIELA 3xH NFL <%= Time.zone.now.year %><h1>
         <p class='italic'>est 1992</p>
         <h2 class='text-xl uppercase'>Reglas</h2>
       </div>
