@@ -63,8 +63,6 @@ Rails.application.configure do
   # config.active_job.queue_adapter     = :resque
   # config.active_job.queue_name_prefix = "quiniela_web_production"
 
-  # setup mail for sendgrid
-
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.default_url_options = { host: 'www.qnflmty.com' }
   config.action_mailer.smtp_settings = {
