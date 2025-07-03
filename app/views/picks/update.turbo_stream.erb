@@ -2,11 +2,3 @@
   <%= render 'pick', pick: @pick %>
 <% end %>
 <%= turbo_stream.prepend 'flash', partial: 'layouts/flash' %>
-<%= turbo_stream.append "toasts" do %>
-  <script>
-    toaster.fire({
-      icon: 'success',
-      title: 'Pick successfully locked to <%= @pick.picked_team.short_name %>'
-    });
-  </script>
-<% end %>
